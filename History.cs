@@ -13,11 +13,15 @@
         public string ForwardingHost { get; set; }
         public string ForwardingUser { get; set; }
         public string ForwardingPort { get; set; }
+        public bool ForwardingHide { get; set; }
         public string ForwardingPrivateKey { get; set; }
         public string ForwardingPassword { get; set; }
+        public string Tag { get; set; }
+        public string LogonScript { get; set; }
+        public string SearchKey { get; set; }
 
-        public History(string uniqueKey, int protocol, string host, string user, string port, string privateKey, string password,
-            bool isForwarding, string forwardingHost, string forwardingUser, string forwardingPort, string forwardingPrivateKey, string forwardingPassword)
+        public History(string uniqueKey, int protocol, string host, string user, string port, string privateKey, string password, bool isForwarding, string forwardingHost,
+            string forwardingUser, string forwardingPort, bool forwardingHide, string forwardingPrivateKey, string forwardingPassword, string tag, string logonScript, string searchKey)
         {
             UniqueKey = uniqueKey;
             Protocol = protocol;
@@ -30,8 +34,12 @@
             ForwardingHost = forwardingHost;
             ForwardingUser = forwardingUser;
             ForwardingPort = forwardingPort;
+            ForwardingHide = forwardingHide;
             ForwardingPrivateKey = forwardingPrivateKey;
             ForwardingPassword = forwardingPassword;
+            Tag = tag;
+            LogonScript = logonScript;
+            SearchKey = searchKey;
         }
     }
 }

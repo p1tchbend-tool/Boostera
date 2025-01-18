@@ -63,6 +63,12 @@
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -164,6 +170,7 @@
             this.textBox1.Size = new System.Drawing.Size(568, 23);
             this.textBox1.TabIndex = 10;
             this.textBox1.Text = "22";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 
@@ -211,7 +218,7 @@
             this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Font = new System.Drawing.Font("メイリオ", 10.2F);
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(722, 555);
+            this.button1.Location = new System.Drawing.Point(722, 632);
             this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(62, 28);
@@ -275,6 +282,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label15);
+            this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label9);
@@ -450,6 +459,7 @@
             this.textBox9.Size = new System.Drawing.Size(557, 23);
             this.textBox9.TabIndex = 22;
             this.textBox9.Text = "22";
+            this.textBox9.TextChanged += new System.EventHandler(this.textBox9_TextChanged);
             // 
             // textBox10
             // 
@@ -504,6 +514,79 @@
             this.comboBox2.Size = new System.Drawing.Size(200, 24);
             this.comboBox2.TabIndex = 24;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label13.Location = new System.Drawing.Point(11, 561);
+            this.label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(52, 21);
+            this.label13.TabIndex = 25;
+            this.label13.Text = "タグ：";
+            // 
+            // textBox11
+            // 
+            this.textBox11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
+            this.textBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox11.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            this.textBox11.ForeColor = System.Drawing.Color.White;
+            this.textBox11.Location = new System.Drawing.Point(214, 561);
+            this.textBox11.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
+            this.textBox11.Name = "textBox11";
+            this.textBox11.Size = new System.Drawing.Size(568, 23);
+            this.textBox11.TabIndex = 26;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label14.Location = new System.Drawing.Point(11, 278);
+            this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(150, 21);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "ログオンスクリプト：";
+            // 
+            // textBox12
+            // 
+            this.textBox12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
+            this.textBox12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox12.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox12.ForeColor = System.Drawing.Color.White;
+            this.textBox12.Location = new System.Drawing.Point(214, 278);
+            this.textBox12.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
+            this.textBox12.Name = "textBox12";
+            this.textBox12.Size = new System.Drawing.Size(568, 23);
+            this.textBox12.TabIndex = 28;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox1.Location = new System.Drawing.Point(202, 210);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(31, 22);
+            this.checkBox1.TabIndex = 36;
+            this.checkBox1.Text = " ";
+            this.checkBox1.UseVisualStyleBackColor = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Enabled = false;
+            this.label15.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label15.Location = new System.Drawing.Point(6, 211);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(108, 21);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "非表示で起動：";
+            // 
             // Form3
             // 
             this.AcceptButton = this.button1;
@@ -511,7 +594,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(796, 596);
+            this.ClientSize = new System.Drawing.Size(796, 671);
+            this.Controls.Add(this.textBox12);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.textBox11);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.groupBox1);
@@ -586,5 +673,11 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

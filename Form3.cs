@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Boostera
@@ -91,6 +93,8 @@ namespace Boostera
                 textBox9.Text = history.ForwardingPort;
                 textBox7.Text = history.ForwardingPrivateKey;
                 textBox8.Text = history.ForwardingPassword;
+                textBox12.Text = history.LogonScript;
+                textBox11.Text = history.Tag;
 
                 comboBox1.SelectedIndex = 0;
             }
@@ -118,13 +122,15 @@ namespace Boostera
 
             comboBox2.SelectedIndexChanged += (s, e) =>
             {
-                if (comboBox2.SelectedIndex == SSH || comboBox2.SelectedIndex == SFTP)
+                if (comboBox2.SelectedIndex == SSH)
                 {
                     textBox1.Text = "22";
                     label5.Enabled = true;
                     textBox3.Enabled = true;
                     panel1.Enabled = true;
                     panel3.Enabled = true;
+                    label14.Enabled = true;
+                    textBox12.Enabled = true;
                 }
                 else if (comboBox2.SelectedIndex == RDP)
                 {
@@ -133,6 +139,18 @@ namespace Boostera
                     textBox3.Enabled = false;
                     panel1.Enabled = false;
                     panel3.Enabled = false;
+                    label14.Enabled = false;
+                    textBox12.Enabled = false;
+                }
+                else if (comboBox2.SelectedIndex == SFTP)
+                {
+                    textBox1.Text = "22";
+                    label5.Enabled = true;
+                    textBox3.Enabled = true;
+                    panel1.Enabled = true;
+                    panel3.Enabled = true;
+                    label14.Enabled = false;
+                    textBox12.Enabled = false;
                 }
             };
 
@@ -270,7 +288,7 @@ namespace Boostera
             Program.SortTabIndex(this);
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             Random random = new Random();
             var localPort = random.Next(49152, 65535).ToString();
@@ -282,10 +300,21 @@ namespace Boostera
                 var user = "\"" + textBox10.Text.Replace("\"", "\"\"") + "\"";
                 var port = "\"" + textBox9.Text.Replace("\"", "\"\"") + "\"";
                 var forwardingPort = textBox1.Text.Replace("\"", "\"\"") + "\"";
+                var forwardingHide = checkBox1.Checked;
                 var key = textBox7.Text;
                 var passwd = textBox8.Text;
 
-                var arguments = host + ":" + port + " /ssh2 /I /ssh-L" + localPort + ":" + forwardingHost + ":" + forwardingPort;
+                var arguments = host + ":" + port + " /ssh2";
+                if (forwardingHide)
+                {
+                    arguments += " /V";
+                }
+                else
+                {
+                    arguments += " /I";
+                }
+                arguments += " /ssh-L" + localPort + ":" + forwardingHost + ":" + forwardingPort;
+
                 if (!string.IsNullOrEmpty(key))
                 {
                     arguments += " /auth=publickey /user=" + user + " /keyfile=\"" + key.Replace("\"", "\"\"") + "\"";
@@ -302,6 +331,7 @@ namespace Boostera
                 try
                 {
                     Process.Start(psi);
+                    Thread.Sleep(1000);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -313,6 +343,7 @@ namespace Boostera
                 var port = "\"" + textBox1.Text.Replace("\"", "\"\"") + "\"";
                 var key = textBox3.Text;
                 var passwd = textBox2.Text;
+                var script = "sendln '" + textBox12.Text + "'";
 
                 var arguments = string.Empty;
                 if (checkBox3.Checked)
@@ -333,6 +364,20 @@ namespace Boostera
                     arguments += " /auth=password /user=" + user;
                 }
                 if (!string.IsNullOrEmpty(passwd)) arguments += " /passwd=\"" + passwd.Replace("\"", "\"\"") + "\"";
+
+                if (!string.IsNullOrEmpty(script))
+                {
+                    try
+                    {
+                        if (!Directory.Exists(Path.Combine(Program.BoosteraDataFolder, ".temp")))
+                            Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
+                        File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"), script);
+
+                        arguments += " /M=\"" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "\"";
+                    }
+                    catch { }
+                }
+
                 arguments += " /W=" + textBox4.Text.Replace("\"", "\"\"") + "@" + textBox5.Text.Replace("\"", "\"\"");
 
                 var psi = new ProcessStartInfo(ttermproPath);
@@ -343,6 +388,13 @@ namespace Boostera
                     Process.Start(psi);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+                try
+                {
+                    Thread.Sleep(1000);
+                    File.Delete(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"));
+                }
+                catch { }
             }
             else if (comboBox2.SelectedIndex == RDP)
             {
@@ -432,13 +484,28 @@ namespace Boostera
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
 
-            var uniqueKey = comboBox2.Text + " : " + textBox5.Text + " : " + textBox4.Text + " : " + textBox1.Text;
             var privateKey = textBox3.Text;
             var password = textBox2.Text;
             var forwardingPrivateKey = textBox7.Text;
             var forwardingPassword = textBox8.Text;
-            var hitory = new History(uniqueKey, comboBox2.SelectedIndex, textBox5.Text, textBox4.Text, textBox1.Text, privateKey, password,
-                checkBox3.Checked, textBox6.Text, textBox10.Text, textBox9.Text, forwardingPrivateKey, forwardingPassword);
+            var logonScript = textBox12.Text;
+
+            var searchKey = string.Empty;
+            var uniqueKey = string.Empty;
+
+            if (string.IsNullOrEmpty(textBox11.Text))
+            {
+                searchKey = comboBox2.Text + textBox4.Text + textBox5.Text;
+                uniqueKey = comboBox2.Text + "://" + textBox4.Text + "@" + textBox5.Text;
+            }
+            else
+            {
+                searchKey = comboBox2.Text + textBox4.Text + textBox5.Text + textBox11.Text;
+                uniqueKey = comboBox2.Text + "://" + textBox4.Text + "@" + textBox5.Text + " #" + textBox11.Text;
+            }
+
+            var hitory = new History(uniqueKey, comboBox2.SelectedIndex, textBox5.Text, textBox4.Text, textBox1.Text, privateKey, password, checkBox3.Checked,
+                textBox6.Text, textBox10.Text, textBox9.Text, checkBox1.Checked, forwardingPrivateKey, forwardingPassword, textBox11.Text, logonScript, searchKey);
 
             histories.RemoveAll(x => x.UniqueKey == uniqueKey);
             histories.Insert(0, hitory);
@@ -450,6 +517,18 @@ namespace Boostera
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.dat"), str);
             }
             catch { }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            textBox1.Text = Regex.Replace(textBox1.Text, @"[^\d]", string.Empty);
+            textBox1.SelectionStart = textBox1.Text.Length;
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+            textBox9.Text = Regex.Replace(textBox9.Text, @"[^\d]", string.Empty);
+            textBox9.SelectionStart = textBox9.Text.Length;
         }
     }
 }
