@@ -20,6 +20,7 @@ namespace Boostera
             WriteIndented = true
         };
 
+        private static readonly int MAX_HISTORIES_COUNT = 10000;
         private static readonly int SSH = 0;
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
@@ -441,7 +442,7 @@ namespace Boostera
 
             histories.RemoveAll(x => x.UniqueKey == uniqueKey);
             histories.Insert(0, hitory);
-            if (histories.Count > 1000) histories.RemoveRange(1000, histories.Count - 1000);
+            if (histories.Count > MAX_HISTORIES_COUNT) histories.RemoveRange(MAX_HISTORIES_COUNT, histories.Count - MAX_HISTORIES_COUNT);
 
             try
             {
