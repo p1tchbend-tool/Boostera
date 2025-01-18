@@ -5,18 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Boostera
 {
     public partial class Form3 : Form
     {
-        public bool IsSavePrivateKey { get { return checkBox1.Checked; } }
-        public bool IsSavePassword { get { return checkBox2.Checked; } }
-        public bool IsSaveForwardingPrivateKey { get { return checkBox5.Checked; } }
-        public bool IsSaveForwardingPassword { get { return checkBox4.Checked; } }
-
         private string ttermproPath = @"C:\Program Files (x86)\teraterm\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyFolder = Program.BoosteraDataFolder;
@@ -30,7 +24,7 @@ namespace Boostera
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
 
-        public Form3(string ttermproPath, string winscpPath, string boosteraKeyFolder, bool isSavePrivateKey, bool isSavePassword, bool isSaveForwardingPrivateKey, bool isSaveForwardingPassword)
+        public Form3(string ttermproPath, string winscpPath, string boosteraKeyFolder)
         {
             InitializeComponent();
             this.Shown += (s, e) => firstLabel.Focus();
@@ -38,15 +32,11 @@ namespace Boostera
             this.ttermproPath = ttermproPath;
             this.winscpPath = winscpPath;
             this.boosteraKeyFolder = boosteraKeyFolder;
-            checkBox1.Checked = isSavePrivateKey;
-            checkBox2.Checked = isSavePassword;
-            checkBox5.Checked = isSaveForwardingPrivateKey;
-            checkBox4.Checked = isSaveForwardingPassword;
             comboBox2.SelectedIndex = 0;
 
             try
             {
-                if (!File.Exists(Path.Combine(boosteraKeyFolder, "Boostera.Key)")))
+                if (!File.Exists(Path.Combine(boosteraKeyFolder, "Boostera.Key")))
                 {
                     var password = string.Empty;
                     while (string.IsNullOrEmpty(password))
@@ -58,7 +48,7 @@ namespace Boostera
                         }
                     }
 
-                    var encrypt = new Encrypt(Path.Combine(boosteraKeyFolder, "Boostera.Key)"));
+                    var encrypt = new Encrypt(boosteraKeyFolder);
                     if (encrypt.CreateKey(password))
                     {
                         MessageBox.Show("パスワードが保存されました。\nこれは他の人に共有しないようにしてください。\n\n" + Path.Combine(boosteraKeyFolder, "Boostera.Key"));
@@ -70,7 +60,7 @@ namespace Boostera
                 }
                 else
                 {
-                    var str = new Encrypt(Path.Combine(boosteraKeyFolder, "Boostera.Key)")).DecryptString(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history-ver2.dat")));
+                    var str = new Encrypt(boosteraKeyFolder).DecryptString(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.dat")));
                     histories = JsonSerializer.Deserialize<List<History>>(str);
                 }
             }
@@ -132,7 +122,6 @@ namespace Boostera
                     textBox1.Text = "22";
                     label5.Enabled = true;
                     textBox3.Enabled = true;
-                    checkBox1.Enabled = true;
                     panel1.Enabled = true;
                     panel3.Enabled = true;
                 }
@@ -141,7 +130,6 @@ namespace Boostera
                     textBox1.Text = "3389";
                     label5.Enabled = false;
                     textBox3.Enabled = false;
-                    checkBox1.Enabled = false;
                     panel1.Enabled = false;
                     panel3.Enabled = false;
                 }
@@ -215,8 +203,6 @@ namespace Boostera
                     textBox8.Enabled = true;
                     textBox9.Enabled = true;
                     textBox10.Enabled = true;
-                    checkBox4.Enabled = true;
-                    checkBox5.Enabled = true;
                     panel4.Enabled = true;
                     panel5.Enabled = true;
                     panel6.Enabled = true;
@@ -233,8 +219,6 @@ namespace Boostera
                     textBox8.Enabled = false;
                     textBox9.Enabled = false;
                     textBox10.Enabled = false;
-                    checkBox4.Enabled = false;
-                    checkBox5.Enabled = false;
                     panel4.Enabled = false;
                     panel5.Enabled = false;
                     panel6.Enabled = false;
@@ -253,8 +237,6 @@ namespace Boostera
                 textBox8.Enabled = true;
                 textBox9.Enabled = true;
                 textBox10.Enabled = true;
-                checkBox4.Enabled = true;
-                checkBox5.Enabled = true;
                 panel4.Enabled = true;
                 panel5.Enabled = true;
                 panel6.Enabled = true;
@@ -271,8 +253,6 @@ namespace Boostera
                 textBox8.Enabled = false;
                 textBox9.Enabled = false;
                 textBox10.Enabled = false;
-                checkBox4.Enabled = false;
-                checkBox5.Enabled = false;
                 panel4.Enabled = false;
                 panel5.Enabled = false;
                 panel6.Enabled = false;
@@ -404,18 +384,6 @@ namespace Boostera
                     Process.Start(psi2);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
-
-                if (!checkBox2.Checked)
-                {
-                    await Task.Delay(10000);  // 接続完了を待機して資格情報削除
-
-                    psi1.Arguments = arguments3;
-                    try
-                    {
-                        Process.Start(psi1);
-                    }
-                    catch (Exception ex) { MessageBox.Show(ex.Message); }
-                }
             }
             else if (comboBox2.SelectedIndex == SFTP)
             {
@@ -464,10 +432,10 @@ namespace Boostera
             }
 
             var uniqueKey = comboBox2.Text + " : " + textBox5.Text + " : " + textBox4.Text + " : " + textBox1.Text;
-            var privateKey = checkBox1.Checked ? textBox3.Text : string.Empty;
-            var password = checkBox2.Checked ? textBox2.Text : string.Empty;
-            var forwardingPrivateKey = checkBox5.Checked ? textBox7.Text : string.Empty;
-            var forwardingPassword = checkBox4.Checked ? textBox8.Text : string.Empty;
+            var privateKey = textBox3.Text;
+            var password = textBox2.Text;
+            var forwardingPrivateKey = textBox7.Text;
+            var forwardingPassword = textBox8.Text;
             var hitory = new History(uniqueKey, comboBox2.SelectedIndex, textBox5.Text, textBox4.Text, textBox1.Text, privateKey, password,
                 checkBox3.Checked, textBox6.Text, textBox10.Text, textBox9.Text, forwardingPrivateKey, forwardingPassword);
 
@@ -477,8 +445,8 @@ namespace Boostera
 
             try
             {
-                var str = new Encrypt(Path.Combine(boosteraKeyFolder, "Boostera.Key)")).EncryptString(JsonSerializer.Serialize(histories, jsonSerializerOptions));
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history-ver2.dat"), str);
+                var str = new Encrypt(boosteraKeyFolder).EncryptString(JsonSerializer.Serialize(histories, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.dat"), str);
             }
             catch { }
         }

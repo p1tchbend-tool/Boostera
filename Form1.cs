@@ -21,13 +21,9 @@ namespace Boostera
         private string[] searchExclusionFolders = new string[] {
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
         private string boosteraKeyFolder = Program.BoosteraDataFolder;
-        private bool isStartUp = false;
+        private bool isStartUp = true;
         private int modkey = HotKey.MOD_KEY_ALT;
         private Keys key = Keys.T;
-        private bool isSavePrivateKey = true;
-        private bool isSavePassword = true;
-        private bool isSaveForwardingPrivateKey = true;
-        private bool isSaveForwardingPassword = true;
 
         private List<IntPtr> hwnds = new List<IntPtr>();
         private List<IntPtr> hwnds_darkmode = new List<IntPtr>();
@@ -53,12 +49,16 @@ namespace Boostera
                 if (((HotKey.HotKeyEventArgs)e).Id == Program.HotKeyShowForm) ShowSearchForm();
             };
 
+            float f = NativeMethods.GetDpiForSystem();
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
+            listBox1.Height = listBox1.ItemHeight * 10;
+
             listBox1.Parent = myPanel3;
             listBox1.Left = 0;
             listBox1.Top = 0;
             listBox1.Width = myPanel3.Width;
             listBox1.Height = myPanel3.Height;
-            myPanel3.Height = listBox1.Height;
+            myPanel3.Height = listBox1.Height - 25;
 
             myPanel4.Left = myPanel2.Left - 2;
             myPanel4.Top = myPanel2.Top - 2;
@@ -137,21 +137,9 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyFolder, isSavePrivateKey, isSavePassword, isSaveForwardingPrivateKey, isSaveForwardingPassword))
+                    using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyFolder))
                     {
                         form3.ShowDialog();
-                        isSavePrivateKey = form3.IsSavePrivateKey;
-                        isSavePassword = form3.IsSavePassword;
-                        isSaveForwardingPrivateKey = form3.IsSaveForwardingPrivateKey;
-                        isSaveForwardingPassword = form3.IsSaveForwardingPassword;
-
-                        try
-                        {
-                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders),
-                                boosteraKeyFolder, isStartUp, modkey, key, isSavePrivateKey, isSavePassword, isSaveForwardingPrivateKey, isSaveForwardingPassword);
-                            File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
-                        }
-                        catch { }
                     }
                     this.Hide();
                     this.WindowState = FormWindowState.Minimized;
@@ -182,8 +170,7 @@ namespace Boostera
 
                         try
                         {
-                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders),
-                                boosteraKeyFolder, isStartUp, modkey, key, isSavePrivateKey, isSavePassword, isSaveForwardingPrivateKey, isSaveForwardingPassword);
+                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders), boosteraKeyFolder, isStartUp, modkey, key);
                             File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
                         }
                         catch { }
@@ -543,10 +530,6 @@ namespace Boostera
                 isStartUp = settings.IsStartUp;
                 modkey = settings.ModKey;
                 key = settings.Key;
-                isSavePrivateKey = settings.IsSavePrivateKey;
-                isSavePassword = settings.IsSavePassword;
-                isSaveForwardingPrivateKey = settings.IsSaveForwardingPrivateKey;
-                isSaveForwardingPassword = settings.IsSaveForwardingPassword;
             }
             catch { }
 

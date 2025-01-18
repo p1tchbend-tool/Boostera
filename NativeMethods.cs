@@ -57,5 +57,8 @@ namespace Boostera
 
         [DllImport("user32.dll")]
         public static extern int UnregisterHotKey(IntPtr HWnd, int ID);
+
+        [DllImport("User32.dll")]
+        public static extern int GetDpiForSystem();
     }
 }

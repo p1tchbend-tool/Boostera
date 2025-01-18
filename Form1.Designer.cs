@@ -85,7 +85,7 @@
             this.listBox1.Margin = new System.Windows.Forms.Padding(2);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(776, 287);
+            this.listBox1.Size = new System.Drawing.Size(760, 410);
             this.listBox1.TabIndex = 1;
             // 
             // timer1
@@ -274,7 +274,7 @@
             this.myPanel3.Margin = new System.Windows.Forms.Padding(2, 8, 2, 2);
             this.myPanel3.Name = "myPanel3";
             this.myPanel3.Radius = 1;
-            this.myPanel3.Size = new System.Drawing.Size(781, 368);
+            this.myPanel3.Size = new System.Drawing.Size(781, 435);
             this.myPanel3.TabIndex = 13;
             this.myPanel3.Visible = false;
             // 
@@ -317,7 +317,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Green;
-            this.ClientSize = new System.Drawing.Size(808, 546);
+            this.ClientSize = new System.Drawing.Size(808, 610);
             this.ControlBox = false;
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel6);

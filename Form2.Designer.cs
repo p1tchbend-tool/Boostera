@@ -55,10 +55,10 @@
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox1.Font = new System.Drawing.Font("メイリオ", 9.75F);
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(270, 45);
+            this.textBox1.Location = new System.Drawing.Point(284, 45);
             this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(713, 27);
+            this.textBox1.Size = new System.Drawing.Size(699, 27);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "C:\\Program Files\\teraterm\\ttpmacro.exe";
             // 
@@ -84,9 +84,9 @@
             this.label2.Location = new System.Drawing.Point(12, 116);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(153, 20);
+            this.label2.Size = new System.Drawing.Size(205, 20);
             this.label2.TabIndex = 4;
-            this.label2.Text = "TTL マクロの検索場所：";
+            this.label2.Text = "TTL マクロの検索対象フォルダ：";
             // 
             // textBox2
             // 
@@ -94,10 +94,10 @@
             this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox2.Font = new System.Drawing.Font("メイリオ", 9.75F);
             this.textBox2.ForeColor = System.Drawing.Color.White;
-            this.textBox2.Location = new System.Drawing.Point(270, 115);
+            this.textBox2.Location = new System.Drawing.Point(284, 115);
             this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(713, 27);
+            this.textBox2.Size = new System.Drawing.Size(699, 27);
             this.textBox2.TabIndex = 5;
             this.textBox2.Text = "C:\\";
             // 
@@ -110,9 +110,9 @@
             this.label3.Location = new System.Drawing.Point(11, 151);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(243, 20);
+            this.label3.Size = new System.Drawing.Size(259, 20);
             this.label3.TabIndex = 6;
-            this.label3.Text = "検索を除外する場所（カンマ区切り）：";
+            this.label3.Text = "検索を除外するフォルダ (カンマ区切り)：";
             // 
             // textBox3
             // 
@@ -120,10 +120,10 @@
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox3.Font = new System.Drawing.Font("メイリオ", 9.75F);
             this.textBox3.ForeColor = System.Drawing.Color.White;
-            this.textBox3.Location = new System.Drawing.Point(270, 150);
+            this.textBox3.Location = new System.Drawing.Point(284, 150);
             this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(713, 27);
+            this.textBox3.Size = new System.Drawing.Size(699, 27);
             this.textBox3.TabIndex = 7;
             this.textBox3.Text = "C:\\Windows,C:\\ProgramData";
             // 
@@ -133,10 +133,10 @@
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox4.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.textBox4.ForeColor = System.Drawing.Color.White;
-            this.textBox4.Location = new System.Drawing.Point(270, 10);
+            this.textBox4.Location = new System.Drawing.Point(284, 10);
             this.textBox4.Margin = new System.Windows.Forms.Padding(2);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(713, 27);
+            this.textBox4.Size = new System.Drawing.Size(699, 27);
             this.textBox4.TabIndex = 8;
             this.textBox4.Text = "C:\\Program Files\\teraterm\\ttermpro.exe";
             // 
@@ -184,13 +184,13 @@
             this.textBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(44)))), ((int)(((byte)(44)))), ((int)(((byte)(44)))));
             this.textBox5.Font = new System.Drawing.Font("メイリオ", 9.75F);
             this.textBox5.ForeColor = System.Drawing.Color.White;
-            this.textBox5.Location = new System.Drawing.Point(270, 260);
+            this.textBox5.Location = new System.Drawing.Point(284, 260);
             this.textBox5.Margin = new System.Windows.Forms.Padding(2);
             this.textBox5.Name = "textBox5";
             this.textBox5.ReadOnly = true;
-            this.textBox5.Size = new System.Drawing.Size(241, 27);
+            this.textBox5.Size = new System.Drawing.Size(227, 27);
             this.textBox5.TabIndex = 12;
-            this.textBox5.Text = "Alt + T";
+            this.textBox5.Text = " Alt + T";
             // 
             // checkBox1
             // 
@@ -198,7 +198,7 @@
             this.checkBox1.BackColor = System.Drawing.Color.Transparent;
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(270, 230);
+            this.checkBox1.Location = new System.Drawing.Point(284, 227);
             this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(31, 22);
@@ -237,10 +237,10 @@
             this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox6.Font = new System.Drawing.Font("メイリオ", 9.75F);
             this.textBox6.ForeColor = System.Drawing.Color.White;
-            this.textBox6.Location = new System.Drawing.Point(270, 80);
+            this.textBox6.Location = new System.Drawing.Point(284, 81);
             this.textBox6.Margin = new System.Windows.Forms.Padding(2);
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(713, 27);
+            this.textBox6.Size = new System.Drawing.Size(699, 27);
             this.textBox6.TabIndex = 16;
             this.textBox6.Text = "C:\\Program Files (x86)\\WinSCP\\WinSCP.exe";
             // 
@@ -263,10 +263,10 @@
             this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox7.Font = new System.Drawing.Font("メイリオ", 9.75F);
             this.textBox7.ForeColor = System.Drawing.Color.White;
-            this.textBox7.Location = new System.Drawing.Point(270, 185);
+            this.textBox7.Location = new System.Drawing.Point(284, 185);
             this.textBox7.Margin = new System.Windows.Forms.Padding(2);
             this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(713, 27);
+            this.textBox7.Size = new System.Drawing.Size(699, 27);
             this.textBox7.TabIndex = 18;
             // 
             // label9
@@ -278,9 +278,9 @@
             this.label9.Location = new System.Drawing.Point(12, 186);
             this.label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(208, 20);
+            this.label9.Size = new System.Drawing.Size(203, 20);
             this.label9.TabIndex = 19;
-            this.label9.Text = "接続設定 暗号化キーの保存場所：";
+            this.label9.Text = "Boostera.Key の保存フォルダ：";
             // 
             // Form2
             // 
