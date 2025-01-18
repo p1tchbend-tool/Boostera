@@ -20,7 +20,7 @@ namespace Boostera
         private string searchFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         private string[] searchExclusionFolders = new string[] {
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
-        private string boosteraKeyPath = Path.Combine(Application.StartupPath, "Boostera.key");
+        private string boosteraKeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera.key");
         private bool isStartUp = false;
         private int modkey = HotKey.MOD_KEY_ALT;
         private Keys key = Keys.T;
@@ -143,7 +143,7 @@ namespace Boostera
                         {
                             var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders),
                                 boosteraKeyPath, isStartUp, modkey, key, isSavePrivateKey, isSavePassword, isSaveForwardingPrivateKey, isSaveForwardingPassword);
-                            File.WriteAllText(Path.Combine(Application.StartupPath, "settings.json"), JsonSerializer.Serialize(settings));
+                            File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "settings.json"), JsonSerializer.Serialize(settings));
                         }
                         catch { }
                     }
@@ -178,7 +178,7 @@ namespace Boostera
                         {
                             var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders),
                                 boosteraKeyPath, isStartUp, modkey, key, isSavePrivateKey, isSavePassword, isSaveForwardingPrivateKey, isSaveForwardingPassword);
-                            File.WriteAllText(Path.Combine(Application.StartupPath, "settings.json"), JsonSerializer.Serialize(settings));
+                            File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "settings.json"), JsonSerializer.Serialize(settings));
                         }
                         catch { }
 
@@ -521,13 +521,13 @@ namespace Boostera
             this.TransparencyKey = Color.Green;
             try
             {
-                files = JsonSerializer.Deserialize<List<Index>>(File.ReadAllText(Path.Combine(Application.StartupPath, "search.index")));
+                files = JsonSerializer.Deserialize<List<Index>>(File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "search.index")));
             }
             catch { }
 
             try
             {
-                var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(Path.Combine(Application.StartupPath, "settings.json")));
+                var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "settings.json")));
                 ttermproPath = settings.TtermproPath;
                 ttpmacroPath = settings.TtpmacroPath;
                 winscpPath = settings.WinscpPath;
@@ -627,7 +627,7 @@ namespace Boostera
                 files = files_shadow;
                 try
                 {
-                    File.WriteAllText(Path.Combine(Application.StartupPath, "search.index"), JsonSerializer.Serialize(files_shadow));
+                    File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "search.index"), JsonSerializer.Serialize(files_shadow));
                 }
                 catch { }
             });

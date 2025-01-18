@@ -19,7 +19,7 @@ namespace Boostera
 
         private string ttermproPath = @"C:\Program Files (x86)\teraterm\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
-        private string boosteraKeyPath = Path.Combine(Application.StartupPath, "Boostera.key");
+        private string boosteraKeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera.key");
         private List<History> histories = new List<History>();
 
         private static readonly int SSH = 0;
@@ -42,7 +42,7 @@ namespace Boostera
 
             try
             {
-                var str = new Encrypt(boosteraKeyPath).DecryptString(File.ReadAllText(Path.Combine(Application.StartupPath, "history-ver2.dat")));
+                var str = new Encrypt(boosteraKeyPath).DecryptString(File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "history-ver2.dat")));
                 histories = JsonSerializer.Deserialize<List<History>>(str);
             }
             catch { }
@@ -449,7 +449,7 @@ namespace Boostera
             try
             {
                 var str = new Encrypt(boosteraKeyPath).EncryptString(JsonSerializer.Serialize(histories));
-                File.WriteAllText(Path.Combine(Application.StartupPath, "history-ver2.dat"), str);
+                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "history-ver2.dat"), str);
             }
             catch { }
         }

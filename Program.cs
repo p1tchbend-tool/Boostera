@@ -33,7 +33,7 @@ namespace Boostera
                 {
                     foreach (Control c in ctrl.Controls)
                     {
-                        c.Font = new Font("BIZ UDPゴシック", c.Font.SizeInPoints, c.Font.Style);
+                        c.Font = new Font("メイリオ", c.Font.SizeInPoints, c.Font.Style);
                         Install(c);
                     }
                 }
@@ -60,7 +60,7 @@ namespace Boostera
         {
             try
             {
-                var errLogFolder = Path.Combine(Application.StartupPath, "log");
+                var errLogFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "log");
                 if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
 
                 File.WriteAllText(
@@ -75,7 +75,7 @@ namespace Boostera
             {
                 try
                 {
-                    var errLogFolder = Path.Combine(Application.StartupPath, "log");
+                    var errLogFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "log");
                     if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
 
                     File.WriteAllText(
