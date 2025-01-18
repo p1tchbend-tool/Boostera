@@ -7,14 +7,14 @@ namespace Boostera
 {
     public class Encrypt
     {
-        private string boosteraKeyFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        private string boosteraKeyFolder = Program.BoosteraDataFolder;
 
         public Encrypt(string boosteraKeyFolder)
         {
             this.boosteraKeyFolder = boosteraKeyFolder;
         }
 
-        private bool CreateKey(string key)
+        public bool CreateKey(string key)
         {
             if (string.IsNullOrEmpty(key)) return false;
 

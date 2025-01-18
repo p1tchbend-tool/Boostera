@@ -82,9 +82,9 @@ namespace Boostera
         {
             textBox5.Text = string.Empty;
 
-            if ((modkey & HotKey.MOD_KEY_CONTROL) == HotKey.MOD_KEY_CONTROL) textBox5.Text = "Control + ";
-            if ((modkey & HotKey.MOD_KEY_ALT) == HotKey.MOD_KEY_ALT) textBox5.Text += "Alt + ";
-            if ((modkey & HotKey.MOD_KEY_SHIFT) == HotKey.MOD_KEY_SHIFT) textBox5.Text += "Shift + ";
+            if ((modkey & HotKey.MOD_KEY_CONTROL) == HotKey.MOD_KEY_CONTROL) textBox5.Text = " Control + ";
+            if ((modkey & HotKey.MOD_KEY_ALT) == HotKey.MOD_KEY_ALT) textBox5.Text += " Alt + ";
+            if ((modkey & HotKey.MOD_KEY_SHIFT) == HotKey.MOD_KEY_SHIFT) textBox5.Text += " Shift + ";
 
             var kc = new KeysConverter();
             textBox5.Text += kc.ConvertToString(key);

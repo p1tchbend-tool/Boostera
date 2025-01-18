@@ -19,21 +19,25 @@ namespace Boostera
 
         private string ttermproPath = @"C:\Program Files (x86)\teraterm\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
-        private string boosteraKeyPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera.key");
+        private string boosteraKeyFolder = Program.BoosteraDataFolder;
         private List<History> histories = new List<History>();
+        private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
+        {
+            WriteIndented = true
+        };
 
         private static readonly int SSH = 0;
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
 
-        public Form3(string ttermproPath, string winscpPath, string boosteraKeyPath, bool isSavePrivateKey, bool isSavePassword, bool isSaveForwardingPrivateKey, bool isSaveForwardingPassword)
+        public Form3(string ttermproPath, string winscpPath, string boosteraKeyFolder, bool isSavePrivateKey, bool isSavePassword, bool isSaveForwardingPrivateKey, bool isSaveForwardingPassword)
         {
             InitializeComponent();
             this.Shown += (s, e) => firstLabel.Focus();
 
             this.ttermproPath = ttermproPath;
             this.winscpPath = winscpPath;
-            this.boosteraKeyPath = boosteraKeyPath;
+            this.boosteraKeyFolder = boosteraKeyFolder;
             checkBox1.Checked = isSavePrivateKey;
             checkBox2.Checked = isSavePassword;
             checkBox5.Checked = isSaveForwardingPrivateKey;
@@ -42,8 +46,33 @@ namespace Boostera
 
             try
             {
-                var str = new Encrypt(boosteraKeyPath).DecryptString(File.ReadAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "history-ver2.dat")));
-                histories = JsonSerializer.Deserialize<List<History>>(str);
+                if (!File.Exists(Path.Combine(boosteraKeyFolder, "Boostera.Key)")))
+                {
+                    var password = string.Empty;
+                    while (string.IsNullOrEmpty(password))
+                    {
+                        using (Form4 form4 = new Form4())
+                        {
+                            form4.ShowDialog();
+                            password = form4.Password;
+                        }
+                    }
+
+                    var encrypt = new Encrypt(Path.Combine(boosteraKeyFolder, "Boostera.Key)"));
+                    if (encrypt.CreateKey(password))
+                    {
+                        MessageBox.Show("パスワードが保存されました。\nこれは他の人に共有しないようにしてください。\n\n" + Path.Combine(boosteraKeyFolder, "Boostera.Key"));
+                    }
+                    else
+                    {
+                        MessageBox.Show("パスワードの登録に失敗しました。\nアプリを再起動して、もう一度やりなおしてください。");
+                    }
+                }
+                else
+                {
+                    var str = new Encrypt(Path.Combine(boosteraKeyFolder, "Boostera.Key)")).DecryptString(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history-ver2.dat")));
+                    histories = JsonSerializer.Deserialize<List<History>>(str);
+                }
             }
             catch { }
 
@@ -448,8 +477,8 @@ namespace Boostera
 
             try
             {
-                var str = new Encrypt(boosteraKeyPath).EncryptString(JsonSerializer.Serialize(histories));
-                File.WriteAllText(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "history-ver2.dat"), str);
+                var str = new Encrypt(Path.Combine(boosteraKeyFolder, "Boostera.Key)")).EncryptString(JsonSerializer.Serialize(histories, jsonSerializerOptions));
+                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history-ver2.dat"), str);
             }
             catch { }
         }

@@ -9,6 +9,7 @@ namespace Boostera
 {
     internal static class Program
     {
+        public static string BoosteraDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera");
         public static HotKey ProgramHotKey = new HotKey();
         public static readonly int HotKeyShowForm = 1;
 
@@ -60,7 +61,7 @@ namespace Boostera
         {
             try
             {
-                var errLogFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "log");
+                var errLogFolder = Path.Combine(Program.BoosteraDataFolder, "log");
                 if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
 
                 File.WriteAllText(
@@ -75,7 +76,7 @@ namespace Boostera
             {
                 try
                 {
-                    var errLogFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "log");
+                    var errLogFolder = Path.Combine(Program.BoosteraDataFolder, "log");
                     if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
 
                     File.WriteAllText(
