@@ -2,96 +2,89 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using System.Windows.Forms;
-using System.Web.Security;
 
 namespace Boostera
 {
     public class Encrypt
     {
-        private string boosteraKeyPath = Path.Combine(Application.StartupPath, "Boostera.key");
+        private string boosteraKeyFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        public Encrypt(string boosteraKeyPath)
+        public Encrypt(string boosteraKeyFolder)
         {
-            this.boosteraKeyPath = boosteraKeyPath;
-            CreateKey();
+            this.boosteraKeyFolder = boosteraKeyFolder;
         }
 
-        private void CreateKey()
+        private bool CreateKey(string key)
         {
-            if (!File.Exists(boosteraKeyPath))
-            {
-                var key = Membership.GeneratePassword(32, 0);
-                var iv = Membership.GeneratePassword(16, 0);
+            if (string.IsNullOrEmpty(key)) return false;
 
-                var dirPath = Path.GetDirectoryName(boosteraKeyPath);
-                if (!Directory.Exists(dirPath)) Directory.CreateDirectory(dirPath);
-                File.WriteAllText(boosteraKeyPath, key + iv);
+            try
+            {
+                if (!Directory.Exists(boosteraKeyFolder)) Directory.CreateDirectory(boosteraKeyFolder);
+                var bytes = Encoding.UTF8.GetBytes(key);
+                File.WriteAllText(Path.Combine(boosteraKeyFolder, "Boostera.Key"), Convert.ToBase64String(bytes));
+
+                return true;
             }
+            catch { return false; }
         }
 
         public string EncryptString(string str)
         {
-            var text = File.ReadAllText(boosteraKeyPath);
-            var key = text.Substring(0, 32);
-            var iv = text.Substring(32);
+            var bytes = Convert.FromBase64String(File.ReadAllText(Path.Combine(boosteraKeyFolder, "Boostera.Key")));
+            var key = Encoding.UTF8.GetString(bytes);
 
-            using (var myRijndael = new RijndaelManaged())
+            using (Aes aesAlg = Aes.Create())
             {
-                myRijndael.BlockSize = 128;
-                myRijndael.KeySize = 256;
-                myRijndael.Mode = CipherMode.CBC;
-                myRijndael.Padding = PaddingMode.PKCS7;
-                myRijndael.Key = Encoding.UTF8.GetBytes(key);
-                myRijndael.IV = Encoding.UTF8.GetBytes(iv);
-
-                var encryptor = myRijndael.CreateEncryptor(myRijndael.Key, myRijndael.IV);
-
-                byte[] encrypted;
-                using (var mStream = new MemoryStream())
+                using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, 16))
                 {
-                    using (var ctStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (var sw = new StreamWriter(ctStream))
-                        {
-                            sw.Write(str);
-                        }
-                        encrypted = mStream.ToArray();
-                    }
+                    aesAlg.Key = keyDerivationFunction.GetBytes(32);
+                    aesAlg.IV = keyDerivationFunction.GetBytes(16);
                 }
-                return (Convert.ToBase64String(encrypted));
+
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.Padding = PaddingMode.PKCS7;
+
+                using (MemoryStream msEncrypt = new MemoryStream())
+                {
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aesAlg.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(str);
+                        }
+                    }
+                    return Convert.ToBase64String(msEncrypt.ToArray());
+                }
             }
         }
 
         public string DecryptString(string str)
         {
-            var text = File.ReadAllText(boosteraKeyPath);
-            var key = text.Substring(0, 32);
-            var iv = text.Substring(32);
+            var bytes = Convert.FromBase64String(File.ReadAllText(Path.Combine(boosteraKeyFolder, "Boostera.Key")));
+            var key = Encoding.UTF8.GetString(bytes);
 
-            using (var rijndael = new RijndaelManaged())
+            using (Aes aesAlg = Aes.Create())
             {
-                rijndael.BlockSize = 128;
-                rijndael.KeySize = 256;
-                rijndael.Mode = CipherMode.CBC;
-                rijndael.Padding = PaddingMode.PKCS7;
-                rijndael.Key = Encoding.UTF8.GetBytes(key);
-                rijndael.IV = Encoding.UTF8.GetBytes(iv);
-                
-                var decryptor = rijndael.CreateDecryptor(rijndael.Key, rijndael.IV);
-
-                var plain = string.Empty;
-                using (var mStream = new MemoryStream(Convert.FromBase64String(str)))
+                using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, 16))
                 {
-                    using (var ctStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Read))
+                    aesAlg.Key = keyDerivationFunction.GetBytes(32);
+                    aesAlg.IV = keyDerivationFunction.GetBytes(16);
+                }
+
+                aesAlg.Mode = CipherMode.CBC;
+                aesAlg.Padding = PaddingMode.PKCS7;
+
+                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(str)))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, aesAlg.CreateDecryptor(), CryptoStreamMode.Read))
                     {
-                        using (var sr = new StreamReader(ctStream))
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
                         {
-                            plain = sr.ReadLine();
+                            return srDecrypt.ReadToEnd();
                         }
                     }
                 }
-                return plain;
             }
         }
     }
