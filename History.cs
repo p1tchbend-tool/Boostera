@@ -20,6 +20,11 @@
         public string LogonScript { get; set; }
         public string SearchKey { get; set; }
 
+        public override string ToString()
+        {
+            return UniqueKey;
+        }
+
         public History(string uniqueKey, int protocol, string host, string user, string port, string privateKey, string password, bool isForwarding, string forwardingHost,
             string forwardingUser, string forwardingPort, bool forwardingHide, string forwardingPrivateKey, string forwardingPassword, string tag, string logonScript, string searchKey)
         {

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,12 +41,12 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.firstLabel = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -67,24 +67,13 @@
             this.textBox11 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(22)))), ((int)(((byte)(22)))));
-            this.comboBox1.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.comboBox1.ForeColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(214, 10);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(568, 24);
-            this.comboBox1.TabIndex = 0;
             // 
             // label1
             // 
@@ -227,29 +216,6 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label6.Location = new System.Drawing.Point(11, 12);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(94, 21);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "ヒストリー：";
-            // 
-            // firstLabel
-            // 
-            this.firstLabel.AutoSize = true;
-            this.firstLabel.BackColor = System.Drawing.Color.Transparent;
-            this.firstLabel.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.firstLabel.Location = new System.Drawing.Point(116, 9);
-            this.firstLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.firstLabel.Name = "firstLabel";
-            this.firstLabel.Size = new System.Drawing.Size(0, 21);
-            this.firstLabel.TabIndex = 21;
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Transparent;
@@ -304,6 +270,31 @@
             this.groupBox1.Size = new System.Drawing.Size(769, 245);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Enabled = false;
+            this.label15.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label15.Location = new System.Drawing.Point(6, 211);
+            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(108, 21);
+            this.label15.TabIndex = 37;
+            this.label15.Text = "非表示で起動：";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.BackColor = System.Drawing.Color.Transparent;
+            this.checkBox1.Location = new System.Drawing.Point(202, 210);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(31, 22);
+            this.checkBox1.TabIndex = 36;
+            this.checkBox1.Text = " ";
+            this.checkBox1.UseVisualStyleBackColor = false;
             // 
             // label7
             // 
@@ -562,30 +553,66 @@
             this.textBox12.Size = new System.Drawing.Size(568, 23);
             this.textBox12.TabIndex = 28;
             // 
-            // checkBox1
+            // listBox1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.BackColor = System.Drawing.Color.Transparent;
-            this.checkBox1.Location = new System.Drawing.Point(202, 210);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(31, 22);
-            this.checkBox1.TabIndex = 36;
-            this.checkBox1.Text = " ";
-            this.checkBox1.UseVisualStyleBackColor = false;
+            this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
+            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.listBox1.Font = new System.Drawing.Font("メイリオ", 20F);
+            this.listBox1.ForeColor = System.Drawing.Color.White;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 41;
+            this.listBox1.Location = new System.Drawing.Point(15, 619);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.ScrollAlwaysVisible = true;
+            this.listBox1.Size = new System.Drawing.Size(277, 41);
+            this.listBox1.TabIndex = 29;
             // 
-            // label15
+            // textBox13
             // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Enabled = false;
-            this.label15.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label15.Location = new System.Drawing.Point(6, 211);
-            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(108, 21);
-            this.label15.TabIndex = 37;
-            this.label15.Text = "非表示で起動：";
+            this.textBox13.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.textBox13.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBox13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
+            this.textBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox13.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox13.ForeColor = System.Drawing.Color.White;
+            this.textBox13.Location = new System.Drawing.Point(15, 11);
+            this.textBox13.Margin = new System.Windows.Forms.Padding(2, 2, 4, 14);
+            this.textBox13.Name = "textBox13";
+            this.textBox13.Size = new System.Drawing.Size(767, 48);
+            this.textBox13.TabIndex = 30;
+            this.textBox13.TextChanged += new System.EventHandler(this.textBox13_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
+            this.label6.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.label6.ForeColor = System.Drawing.Color.Gray;
+            this.label6.Location = new System.Drawing.Point(71, 17);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 6);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(393, 24);
+            this.label6.TabIndex = 31;
+            this.label6.Text = "「SPACE」 でヒストリーの検索開始...";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(37)))));
+            this.panel7.BackgroundImage = global::Boostera.Properties.Resources.search;
+            this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.panel7.Location = new System.Drawing.Point(744, 12);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(30, 30);
+            this.panel7.TabIndex = 32;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
+            this.toolTip1.ForeColor = System.Drawing.Color.White;
+            this.toolTip1.OwnerDraw = true;
             // 
             // Form3
             // 
@@ -595,6 +622,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(796, 671);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.textBox13);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.textBox12);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.textBox11);
@@ -602,11 +633,9 @@
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.firstLabel);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox3);
@@ -618,7 +647,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -638,8 +666,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -651,11 +677,9 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label firstLabel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox checkBox3;
         private System.Windows.Forms.Panel panel4;
@@ -679,5 +703,10 @@
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

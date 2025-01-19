@@ -452,19 +452,15 @@ namespace Boostera
                 }
                 else if (e.KeyCode == Keys.Up)
                 {
+                    e.Handled = true;
                     if (listBox1.Items.Count == 0) return;
-                    if (listBox1.SelectedIndex > 0)
-                    {
-                        listBox1.SelectedIndex -= 1;
-                    }
+                    if (listBox1.SelectedIndex > 0) listBox1.SelectedIndex -= 1;
                 }
                 else if (e.KeyCode == Keys.Down)
                 {
+                    e.Handled = true;
                     if (listBox1.Items.Count == 0) return;
-                    if (listBox1.SelectedIndex < listBox1.Items.Count - 1)
-                    {
-                        listBox1.SelectedIndex += 1;
-                    }
+                    if (listBox1.SelectedIndex < listBox1.Items.Count - 1) listBox1.SelectedIndex += 1;
                 }
             };
         }

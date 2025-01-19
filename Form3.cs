@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,6 +17,7 @@ namespace Boostera
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyFolder = Program.BoosteraDataFolder;
         private List<History> histories = new List<History>();
+        private int preIndex = ListBox.NoMatches;
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true
@@ -31,12 +31,129 @@ namespace Boostera
         public Form3(string ttermproPath, string winscpPath, string boosteraKeyFolder)
         {
             InitializeComponent();
-            this.Shown += (s, e) => firstLabel.Focus();
+            this.Shown += (s, e) => textBox13.Focus();
 
             this.ttermproPath = ttermproPath;
             this.winscpPath = winscpPath;
             this.boosteraKeyFolder = boosteraKeyFolder;
             comboBox2.SelectedIndex = 0;
+
+            listBox1.Visible = false;
+            listBox1.Top = label12.Top;
+            listBox1.Width = textBox13.Width;
+
+            float f = NativeMethods.GetDpiForSystem();
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
+            listBox1.Height = listBox1.ItemHeight * 10;
+
+            listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
+            listBox1.MouseMove += (s, e) =>
+            {
+                var index = listBox1.IndexFromPoint(e.Location);
+                if (index == ListBox.NoMatches)
+                {
+                    listBox1.Cursor = Cursors.Default;
+                    toolTip1.Hide(listBox1);
+                    return;
+                }
+                else
+                {
+                    listBox1.Cursor = Cursors.Hand;
+                    listBox1.SelectedIndex = index;
+                }
+
+                if (index != preIndex)
+                {
+                    var text = listBox1.Items[index].ToString();
+                    if (toolTip1.GetToolTip(listBox1) != text) toolTip1.SetToolTip(listBox1, text);
+                }
+                preIndex = index;
+            };
+
+            listBox1.MouseClick += (s, e) =>
+            {
+                if (e.Button != MouseButtons.Left) return;
+                if (listBox1.IndexFromPoint(e.Location) == ListBox.NoMatches) return;
+                if (listBox1.SelectedItems.Count == 0) return;
+
+                var history = (History)listBox1.SelectedItems[0];
+                comboBox2.SelectedIndex = history.Protocol;
+                textBox5.Text = history.Host;
+                textBox4.Text = history.User;
+                textBox1.Text = history.Port;
+                textBox3.Text = history.PrivateKey;
+                textBox2.Text = history.Password;
+                checkBox3.Checked = history.IsForwarding;
+                textBox6.Text = history.ForwardingHost;
+                textBox10.Text = history.ForwardingUser;
+                textBox9.Text = history.ForwardingPort;
+                textBox7.Text = history.ForwardingPrivateKey;
+                textBox8.Text = history.ForwardingPassword;
+
+                listBox1.Visible = false;
+                button1.Focus();
+            };
+
+            listBox1.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    if (listBox1.SelectedItems.Count == 0) return;
+
+                    var history = (History)listBox1.SelectedItems[0];
+                    comboBox2.SelectedIndex = history.Protocol;
+                    textBox5.Text = history.Host;
+                    textBox4.Text = history.User;
+                    textBox1.Text = history.Port;
+                    textBox3.Text = history.PrivateKey;
+                    textBox2.Text = history.Password;
+                    checkBox3.Checked = history.IsForwarding;
+                    textBox6.Text = history.ForwardingHost;
+                    textBox10.Text = history.ForwardingUser;
+                    textBox9.Text = history.ForwardingPort;
+                    textBox7.Text = history.ForwardingPrivateKey;
+                    textBox8.Text = history.ForwardingPassword;
+                }
+                else
+                {
+                    textBox13.Focus();
+                }
+            };
+
+            textBox13.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    if (listBox1.SelectedItems.Count == 0) return;
+                    if (string.IsNullOrEmpty(textBox13.Text)) return;
+
+                    var history = (History)listBox1.SelectedItems[0];
+                    comboBox2.SelectedIndex = history.Protocol;
+                    textBox5.Text = history.Host;
+                    textBox4.Text = history.User;
+                    textBox1.Text = history.Port;
+                    textBox3.Text = history.PrivateKey;
+                    textBox2.Text = history.Password;
+                    checkBox3.Checked = history.IsForwarding;
+                    textBox6.Text = history.ForwardingHost;
+                    textBox10.Text = history.ForwardingUser;
+                    textBox9.Text = history.ForwardingPort;
+                    textBox7.Text = history.ForwardingPrivateKey;
+                    textBox8.Text = history.ForwardingPassword;
+                }
+                else if (e.KeyCode == Keys.Up)
+                {
+                    e.Handled = true;
+                    if (listBox1.Items.Count == 0) return;
+                    if (listBox1.SelectedIndex > 0) listBox1.SelectedIndex -= 1;
+                }
+                else if (e.KeyCode == Keys.Down)
+                {
+                    e.Handled = true;
+                    if (listBox1.Items.Count == 0) return;
+                    if (listBox1.SelectedIndex < listBox1.Items.Count - 1) listBox1.SelectedIndex += 1;
+                }
+            };
 
             try
             {
@@ -46,16 +163,13 @@ namespace Boostera
             }
             catch { }
 
-            histories.ForEach(x =>
-            {
-                comboBox1.BeginUpdate();
-                comboBox1.Items.Add(x.UniqueKey);
-                comboBox1.EndUpdate();
-            });
+            listBox1.BeginUpdate();
+            histories.ForEach(x => listBox1.Items.Add(x));
+            listBox1.EndUpdate();
 
-            if (comboBox1.Items.Count != 0)
+            if (listBox1.Items.Count != 0)
             {
-                var history = histories.FirstOrDefault(x => x.UniqueKey == comboBox1.Items[0].ToString());
+                var history = (History)listBox1.Items[0];
                 if (history == null) return;
 
                 comboBox2.SelectedIndex = history.Protocol;
@@ -73,29 +187,8 @@ namespace Boostera
                 textBox12.Text = history.LogonScript;
                 textBox11.Text = history.Tag;
 
-                comboBox1.SelectedIndex = 0;
+                listBox1.SelectedIndex = 0;
             }
-
-            comboBox1.SelectedIndexChanged += (s, e) =>
-            {
-                if (comboBox1.SelectedItem == null) return;
-
-                var history = histories.FirstOrDefault(x => x.UniqueKey == comboBox1.SelectedItem.ToString());
-                if (history == null) return;
-
-                comboBox2.SelectedIndex = history.Protocol;
-                textBox5.Text = history.Host;
-                textBox4.Text = history.User;
-                textBox1.Text = history.Port;
-                textBox3.Text = history.PrivateKey;
-                textBox2.Text = history.Password;
-                checkBox3.Checked = history.IsForwarding;
-                textBox6.Text = history.ForwardingHost;
-                textBox10.Text = history.ForwardingUser;
-                textBox9.Text = history.ForwardingPort;
-                textBox7.Text = history.ForwardingPrivateKey;
-                textBox8.Text = history.ForwardingPassword;
-            };
 
             comboBox2.SelectedIndexChanged += (s, e) =>
             {
@@ -253,6 +346,13 @@ namespace Boostera
                 panel5.Enabled = false;
                 panel6.Enabled = false;
             }
+
+            toolTip1.Draw += (s, e) =>
+            {
+                e.DrawBackground();
+                e.DrawBorder();
+                e.DrawText(TextFormatFlags.WordBreak);
+            };
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -511,6 +611,34 @@ namespace Boostera
         {
             textBox9.Text = Regex.Replace(textBox9.Text, @"[^\d]", string.Empty);
             textBox9.SelectionStart = textBox9.Text.Length;
+        }
+
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBox13.Text))
+            {
+                label6.Visible = true;
+                listBox1.Visible = false;
+            }
+            else
+            {
+                label6.Visible = false;
+                listBox1.Visible = true;
+            }
+
+            var searchWords = textBox13.Text.ToLower().Split(new string[] { " ", "　" }, StringSplitOptions.RemoveEmptyEntries);
+            var matchedHistories = new List<History>();
+
+            histories.ForEach(x =>
+            {
+                if (searchWords.All(y => x.ToString().ToLower().Contains(y))) matchedHistories.Add(x);
+            });
+
+            listBox1.BeginUpdate();
+            listBox1.Items.Clear();
+            matchedHistories.ForEach(x => listBox1.Items.Add(x));
+            listBox1.EndUpdate();
+            if (listBox1.Items.Count != 0) listBox1.SelectedIndex = 0;
         }
     }
 }
