@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -13,7 +14,7 @@ namespace Boostera
 {
     public partial class Form3 : Form
     {
-        private string ttermproPath = @"C:\Program Files (x86)\teraterm\ttermpro.exe";
+        private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyFolder = Program.BoosteraDataFolder;
         private List<History> histories = new List<History>();
@@ -39,33 +40,9 @@ namespace Boostera
 
             try
             {
-                if (!File.Exists(Path.Combine(boosteraKeyFolder, "Boostera.Key")))
-                {
-                    var password = string.Empty;
-                    while (string.IsNullOrEmpty(password))
-                    {
-                        using (Form4 form4 = new Form4())
-                        {
-                            form4.ShowDialog();
-                            password = form4.Password;
-                        }
-                    }
-
-                    var encrypt = new Encrypt(boosteraKeyFolder);
-                    if (encrypt.CreateKey(password))
-                    {
-                        MessageBox.Show("パスワードが保存されました。\nこれは他の人に共有しないようにしてください。\n\n" + Path.Combine(boosteraKeyFolder, "Boostera.Key"));
-                    }
-                    else
-                    {
-                        MessageBox.Show("パスワードの登録に失敗しました。\nアプリを再起動して、もう一度やりなおしてください。");
-                    }
-                }
-                else
-                {
-                    var str = new Encrypt(boosteraKeyFolder).DecryptString(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.dat")));
-                    histories = JsonSerializer.Deserialize<List<History>>(str);
-                }
+                var historyEncrypted = JsonSerializer.Deserialize<HistoryEncrypted>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.json")));
+                var historyJson = new Encrypt(boosteraKeyFolder).DecryptData(historyEncrypted);
+                histories = JsonSerializer.Deserialize<List<History>>(historyJson);
             }
             catch { }
 
@@ -517,8 +494,9 @@ namespace Boostera
 
             try
             {
-                var str = new Encrypt(boosteraKeyFolder).EncryptString(JsonSerializer.Serialize(histories, jsonSerializerOptions));
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.dat"), str);
+                var historyEncrypted = new Encrypt(boosteraKeyFolder).EncryptData(JsonSerializer.Serialize(histories));
+                var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
+                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
             }
             catch { }
         }

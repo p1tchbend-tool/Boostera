@@ -2,6 +2,8 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Security;
+using System.Windows.Forms;
 
 namespace Boostera
 {
@@ -14,77 +16,93 @@ namespace Boostera
             this.boosteraKeyFolder = boosteraKeyFolder;
         }
 
-        public bool CreateKey(string key)
+        public void CreateKey()
         {
-            if (string.IsNullOrEmpty(key)) return false;
-
-            try
+            if (!Directory.Exists(boosteraKeyFolder)) Directory.CreateDirectory(boosteraKeyFolder);
+            if (!File.Exists(Path.Combine(boosteraKeyFolder, "Boostera.key")))
             {
-                if (!Directory.Exists(boosteraKeyFolder)) Directory.CreateDirectory(boosteraKeyFolder);
-                var bytes = Encoding.UTF8.GetBytes(key);
-                File.WriteAllText(Path.Combine(boosteraKeyFolder, "Boostera.Key"), Convert.ToBase64String(bytes));
-
-                return true;
-            }
-            catch { return false; }
-        }
-
-        public string EncryptString(string str)
-        {
-            var bytes = Convert.FromBase64String(File.ReadAllText(Path.Combine(boosteraKeyFolder, "Boostera.Key")));
-            var key = Encoding.UTF8.GetString(bytes);
-
-            using (Aes aesAlg = Aes.Create())
-            {
-                using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, 16))
+                using (var rsa = new RSACryptoServiceProvider(2048))
                 {
-                    aesAlg.Key = keyDerivationFunction.GetBytes(32);
-                    aesAlg.IV = keyDerivationFunction.GetBytes(16);
-                }
+                    var privateKey = rsa.ToXmlString(true);
+                    File.WriteAllText(Path.Combine(boosteraKeyFolder, "Boostera.key"), privateKey);
 
-                aesAlg.Mode = CipherMode.CBC;
-                aesAlg.Padding = PaddingMode.PKCS7;
-
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, aesAlg.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            swEncrypt.Write(str);
-                        }
-                    }
-                    return Convert.ToBase64String(msEncrypt.ToArray());
+                    MessageBox.Show("接続情報保護用のシークレットが作成されました。\nこれは他の人に共有しないように注意してください。\n\n" +
+                        Path.Combine(boosteraKeyFolder, "Boostera.key"), "Boostera");
                 }
             }
         }
 
-        public string DecryptString(string str)
+        public HistoryEncrypted EncryptData(string data)
         {
-            var bytes = Convert.FromBase64String(File.ReadAllText(Path.Combine(boosteraKeyFolder, "Boostera.Key")));
-            var key = Encoding.UTF8.GetString(bytes);
+            if (!File.Exists(Path.Combine(boosteraKeyFolder, "Boostera.key"))) CreateKey();
 
-            using (Aes aesAlg = Aes.Create())
+            var key = Encoding.UTF8.GetBytes(Membership.GeneratePassword(32, 0));
+            var iv = Encoding.UTF8.GetBytes(Membership.GeneratePassword(16, 0));
+
+            using (var myRijndael = new RijndaelManaged())
             {
-                using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, 16))
+                myRijndael.BlockSize = 128;
+                myRijndael.KeySize = 256;
+                myRijndael.Mode = CipherMode.CBC;
+                myRijndael.Padding = PaddingMode.PKCS7;
+                myRijndael.Key = key;
+                myRijndael.IV = iv;
+
+                var encryptor = myRijndael.CreateEncryptor(myRijndael.Key, myRijndael.IV);
+
+                byte[] encrypted;
+                using (var mStream = new MemoryStream())
                 {
-                    aesAlg.Key = keyDerivationFunction.GetBytes(32);
-                    aesAlg.IV = keyDerivationFunction.GetBytes(16);
+                    using (var ctStream = new CryptoStream(mStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (var sw = new StreamWriter(ctStream))
+                        {
+                            sw.Write(data);
+                        }
+                        encrypted = mStream.ToArray();
+                    }
                 }
 
-                aesAlg.Mode = CipherMode.CBC;
-                aesAlg.Padding = PaddingMode.PKCS7;
+                var rsa = new RSACryptoServiceProvider(2048);
+                rsa.FromXmlString(File.ReadAllText(Path.Combine(boosteraKeyFolder, "Boostera.key")));
 
-                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(str)))
+                var historyEncrypted = new HistoryEncrypted(
+                    Convert.ToBase64String(rsa.Encrypt(key, false)), Convert.ToBase64String(rsa.Encrypt(iv, false)), Convert.ToBase64String(encrypted));
+                return (historyEncrypted);
+            }
+        }
+
+        public string DecryptData(HistoryEncrypted historyEncrypted)
+        {
+            var rsa = new RSACryptoServiceProvider(2048);
+            rsa.FromXmlString(File.ReadAllText(Path.Combine(boosteraKeyFolder, "Boostera.key")));
+
+            var key = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Key), false);
+            var iv = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Iv), false);
+
+            using (var rijndael = new RijndaelManaged())
+            {
+                rijndael.BlockSize = 128;
+                rijndael.KeySize = 256;
+                rijndael.Mode = CipherMode.CBC;
+                rijndael.Padding = PaddingMode.PKCS7;
+                rijndael.Key = key;
+                rijndael.IV = iv;
+
+                var decryptor = rijndael.CreateDecryptor(rijndael.Key, rijndael.IV);
+
+                var plain = string.Empty;
+                using (var mStream = new MemoryStream(Convert.FromBase64String(historyEncrypted.Data)))
                 {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, aesAlg.CreateDecryptor(), CryptoStreamMode.Read))
+                    using (var ctStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Read))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        using (var sr = new StreamReader(ctStream))
                         {
-                            return srDecrypt.ReadToEnd();
+                            plain = sr.ReadLine();
                         }
                     }
                 }
+                return plain;
             }
         }
     }

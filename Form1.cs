@@ -14,8 +14,8 @@ namespace Boostera
 {
     public partial class Form1 : Form
     {
-        private string ttermproPath = @"C:\Program Files (x86)\teraterm\ttermpro.exe";
-        private string ttpmacroPath = @"C:\Program Files (x86)\teraterm\ttpmacro.exe";
+        private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
+        private string ttpmacroPath = @"C:\Program Files (x86)\teraterm5\ttpmacro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string searchFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         private string[] searchExclusionFolders = new string[] {

@@ -146,6 +146,7 @@
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
     <Compile Include="History.cs" />
+    <Compile Include="HistoryEncrypted.cs" />
     <Compile Include="HotKey.cs">
       <SubType>Form</SubType>
     </Compile>
