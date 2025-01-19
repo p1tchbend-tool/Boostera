@@ -486,7 +486,7 @@ namespace Boostera
 
             var searchWords = textBox1.Text.ToLower().Split(new string[] { " ", "　" }, StringSplitOptions.RemoveEmptyEntries);
             var myListBoxItemsMatchName = new List<MyListBoxItem>();
-            var myListBoxItemsMatchText = new List<MyListBoxItem>();
+            var myListBoxItemsMatchScriptText = new List<MyListBoxItem>();
 
             files.ForEach(x =>
             {
@@ -498,13 +498,13 @@ namespace Boostera
                     return;
                 }
                 if (searchWords.All(y => x.Text.ToLower().Contains(y)))
-                    myListBoxItemsMatchText.Add(new MyListBoxItem(Path.GetFileNameWithoutExtension(x.Path), x.Path, x.Timestamp));
+                    myListBoxItemsMatchScriptText.Add(new MyListBoxItem(Path.GetFileNameWithoutExtension(x.Path), x.Path, x.Timestamp));
             });
 
             listBox1.BeginUpdate();
             listBox1.Items.Clear();
             listBox1.Items.AddRange(myListBoxItemsMatchName.OrderByDescending(x => x.Timestamp).ToArray());
-            listBox1.Items.AddRange(myListBoxItemsMatchText.OrderByDescending(x => x.Timestamp).ToArray());
+            listBox1.Items.AddRange(myListBoxItemsMatchScriptText.OrderByDescending(x => x.Timestamp).ToArray());
             listBox1.EndUpdate();
             if (listBox1.Items.Count != 0) listBox1.SelectedIndex = 0;
         }

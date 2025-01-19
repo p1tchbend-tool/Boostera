@@ -19,6 +19,9 @@ namespace Boostera
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int ShowWindow(IntPtr hWnd, int Msg);
 
+        public static readonly int SW_HIDE = 0;
+        public static readonly int SW_SHOW = 5;
+
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);

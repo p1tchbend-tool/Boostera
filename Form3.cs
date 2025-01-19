@@ -325,6 +325,9 @@ namespace Boostera
                 }
                 if (!string.IsNullOrEmpty(passwd)) arguments += " /passwd=\"" + passwd.Replace("\"", "\"\"") + "\"";
 
+                var windowTitle = textBox10.Text + "@" + textBox6.Text + " #" + textBox11.Text;
+                arguments += " /W=\"" + windowTitle.Replace("\"", "\"\"") + "\"";
+
                 var psi = new ProcessStartInfo(ttermproPath);
                 psi.UseShellExecute = true;
                 psi.Arguments = arguments;
@@ -378,7 +381,8 @@ namespace Boostera
                     catch { }
                 }
 
-                arguments += " /W=" + textBox4.Text.Replace("\"", "\"\"") + "@" + textBox5.Text.Replace("\"", "\"\"");
+                var windowTitle = textBox4.Text + "@" + textBox5.Text + " #" + textBox11.Text;
+                arguments += " /W=\"" + windowTitle.Replace("\"", "\"\"") + "\"";
 
                 var psi = new ProcessStartInfo(ttermproPath);
                 psi.UseShellExecute = true;
