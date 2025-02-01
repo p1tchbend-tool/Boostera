@@ -158,7 +158,7 @@ namespace Boostera
             try
             {
                 var historyEncrypted = JsonSerializer.Deserialize<HistoryEncrypted>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.json")));
-                var historyJson = new Encrypt(boosteraKeyFolder).DecryptData(historyEncrypted);
+                var historyJson = HistoryEncrypted.DecryptData(historyEncrypted, Program.BoosteraDataFolder, Program.BoosteraKeyFileName);
                 histories = JsonSerializer.Deserialize<List<History>>(historyJson);
             }
             catch { }
@@ -363,26 +363,47 @@ namespace Boostera
 
             Program.ChangeFont(this);
             Program.SortTabIndex(this);
+
+            try
+            {
+                if (!File.Exists(Path.Combine(Program.BoosteraDataFolder, Program.BoosteraKeyFileName)))
+                {
+                    if (HistoryEncrypted.CreateKey(Program.BoosteraDataFolder, Program.BoosteraKeyFileName))
+                    {
+                        MessageBox.Show("接続情報保護用のシークレットが作成されました。\nこれは他の人に共有しないように注意してください。\n\n" +
+                            Path.Combine(Program.BoosteraDataFolder, Program.BoosteraKeyFileName), "Boostera");
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             Random random = new Random();
-            var localPort = random.Next(49152, 65535).ToString();
+            var forwardingLocalPort = random.Next(49152, 65535).ToString();
 
-            if (checkBox3.Checked)
+            var protocol = comboBox2.SelectedIndex;
+            var protocolText = comboBox2.Text;
+            var host = textBox5.Text;
+            var user = textBox4.Text;
+            var port = textBox1.Text;
+            var privateKey = textBox3.Text;
+            var password = textBox2.Text;
+            var logonScript = textBox12.Text;
+            var isForwarding = checkBox3.Checked;
+            var forwardingHost = textBox6.Text;
+            var forwardingUser = textBox10.Text;
+            var forwardingPort = textBox9.Text;
+            var forwardingPrivateKey = textBox7.Text;
+            var forwardingPassword = textBox8.Text;
+            var isHide = checkBox1.Checked;
+            var tag = textBox11.Text;
+
+            if (isForwarding)
             {
-                var host = "\"" + textBox6.Text.Replace("\"", "\"\"") + "\"";
-                var forwardingHost = textBox5.Text.Replace("\"", "\"\"") + "\"";
-                var user = "\"" + textBox10.Text.Replace("\"", "\"\"") + "\"";
-                var port = "\"" + textBox9.Text.Replace("\"", "\"\"") + "\"";
-                var forwardingPort = textBox1.Text.Replace("\"", "\"\"") + "\"";
-                var forwardingHide = checkBox1.Checked;
-                var key = textBox7.Text;
-                var passwd = textBox8.Text;
-
-                var arguments = host + ":" + port + " /ssh2";
-                if (forwardingHide)
+                var arguments = EscapedTextForTtl(forwardingHost) + ":" + forwardingPort + " /ssh2";
+                if (isHide)
                 {
                     arguments += " /V";
                 }
@@ -390,20 +411,20 @@ namespace Boostera
                 {
                     arguments += " /I";
                 }
-                arguments += " /ssh-L" + localPort + ":" + forwardingHost + ":" + forwardingPort;
+                arguments += " /ssh-L" + forwardingLocalPort + ":" + EscapedTextForTtl(host) + ":" + port;
 
-                if (!string.IsNullOrEmpty(key))
+                if (!string.IsNullOrEmpty(forwardingPrivateKey))
                 {
-                    arguments += " /auth=publickey /user=" + user + " /keyfile=\"" + key.Replace("\"", "\"\"") + "\"";
+                    arguments += " /auth=publickey /user=" + EscapedTextForTtl(forwardingUser) + " /keyfile=\"" + forwardingPrivateKey + "\"";
                 }
                 else
                 {
-                    arguments += " /auth=password /user=" + user;
+                    arguments += " /auth=password /user=" + EscapedTextForTtl(forwardingUser);
                 }
-                if (!string.IsNullOrEmpty(passwd)) arguments += " /passwd=\"" + passwd.Replace("\"", "\"\"") + "\"";
+                if (!string.IsNullOrEmpty(forwardingPassword)) arguments += " /passwd=" + EscapedTextForTtl(forwardingPassword);
 
-                var windowTitle = textBox10.Text + "@" + textBox6.Text + " #" + textBox11.Text;
-                arguments += " /W=\"" + windowTitle.Replace("\"", "\"\"") + "\"";
+                var windowTitle = forwardingUser + "@" + forwardingHost;
+                arguments += " /W=" + windowTitle;
 
                 var psi = new ProcessStartInfo(ttermproPath);
                 psi.UseShellExecute = true;
@@ -411,55 +432,53 @@ namespace Boostera
                 try
                 {
                     Process.Start(psi);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(200);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
 
             if (comboBox2.SelectedIndex == SSH)
             {
-                var host = "\"" + textBox5.Text.Replace("\"", "\"\"") + "\"";
-                var user = "\"" + textBox4.Text.Replace("\"", "\"\"") + "\"";
-                var port = "\"" + textBox1.Text.Replace("\"", "\"\"") + "\"";
-                var key = textBox3.Text;
-                var passwd = textBox2.Text;
-                var script = "sendln '" + textBox12.Text + "'";
-
                 var arguments = string.Empty;
-                if (checkBox3.Checked)
+                if (isForwarding)
                 {
-                    arguments = "localhost:" + localPort + " /nosecuritywarning /ssh2";  // トンネリング時に限り検証無効
+                    arguments = "localhost:" + forwardingLocalPort + " /nosecuritywarning /ssh2";  // トンネリング時に限り検証無効
                 }
                 else
                 {
-                    arguments = host + ":" + port + " /ssh2";
+                    arguments = EscapedTextForTtl(host) + ":" + port + " /ssh2";
                 }
 
-                if (!string.IsNullOrEmpty(key))
+                if (!string.IsNullOrEmpty(privateKey))
                 {
-                    arguments += " /auth=publickey /user=" + user + " /keyfile=\"" + key.Replace("\"", "\"\"") + "\"";
+                    arguments += " /auth=publickey /user=" + EscapedTextForTtl(user) + " /keyfile=\"" + privateKey + "\"";
                 }
                 else
                 {
-                    arguments += " /auth=password /user=" + user;
+                    arguments += " /auth=password /user=" + EscapedTextForTtl(user);
                 }
-                if (!string.IsNullOrEmpty(passwd)) arguments += " /passwd=\"" + passwd.Replace("\"", "\"\"") + "\"";
+                if (!string.IsNullOrEmpty(password)) arguments += " /passwd=" + EscapedTextForTtl(password);
 
-                if (!string.IsNullOrEmpty(script))
+                if (!string.IsNullOrEmpty(logonScript))
                 {
                     try
                     {
                         if (!Directory.Exists(Path.Combine(Program.BoosteraDataFolder, ".temp")))
                             Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
-                        File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"), script);
 
+                        var script = @"wait ''
+mpause 200
+sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
+"filedelete '" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "'";
+
+                        File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"), script);
                         arguments += " /M=\"" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "\"";
                     }
                     catch { }
                 }
 
-                var windowTitle = textBox4.Text + "@" + textBox5.Text + " #" + textBox11.Text;
-                arguments += " /W=\"" + windowTitle.Replace("\"", "\"\"") + "\"";
+                var windowTitle = user + "@" + host;
+                arguments += " /W=" + windowTitle;
 
                 var psi = new ProcessStartInfo(ttermproPath);
                 psi.UseShellExecute = true;
@@ -469,35 +488,21 @@ namespace Boostera
                     Process.Start(psi);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
-
-                try
-                {
-                    Thread.Sleep(1000);
-                    File.Delete(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"));
-                }
-                catch { }
             }
             else if (comboBox2.SelectedIndex == RDP)
             {
-                var host = textBox5.Text;
-                var user = textBox4.Text;
-                var port = textBox1.Text;
-                var passwd = textBox2.Text;
                 var arguments1 = string.Empty;
                 var arguments2 = string.Empty;
-                var arguments3 = string.Empty;
 
-                if (checkBox3.Checked)
+                if (isForwarding)
                 {
-                    arguments1 = "/generic:TERMSRV/localhost" + " /user:" + user + " /pass:" + passwd;
-                    arguments2 = "/v:localhost" + ":" + localPort;
-                    arguments3 = "/delete:TERMSRV/localhost";
+                    arguments1 = "/generic:TERMSRV/localhost /user:" + user + " /pass:" + password;
+                    arguments2 = "/v:localhost:" + forwardingLocalPort;
                 }
                 else
                 {
-                    arguments1 = "/generic:TERMSRV/" + host + " /user:" + user + " /pass:" + passwd;
+                    arguments1 = "/generic:TERMSRV/" + host + " /user:" + user + " /pass:" + password;
                     arguments2 = "/v:" + host + ":" + port;
-                    arguments3 = "/delete:TERMSRV/" + host;
                 }
 
                 var psi1 = new ProcessStartInfo("cmdkey");
@@ -506,7 +511,8 @@ namespace Boostera
                 psi1.Arguments = arguments1;
                 try
                 {
-                    Process.Start(psi1);
+                    var process = Process.Start(psi1);
+                    process.WaitForExit();
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
 
@@ -521,39 +527,36 @@ namespace Boostera
             }
             else if (comboBox2.SelectedIndex == SFTP)
             {
-                var host = textBox5.Text;
-                var user = textBox4.Text;
-                var port = textBox1.Text;
-                var key = textBox3.Text;
-                var passwd = textBox2.Text;
                 var arguments = string.Empty;
 
-                if (checkBox3.Checked)
+                if (isForwarding)
                 {
-                    if (string.IsNullOrEmpty(passwd))
+                    if (!string.IsNullOrEmpty(password))
                     {
-                        arguments = "sftp://" + user + "@localhost:" + localPort;
+                        arguments = "sftp://" + user + ":" + password + "@localhost:" + forwardingLocalPort;
                     }
                     else
                     {
-                        arguments = "sftp://" + user + ":" + passwd + "@localhost:" + localPort;
+                        arguments = "sftp://" + user + "@localhost:" + forwardingLocalPort;
                     }
-                    if (!string.IsNullOrEmpty(key)) arguments += " /privatekey=\"" + key + "\"";
-                    arguments += " /sessionname=" + user + "@" + host;
+                    if (!string.IsNullOrEmpty(privateKey)) arguments += " /privatekey=\"" + privateKey + "\"";
+
                     arguments += " /hostkey=\"*\"";  // トンネリング時に限り検証無効
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(passwd))
+                    if (!string.IsNullOrEmpty(password))
                     {
-                        arguments = "sftp://" + user + "@" + host + ":" + port;
+                        arguments = "sftp://" + user + ":" + password + "@" + host + ":" + port;
                     }
                     else
                     {
-                        arguments = "sftp://" + user + ":" + passwd + "@" + host + ":" + port;
+                        arguments = "sftp://" + user + "@" + host + ":" + port;
                     }
-                    if (!string.IsNullOrEmpty(key)) arguments += " /privatekey=\"" + key + "\"";
+                    if (!string.IsNullOrEmpty(privateKey)) arguments += " /privatekey=\"" + privateKey + "\"";
                 }
+
+                arguments += " /sessionname=" + user + "@" + host;
 
                 var psi = new ProcessStartInfo(winscpPath);
                 psi.UseShellExecute = true;
@@ -565,28 +568,22 @@ namespace Boostera
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
 
-            var privateKey = textBox3.Text;
-            var password = textBox2.Text;
-            var forwardingPrivateKey = textBox7.Text;
-            var forwardingPassword = textBox8.Text;
-            var logonScript = textBox12.Text;
-
             var searchKey = string.Empty;
             var uniqueKey = string.Empty;
 
-            if (string.IsNullOrEmpty(textBox11.Text))
+            if (string.IsNullOrEmpty(tag))
             {
-                searchKey = comboBox2.Text + textBox4.Text + textBox5.Text;
-                uniqueKey = comboBox2.Text + "://" + textBox4.Text + "@" + textBox5.Text;
+                searchKey = protocolText + user + host;
+                uniqueKey = protocolText + "://" + user + "@" + host;
             }
             else
             {
-                searchKey = comboBox2.Text + textBox4.Text + textBox5.Text + textBox11.Text;
-                uniqueKey = comboBox2.Text + "://" + textBox4.Text + "@" + textBox5.Text + " #" + textBox11.Text;
+                searchKey = protocolText + user + host + tag;
+                uniqueKey = protocolText + "://" + user + "@" + host + " #" + tag;
             }
 
-            var hitory = new History(uniqueKey, comboBox2.SelectedIndex, textBox5.Text, textBox4.Text, textBox1.Text, privateKey, password, checkBox3.Checked,
-                textBox6.Text, textBox10.Text, textBox9.Text, checkBox1.Checked, forwardingPrivateKey, forwardingPassword, textBox11.Text, logonScript, searchKey);
+            var hitory = new History(uniqueKey, protocol, host, user, port, privateKey, password, isForwarding, forwardingHost,
+                forwardingUser, forwardingPort, forwardingLocalPort, isHide, forwardingPrivateKey, forwardingPassword, tag, logonScript, searchKey);
 
             histories.RemoveAll(x => x.UniqueKey == uniqueKey);
             histories.Insert(0, hitory);
@@ -594,7 +591,7 @@ namespace Boostera
 
             try
             {
-                var historyEncrypted = new Encrypt(boosteraKeyFolder).EncryptData(JsonSerializer.Serialize(histories));
+                var historyEncrypted = HistoryEncrypted.EncryptData(JsonSerializer.Serialize(histories), Program.BoosteraDataFolder, Program.BoosteraKeyFileName);
                 var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
             }
@@ -639,6 +636,14 @@ namespace Boostera
             matchedHistories.ForEach(x => listBox1.Items.Add(x));
             listBox1.EndUpdate();
             if (listBox1.Items.Count != 0) listBox1.SelectedIndex = 0;
+        }
+
+        private string EscapedTextForTtl (string text)
+        {
+            text = text.Replace("\"", "#34");
+            text = text.Replace("'", "#39");
+            text = text.Replace(";", "#59");
+            return text;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace Boostera
     internal static class Program
     {
         public static string BoosteraDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera");
+        public static string BoosteraKeyFileName = "Boostera.key";
         public static HotKey ProgramHotKey = new HotKey();
         public static readonly int HotKeyShowForm = 1;
 

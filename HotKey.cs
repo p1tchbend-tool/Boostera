@@ -68,21 +68,28 @@ namespace Boostera
             }
         }
 
+        private void HotKey_Load(object sender, EventArgs e)
+        {
+
+        }
+
         private void InitializeComponent()
         {
             this.SuspendLayout();
             // 
             // HotKey
             // 
-            this.ClientSize = new System.Drawing.Size(292, 269);
+            this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "HotKey";
             this.Load += new System.EventHandler(this.HotKey_Load);
             this.ResumeLayout(false);
+
         }
 
-        private void HotKey_Load(object sender, EventArgs e)
+        public HotKey()
         {
-
+            InitializeComponent();
+            this.Visible = false;
         }
     }
 }

@@ -128,6 +128,8 @@ namespace Boostera
             toolTip1.SetToolTip(panel8, "最前面固定／固定解除");
             toolTip1.SetToolTip(panel9, "格子状に並べる");
             toolTip1.SetToolTip(panel10, "TeraTerm 終了");
+            toolTip1.SetToolTip(panel11, "TeraTerm 表示");
+            toolTip1.SetToolTip(panel12, "TeraTerm 非表示");
             toolTip1.SetToolTip(panel2, "接続");
 
             panel2.MouseClick += (s, e) =>
@@ -241,6 +243,8 @@ namespace Boostera
                         }
                     }
                 }
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
             };
 
             panel6.MouseClick += (s, e) =>
@@ -274,6 +278,8 @@ namespace Boostera
                         }
                     }
                 }
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
             };
 
             panel7.MouseClick += (s, e) =>
@@ -287,6 +293,9 @@ namespace Boostera
                     Process.Start(psi);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
             };
 
             panel8.MouseClick += (s, e) =>
@@ -351,6 +360,8 @@ namespace Boostera
                         if (i >= length) break;
                     }
                 }
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
             };
 
             panel10.MouseClick += (s, e) =>
@@ -366,6 +377,38 @@ namespace Boostera
                     for (int i = 0; i < ps.Length; i++)
                     {
                         NativeMethods.PostMessage(ps[i].MainWindowHandle, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
+                    }
+                }
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
+            };
+
+            panel11.MouseClick += (s, e) =>
+            {
+                if (e.Button != MouseButtons.Left) return;
+
+                var ps = Process.GetProcessesByName("ttermpro");
+                if (ps.Length != 0)
+                {
+                    for (int i = 0; i < ps.Length; i++)
+                    {
+                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_SHOW);
+                    }
+                }
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
+            };
+
+            panel12.MouseClick += (s, e) =>
+            {
+                if (e.Button != MouseButtons.Left) return;
+
+                var ps = Process.GetProcessesByName("ttermpro");
+                if (ps.Length != 0)
+                {
+                    for (int i = 0; i < ps.Length; i++)
+                    {
+                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_HIDE);
                     }
                 }
                 this.Hide();
