@@ -16,7 +16,7 @@ namespace Boostera
         public int ModKey { get; set; }
         public Keys Key { get; set; }
 
-        public Form2(string ttermproPath, string ttpmacroPath, string winscpPath, string searchFolder, string searchExclusionFolders, string boosteraKeyPath, bool isStartUp, int modKey, Keys key)
+        public Form2(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key)
         {
             InitializeComponent();
             label7.Text = string.Empty;
@@ -28,12 +28,12 @@ namespace Boostera
             textBox1.TextChanged += (s, e) => textBox1.Text = textBox1.Text.Replace("\"", "");
             textBox6.Text = winscpPath;
             textBox6.TextChanged += (s, e) => textBox6.Text = textBox6.Text.Replace("\"", "");
+            textBox7.Text = boosteraKeyPath;
+            textBox7.TextChanged += (s, e) => textBox7.Text = textBox7.Text.Replace("\"", "");
             textBox2.Text = searchFolder;
             textBox2.TextChanged += (s, e) => textBox2.Text = textBox2.Text.Replace("\"", "");
             textBox3.Text = searchExclusionFolders;
             textBox3.TextChanged += (s, e) => textBox3.Text = textBox3.Text.Replace("\"", "");
-            textBox7.Text = boosteraKeyPath;
-            textBox7.TextChanged += (s, e) => textBox7.Text = textBox7.Text.Replace("\"", "");
 
             checkBox1.Checked = isStartUp;
             ModKey = modKey;

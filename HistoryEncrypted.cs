@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,17 +20,17 @@ namespace Boostera
             Data = data;
         }
 
-        public static bool CreateKey(string boosteraDataFolder, string boosteraKeyFileName)
+        public static bool CreateKey(string boosteraKeyPath)
         {
             try
             {
-                if (!Directory.Exists(boosteraDataFolder)) Directory.CreateDirectory(boosteraDataFolder);
-                if (!File.Exists(Path.Combine(boosteraDataFolder, boosteraKeyFileName)))
+                if (!Directory.Exists(Path.GetDirectoryName(boosteraKeyPath))) Directory.CreateDirectory(Path.GetDirectoryName(boosteraKeyPath));
+                if (!File.Exists(boosteraKeyPath))
                 {
                     using (var rsa = new RSACryptoServiceProvider(3072))
                     {
                         var privateKey = rsa.ToXmlString(true);
-                        File.WriteAllText(Path.Combine(boosteraDataFolder, boosteraKeyFileName), privateKey);
+                        File.WriteAllText(boosteraKeyPath, privateKey);
 
                         return true;
                     }
@@ -39,9 +40,9 @@ namespace Boostera
             catch { throw; }
         }
 
-        public static HistoryEncrypted EncryptData(string data, string boosteraDataFolder, string boosteraKeyFileName)
+        public static HistoryEncrypted EncryptData(string data, string boosteraKeyPath)
         {
-            if (!File.Exists(Path.Combine(boosteraDataFolder, boosteraKeyFileName))) CreateKey(boosteraDataFolder, boosteraKeyFileName);
+            if (!File.Exists(boosteraKeyPath)) CreateKey(boosteraKeyPath);
 
             var key = Encoding.UTF8.GetBytes(Membership.GeneratePassword(32, 0));
             var iv = Encoding.UTF8.GetBytes(Membership.GeneratePassword(16, 0));
@@ -71,7 +72,7 @@ namespace Boostera
                 }
 
                 var rsa = new RSACryptoServiceProvider(3072);
-                rsa.FromXmlString(File.ReadAllText(Path.Combine(boosteraDataFolder, boosteraKeyFileName)));
+                rsa.FromXmlString(File.ReadAllText(boosteraKeyPath));
 
                 var historyEncrypted = new HistoryEncrypted(
                     Convert.ToBase64String(rsa.Encrypt(key, false)), Convert.ToBase64String(rsa.Encrypt(iv, false)), Convert.ToBase64String(encrypted));
@@ -79,10 +80,10 @@ namespace Boostera
             }
         }
 
-        public static string DecryptData(HistoryEncrypted historyEncrypted, string boosteraDataFolder, string boosteraKeyFileName)
+        public static string DecryptData(HistoryEncrypted historyEncrypted, string boosteraKeyPath)
         {
             var rsa = new RSACryptoServiceProvider(3072);
-            rsa.FromXmlString(File.ReadAllText(Path.Combine(boosteraDataFolder, boosteraKeyFileName)));
+            rsa.FromXmlString(File.ReadAllText(boosteraKeyPath));
 
             var key = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Key), false);
             var iv = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Iv), false);

@@ -108,10 +108,11 @@
             this.label1.Location = new System.Drawing.Point(50, 101);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 6);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(393, 24);
+            this.label1.Size = new System.Drawing.Size(400, 24);
             this.label1.TabIndex = 3;
             this.label1.Text = "「SPACE」 で TTL マクロの検索開始...";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // timer3
             // 

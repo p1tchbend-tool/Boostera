@@ -15,7 +15,7 @@ namespace Boostera
     {
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
-        private string boosteraKeyFolder = Program.BoosteraDataFolder;
+        private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
         private List<History> histories = new List<History>();
         private int preIndex = ListBox.NoMatches;
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
@@ -28,23 +28,24 @@ namespace Boostera
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
 
-        public Form3(string ttermproPath, string winscpPath, string boosteraKeyFolder)
+        public Form3(string ttermproPath, string winscpPath, string boosteraKeyPath)
         {
             InitializeComponent();
             this.Shown += (s, e) => textBox13.Focus();
 
             this.ttermproPath = ttermproPath;
             this.winscpPath = winscpPath;
-            this.boosteraKeyFolder = boosteraKeyFolder;
+            this.boosteraKeyPath = boosteraKeyPath;
             comboBox2.SelectedIndex = 0;
 
             listBox1.Visible = false;
-            listBox1.Top = label12.Top;
-            listBox1.Width = textBox13.Width;
+            listBox1.Left = label12.Left;
+            listBox1.Top = comboBox2.Top;
+            listBox1.Width = textBox13.Width + 1;
 
             float f = NativeMethods.GetDpiForSystem();
             listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
-            listBox1.Height = listBox1.ItemHeight * 10;
+            listBox1.Height = listBox1.ItemHeight * 16;
 
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
             listBox1.MouseMove += (s, e) =>
@@ -158,7 +159,7 @@ namespace Boostera
             try
             {
                 var historyEncrypted = JsonSerializer.Deserialize<HistoryEncrypted>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.json")));
-                var historyJson = HistoryEncrypted.DecryptData(historyEncrypted, Program.BoosteraDataFolder, Program.BoosteraKeyFileName);
+                var historyJson = HistoryEncrypted.DecryptData(historyEncrypted, boosteraKeyPath);
                 histories = JsonSerializer.Deserialize<List<History>>(historyJson);
             }
             catch { }
@@ -366,12 +367,12 @@ namespace Boostera
 
             try
             {
-                if (!File.Exists(Path.Combine(Program.BoosteraDataFolder, Program.BoosteraKeyFileName)))
+                if (!File.Exists(boosteraKeyPath))
                 {
-                    if (HistoryEncrypted.CreateKey(Program.BoosteraDataFolder, Program.BoosteraKeyFileName))
+                    if (HistoryEncrypted.CreateKey(boosteraKeyPath))
                     {
                         MessageBox.Show("接続情報保護用のシークレットが作成されました。\nこれは他の人に共有しないように注意してください。\n\n" +
-                            Path.Combine(Program.BoosteraDataFolder, Program.BoosteraKeyFileName), "Boostera");
+                            boosteraKeyPath, "Boostera");
                     }
                 }
             }
@@ -591,7 +592,7 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
 
             try
             {
-                var historyEncrypted = HistoryEncrypted.EncryptData(JsonSerializer.Serialize(histories), Program.BoosteraDataFolder, Program.BoosteraKeyFileName);
+                var historyEncrypted = HistoryEncrypted.EncryptData(JsonSerializer.Serialize(histories), boosteraKeyPath);
                 var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
             }
@@ -644,6 +645,21 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
             text = text.Replace("'", "#39");
             text = text.Replace(";", "#59");
             return text;
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            textBox13.Focus();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

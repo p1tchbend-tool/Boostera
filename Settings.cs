@@ -15,14 +15,14 @@ namespace Boostera
         public Keys Key { get; set; }
 
         public Settings(string ttermproPath, string ttpmacroPath, string winscpPath,
-            string searchFolder, string searchExclusionFolders, string boosteraKeyPath, bool isStartUp, int modKey, Keys key) 
+            string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key) 
         {
             TtermproPath = ttermproPath;
             TtpmacroPath = ttpmacroPath;
             WinscpPath = winscpPath;
+            BoosteraKeyPath = boosteraKeyPath;
             SearchFolder = searchFolder;
             SearchExclusionFolders = searchExclusionFolders;
-            BoosteraKeyPath = boosteraKeyPath;
             IsStartUp = isStartUp;
             ModKey = modKey;
             Key = key;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Boostera
@@ -63,5 +64,17 @@ namespace Boostera
 
         [DllImport("User32.dll")]
         public static extern int GetDpiForSystem();
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
+
+        public delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
+
+        [DllImport("user32.dll")]
+        public static extern int GetClassName(IntPtr hWnd, StringBuilder className, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
     }
 }

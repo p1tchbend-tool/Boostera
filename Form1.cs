@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,10 +18,10 @@ namespace Boostera
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string ttpmacroPath = @"C:\Program Files (x86)\teraterm5\ttpmacro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
+        private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
         private string searchFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         private string[] searchExclusionFolders = new string[] {
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
-        private string boosteraKeyFolder = Program.BoosteraDataFolder;
         private bool isStartUp = true;
         private int modkey = HotKey.MOD_KEY_ALT;
         private Keys key = Keys.T;
@@ -139,7 +140,7 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyFolder))
+                    using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyPath))
                     {
                         form3.ShowDialog();
                     }
@@ -156,23 +157,23 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form2 = new Form2(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders), boosteraKeyFolder, isStartUp, modkey, key))
+                    using (var form2 = new Form2(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
                     {
                         form2.ShowDialog();
                         if (!string.IsNullOrEmpty(form2.TtermproPath) && File.Exists(form2.TtermproPath)) ttermproPath = form2.TtermproPath;
                         if (!string.IsNullOrEmpty(form2.TtpmacroPath) && File.Exists(form2.TtpmacroPath)) ttpmacroPath = form2.TtpmacroPath;
                         if (!string.IsNullOrEmpty(form2.WinscpPath) && File.Exists(form2.WinscpPath)) winscpPath = form2.WinscpPath;
+                        if (!string.IsNullOrEmpty(form2.BoosteraKeyPath) && File.Exists(form2.BoosteraKeyPath)) boosteraKeyPath = form2.BoosteraKeyPath;
                         if (!string.IsNullOrEmpty(form2.SearchFolder) && Directory.Exists(form2.SearchFolder)) searchFolder = form2.SearchFolder;
                         if (!string.IsNullOrEmpty(form2.SearchExclusionFolders)) searchExclusionFolders = form2.SearchExclusionFolders.Split(',');
 
-                        boosteraKeyFolder = form2.BoosteraKeyPath;
                         isStartUp = form2.IsStartUp;
                         modkey = form2.ModKey;
                         key = form2.Key;
 
                         try
                         {
-                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, searchFolder, string.Join(",", searchExclusionFolders), boosteraKeyFolder, isStartUp, modkey, key);
+                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key);
                             File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
                         }
                         catch { }
@@ -378,6 +379,25 @@ namespace Boostera
                     {
                         NativeMethods.PostMessage(ps[i].MainWindowHandle, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
                     }
+
+                    for (int i = 0; i < ps.Length; i++)
+                    {
+                        uint processId = (uint)ps[i].Id;
+
+                        NativeMethods.EnumWindows((hWnd, lParam) =>
+                        {
+                            NativeMethods.GetWindowThreadProcessId(hWnd, out uint currentProcessId);
+                            if (currentProcessId == processId)
+                            {
+                                var className = new StringBuilder(256);
+                                NativeMethods.GetClassName(hWnd, className, className.Capacity);
+
+                                if (className.ToString() == "VTWin32") NativeMethods.PostMessage(hWnd, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
+                            }
+                            return true;
+
+                        }, IntPtr.Zero);
+                    }
                 }
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
@@ -388,12 +408,23 @@ namespace Boostera
                 if (e.Button != MouseButtons.Left) return;
 
                 var ps = Process.GetProcessesByName("ttermpro");
-                if (ps.Length != 0)
+                for (int i = 0; i < ps.Length; i++)
                 {
-                    for (int i = 0; i < ps.Length; i++)
+                    uint processId = (uint)ps[i].Id;
+
+                    NativeMethods.EnumWindows((hWnd, lParam) =>
                     {
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_SHOW);
-                    }
+                        NativeMethods.GetWindowThreadProcessId(hWnd, out uint currentProcessId);
+                        if (currentProcessId == processId)
+                        {
+                            var className = new StringBuilder(256);
+                            NativeMethods.GetClassName(hWnd, className, className.Capacity);
+
+                            if (className.ToString() == "VTWin32") NativeMethods.ShowWindow(hWnd, NativeMethods.SW_SHOW);
+                        }
+                        return true;
+
+                    }, IntPtr.Zero);
                 }
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
@@ -404,12 +435,9 @@ namespace Boostera
                 if (e.Button != MouseButtons.Left) return;
 
                 var ps = Process.GetProcessesByName("ttermpro");
-                if (ps.Length != 0)
+                for (int i = 0; i < ps.Length; i++)
                 {
-                    for (int i = 0; i < ps.Length; i++)
-                    {
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_HIDE);
-                    }
+                    NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_HIDE);
                 }
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
@@ -563,9 +591,9 @@ namespace Boostera
                 ttermproPath = settings.TtermproPath;
                 ttpmacroPath = settings.TtpmacroPath;
                 winscpPath = settings.WinscpPath;
+                boosteraKeyPath = settings.BoosteraKeyPath;
                 searchFolder = settings.SearchFolder;
                 searchExclusionFolders = settings.SearchExclusionFolders.Split(',');
-                boosteraKeyFolder = settings.BoosteraKeyPath;
                 isStartUp = settings.IsStartUp;
                 modkey = settings.ModKey;
                 key = settings.Key;
@@ -716,6 +744,11 @@ namespace Boostera
             NativeMethods.AttachThreadInput(thisThread, foreThread, true);
 
             EnumerateAsync();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            textBox1.Focus();
         }
     }
 }
