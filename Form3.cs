@@ -16,6 +16,7 @@ namespace Boostera
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
+        private string boosteraMacroFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Boostera");
         private List<History> histories = new List<History>();
         private int preIndex = ListBox.NoMatches;
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
@@ -91,11 +92,12 @@ namespace Boostera
                 textBox7.Text = history.ForwardingPrivateKey;
                 textBox8.Text = history.ForwardingPassword;
 
+                textBox13.Text = string.Empty;
                 listBox1.Visible = false;
-                button1.Focus();
+                textBox13.Focus();
             };
 
-            listBox1.KeyDown += (s, e) =>
+            listBox1.PreviewKeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -115,13 +117,9 @@ namespace Boostera
                     textBox7.Text = history.ForwardingPrivateKey;
                     textBox8.Text = history.ForwardingPassword;
                 }
-                else
-                {
-                    textBox13.Focus();
-                }
             };
 
-            textBox13.KeyDown += (s, e) =>
+            textBox13.PreviewKeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
@@ -144,15 +142,21 @@ namespace Boostera
                 }
                 else if (e.KeyCode == Keys.Up)
                 {
-                    e.Handled = true;
                     if (listBox1.Items.Count == 0) return;
                     if (listBox1.SelectedIndex > 0) listBox1.SelectedIndex -= 1;
                 }
                 else if (e.KeyCode == Keys.Down)
                 {
-                    e.Handled = true;
                     if (listBox1.Items.Count == 0) return;
                     if (listBox1.SelectedIndex < listBox1.Items.Count - 1) listBox1.SelectedIndex += 1;
+                }
+            };
+
+            textBox13.KeyDown += (s, e) =>
+            {
+                if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
+                {
+                    e.Handled = true;
                 }
             };
 
@@ -247,7 +251,6 @@ namespace Boostera
 
                 using (var openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.RestoreDirectory = false;
                     if (openFileDialog.ShowDialog() == DialogResult.OK) textBox3.Text = openFileDialog.FileName;
                 }
             };
@@ -274,44 +277,7 @@ namespace Boostera
 
                 using (var openFileDialog = new OpenFileDialog())
                 {
-                    openFileDialog.RestoreDirectory = false;
                     if (openFileDialog.ShowDialog() == DialogResult.OK) textBox7.Text = openFileDialog.FileName;
-                }
-            };
-
-            checkBox3.CheckedChanged += (s, e) =>
-            {
-                if (checkBox3.Checked)
-                {
-                    label7.Enabled = true;
-                    label8.Enabled = true;
-                    label9.Enabled = true;
-                    label10.Enabled = true;
-                    label11.Enabled = true;
-                    textBox6.Enabled = true;
-                    textBox7.Enabled = true;
-                    textBox8.Enabled = true;
-                    textBox9.Enabled = true;
-                    textBox10.Enabled = true;
-                    panel4.Enabled = true;
-                    panel5.Enabled = true;
-                    panel6.Enabled = true;
-                }
-                else
-                {
-                    label7.Enabled = false;
-                    label8.Enabled = false;
-                    label9.Enabled = false;
-                    label10.Enabled = false;
-                    label11.Enabled = false;
-                    textBox6.Enabled = false;
-                    textBox7.Enabled = false;
-                    textBox8.Enabled = false;
-                    textBox9.Enabled = false;
-                    textBox10.Enabled = false;
-                    panel4.Enabled = false;
-                    panel5.Enabled = false;
-                    panel6.Enabled = false;
                 }
             };
 
@@ -330,6 +296,8 @@ namespace Boostera
                 panel4.Enabled = true;
                 panel5.Enabled = true;
                 panel6.Enabled = true;
+                label15.Enabled = true;
+                checkBox1.Enabled = true;
             }
             else
             {
@@ -346,6 +314,8 @@ namespace Boostera
                 panel4.Enabled = false;
                 panel5.Enabled = false;
                 panel6.Enabled = false;
+                label15.Enabled = false;
+                checkBox1.Enabled = false;
             }
 
             toolTip1.Draw += (s, e) =>
@@ -353,6 +323,17 @@ namespace Boostera
                 e.DrawBackground();
                 e.DrawBorder();
                 e.DrawText(TextFormatFlags.WordBreak);
+            };
+
+            this.FormClosing += (s, e) =>
+            {
+                if (listBox1.Visible)
+                {
+                    e.Cancel = true;
+                    textBox13.Text = string.Empty;
+                    listBox1.Visible = false;
+                    textBox13.Focus();
+                }
             };
         }
 
@@ -381,6 +362,8 @@ namespace Boostera
 
         private void button1_Click(object sender, EventArgs e)
         {
+            if (listBox1.Visible) return;
+
             Random random = new Random();
             var forwardingLocalPort = random.Next(49152, 65535).ToString();
 
@@ -641,9 +624,19 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
 
         private string EscapedTextForTtl (string text)
         {
+            if (string.IsNullOrEmpty(text)) return text;
             text = text.Replace("\"", "#34");
             text = text.Replace("'", "#39");
             text = text.Replace(";", "#59");
+            return text;
+        }
+
+        private string UnscapedTextForTtl(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return text;
+            text = text.Replace("#34", "\"");
+            text = text.Replace("#39", "'");
+            text = text.Replace("#59", ";");
             return text;
         }
 
@@ -654,12 +647,362 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
 
         private void button2_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var targetFolder = string.Empty;
 
+                if (!Directory.Exists(boosteraMacroFolder)) Directory.CreateDirectory(boosteraMacroFolder);
+                using (var openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.InitialDirectory = boosteraMacroFolder;
+                    openFileDialog.FileName = "Folder";
+                    openFileDialog.Filter = "Folder|.";
+                    openFileDialog.ValidateNames = false;
+                    openFileDialog.CheckFileExists = false;
+                    openFileDialog.CheckPathExists = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK) targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                }
+
+                if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
+
+                Random random = new Random();
+                var forwardingLocalPort = random.Next(49152, 65535).ToString();
+
+                var protocolText = comboBox2.Text;
+                var host = textBox5.Text;
+                var user = textBox4.Text;
+                var port = textBox1.Text;
+                var privateKey = textBox3.Text;
+                var password = textBox2.Text;
+                var logonScript = textBox12.Text;
+                var isForwarding = checkBox3.Checked;
+                var forwardingHost = textBox6.Text;
+                var forwardingUser = textBox10.Text;
+                var forwardingPort = textBox9.Text;
+                var forwardingPrivateKey = textBox7.Text;
+                var forwardingPassword = textBox8.Text;
+                var isHide = checkBox1.Checked;
+                var tag = textBox11.Text;
+
+                var ttl = TTL_TEMPLATE.Replace("{{Protocol}}", protocolText);
+                ttl = ttl.Replace("{{Host}}", EscapedTextForTtl(host));
+                ttl = ttl.Replace("{{User}}", EscapedTextForTtl(user));
+                ttl = ttl.Replace("{{Port}}", port);
+                ttl = ttl.Replace("{{PrivateKey}}", privateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
+                ttl = ttl.Replace("{{Password}}", EscapedTextForTtl(password));
+                ttl = ttl.Replace("{{LogonScript}}", EscapedTextForTtl(logonScript));
+                ttl = ttl.Replace("{{IsForwarding}}", isForwarding.ToString().ToLower());
+                ttl = ttl.Replace("{{ForwardingHost}}", EscapedTextForTtl(forwardingHost));
+                ttl = ttl.Replace("{{ForwardingUser}}", EscapedTextForTtl(forwardingUser));
+                ttl = ttl.Replace("{{ForwardingPort}}", forwardingPort);
+                ttl = ttl.Replace("{{ForwardingLocalPort}}", forwardingLocalPort);
+                ttl = ttl.Replace("{{ForwardingPrivateKey}}", forwardingPrivateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
+                ttl = ttl.Replace("{{ForwardingPassword}}", EscapedTextForTtl(forwardingPassword));
+                ttl = ttl.Replace("{{IsHide}}", isHide.ToString().ToLower());
+                ttl = ttl.Replace("{{WinscpPath}}", winscpPath.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
+                ttl = ttl.Replace("{{Tag}}", EscapedTextForTtl(tag));
+
+                var ttlFileName = protocolText + "_" + user + "@" + host;
+                if (!string.IsNullOrEmpty(tag)) ttlFileName += "_" + tag;
+                ttlFileName = Regex.Replace(ttlFileName, @"[<>:""/\\|?*]", "");
+                ttlFileName = ttlFileName.ToLower() + ".ttl";
+
+                File.WriteAllText(Path.Combine(targetFolder, ttlFileName), ttl);
+                MessageBox.Show("TTL マクロをエクスポートしました。\n\n" + Path.Combine(targetFolder, ttlFileName), "Boostera");
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            try
+            {
+                var ttlFilePath = string.Empty;
+                using (var openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "TTL|*.ttl";
+                    if (openFileDialog.ShowDialog() == DialogResult.OK) ttlFilePath = openFileDialog.FileName;
+                }
 
+                if (string.IsNullOrEmpty(ttlFilePath) || !File.Exists(ttlFilePath)) return;
+                var ttl = File.ReadAllText(ttlFilePath);
+
+                comboBox2.Text = RegexMatchedGroupText(ttl, @"^Protocol\s+=\s+'(.*?)'");
+                textBox5.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Host\s+=\s+'(.*?)'"));
+                textBox4.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^User\s+=\s+'(.*?)'"));
+                textBox1.Text = RegexMatchedGroupText(ttl, @"^Port\s+=\s+'(.*?)'");
+                textBox3.Text = RegexMatchedGroupText(ttl, @"^PrivateKey\s+=\s+'(.*?)'")
+                    .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+                textBox2.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'"));
+                textBox12.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'"));
+                checkBox3.Checked = RegexMatchedGroupText(ttl, @"^IsForwarding\s+=\s+'(.*?)'") == "true";
+                textBox6.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'"));
+                textBox10.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'"));
+                textBox9.Text = RegexMatchedGroupText(ttl, @"^ForwardingPort\s+=\s+'(.*?)'");
+                textBox7.Text = RegexMatchedGroupText(ttl, @"^ForwardingPrivateKey\s+=\s+'(.*?)'")
+                    .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+                textBox8.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^ForwardingPassword\s+=\s+'(.*?)'"));
+                checkBox1.Checked = RegexMatchedGroupText(ttl, @"^IsHide\s+=\s+'(.*?)'") == "true";
+                textBox11.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Tag\s+=\s+'(.*?)'"));
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+
+        private string RegexMatchedGroupText(string text, string pattern)
+        {
+            var matchedGroupText = string.Empty;
+            try
+            {
+                var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+                matchedGroupText = match.Groups[1].Value;
+            }
+            catch { }
+            return matchedGroupText;
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox3.Checked)
+            {
+                label7.Enabled = true;
+                label8.Enabled = true;
+                label9.Enabled = true;
+                label10.Enabled = true;
+                label11.Enabled = true;
+                textBox6.Enabled = true;
+                textBox7.Enabled = true;
+                textBox8.Enabled = true;
+                textBox9.Enabled = true;
+                textBox10.Enabled = true;
+                panel4.Enabled = true;
+                panel5.Enabled = true;
+                panel6.Enabled = true;
+                label15.Enabled = true;
+                checkBox1.Enabled = true;
+            }
+            else
+            {
+                label7.Enabled = false;
+                label8.Enabled = false;
+                label9.Enabled = false;
+                label10.Enabled = false;
+                label11.Enabled = false;
+                textBox6.Enabled = false;
+                textBox7.Enabled = false;
+                textBox8.Enabled = false;
+                textBox9.Enabled = false;
+                textBox10.Enabled = false;
+                panel4.Enabled = false;
+                panel5.Enabled = false;
+                panel6.Enabled = false;
+                label15.Enabled = false;
+                checkBox1.Enabled = false;
+            }
+        }
+
+        private static readonly string TTL_TEMPLATE = @"Protocol = '{{Protocol}}'
+Host = '{{Host}}'
+User = '{{User}}'
+Port = '{{Port}}'
+PrivateKey = '{{PrivateKey}}'
+Password = '{{Password}}'
+LogonScript = '{{LogonScript}}'
+IsForwarding = '{{IsForwarding}}'
+ForwardingHost = '{{ForwardingHost}}'
+ForwardingUser = '{{ForwardingUser}}'
+ForwardingPort = '{{ForwardingPort}}'
+ForwardingLocalPort = '{{ForwardingLocalPort}}'
+ForwardingPrivateKey = '{{ForwardingPrivateKey}}'
+ForwardingPassword = '{{ForwardingPassword}}'
+IsHide = '{{IsHide}}'
+WinscpPath = '{{WinscpPath}}'
+Tag = '{{Tag}}'
+
+expandenv PrivateKey
+expandenv ForwardingPrivateKey
+expandenv WinscpPath
+
+buf = ''
+if IsForwarding == 'true' then
+    strconcat buf ForwardingHost
+    strconcat buf ':'
+    strconcat buf ForwardingPort
+    strconcat buf ' /ssh2'
+
+    if IsHide == 'true' then
+        strconcat buf ' /V'
+    else
+        strconcat buf ' /I'
+    end if
+
+    strconcat buf ' /ssh-L'
+    strconcat buf forwardingLocalPort
+    strconcat buf ':'
+    strconcat buf Host
+    strconcat buf ':'
+    strconcat buf Port
+
+    if ForwardingPrivateKey != '' then
+        strconcat buf ' /auth=publickey /user='
+        strconcat buf ForwardingUser
+        strconcat buf ' /keyfile=""'
+        strconcat buf ForwardingPrivateKey
+        strconcat buf '""'
+    else
+        strconcat buf ' /auth=password /user='
+        strconcat buf ForwardingUser
+    end if
+
+    if ForwardingPassword != '' then
+        strconcat buf ' /passwd='
+        strconcat buf ForwardingPassword
+    end if
+
+    strconcat buf ' /W='
+    strconcat buf ForwardingUser
+    trconcat buf '@'
+    strconcat buf ForwardingHost
+
+    connect buf
+    wait ''
+    mpause 200
+endif
+
+buf = ''
+if Protocol == 'SSH' then
+    if IsForwarding == 'true' then
+        strconcat buf 'localhost:'
+        strconcat buf forwardingLocalPort
+        strconcat buf ' /nosecuritywarning /ssh2:'
+    else
+        strconcat buf Host
+        strconcat buf ':'
+        strconcat buf Port
+        strconcat buf ' /ssh2:'
+    end if
+
+    if PrivateKey != '' then
+        strconcat buf ' /auth=publickey /user='
+        strconcat buf User
+        strconcat buf ' /keyfile=""'
+        strconcat buf PrivateKey
+        strconcat buf '""'
+    else
+        strconcat buf ' /auth=password /user='
+        strconcat buf User
+    end if
+
+    if Password != '' then
+        strconcat buf ' /passwd='
+        strconcat buf Password
+    end if
+
+    strconcat buf ' /W='
+    strconcat buf User
+    trconcat buf '@'
+    strconcat buf Host
+
+    connect buf
+    if LogonScript != '' then
+        wait ''
+        mpause 200
+        sendln LogonScript
+    end if
+
+else if Protocol == 'RDP' then
+    strconcat buf 'cmdkey'
+
+    if IsForwarding == 'true' then
+        strconcat buf ' /generic:TERMSRV/localhost /user:'
+        strconcat buf User
+        strconcat buf ' /pass:'
+        strconcat buf Password
+    else
+        strconcat buf ' /generic:TERMSRV/'
+        strconcat buf Host
+        strconcat buf ' /user:'
+        strconcat buf User
+        strconcat buf ' /pass:'
+        strconcat buf Password
+    end if
+
+    exec buf 'minimize' 1
+
+    buf = ''
+    strconcat buf 'mstsc'
+
+    if IsForwarding == 'true' then
+        strconcat buf ' /v:localhost:'
+        strconcat buf forwardingLocalPort
+    else
+        strconcat buf ' /v:'
+        strconcat buf Host
+        strconcat buf ':'
+        strconcat buf Port
+    end if
+
+    exec buf
+
+else if Protocol == 'SFTP' then
+    strconcat buf WinscpPath
+
+    if IsForwarding == 'true' then
+        if Password != '' then
+            strconcat buf ' sftp://'
+            strconcat buf User
+            strconcat buf ':'
+            strconcat buf Password
+            strconcat buf '@localhost:'
+            strconcat buf forwardingLocalPort
+        else
+            strconcat buf ' sftp://'
+            strconcat buf User
+            strconcat buf '@localhost:'
+            strconcat buf forwardingLocalPort
+        end if
+
+        if PrivateKey != '' then
+            strconcat buf ' /privatekey=""'
+            strconcat buf PrivateKey
+            strconcat buf '""'
+        end if
+
+        strconcat buf ' /hostkey=""*""'
+    else
+        if Password != '' then
+            strconcat buf ' sftp://'
+            strconcat buf User
+            strconcat buf ':'
+            strconcat buf Password
+            strconcat buf '@'
+            strconcat buf Host
+            strconcat buf ':'
+            strconcat buf Port
+        else
+            strconcat buf ' sftp://'
+            strconcat buf User
+            strconcat buf '@'
+            strconcat buf Host
+            strconcat buf ':'
+            strconcat buf Port
+        end if
+
+        if PrivateKey != '' then
+            strconcat buf ' /privatekey=""'
+            strconcat buf PrivateKey
+            strconcat buf '""'
+        end if
+    end if
+
+    strconcat buf ' /sessionname='
+    strconcat buf User
+    strconcat buf '@'
+    strconcat buf Host
+
+    exec buf
+end if
+
+";
     }
 }
