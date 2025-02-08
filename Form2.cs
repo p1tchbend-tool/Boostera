@@ -15,10 +15,9 @@ namespace Boostera
         public string BoosteraKeyPath { get { return textBox7.Text; } }
         public bool IsStartUp { get { return checkBox1.Checked; } }
 
-        #pragma warning disable WFO1000 // プロパティ コンテンツのコード シリアル化構成がありません
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int ModKey { get; set; }
 
-        #pragma warning restore WFO1000 // プロパティ コンテンツのコード シリアル化構成がありません
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Keys Key { get; set; }
 

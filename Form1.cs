@@ -77,6 +77,7 @@ namespace Boostera
             {
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
             };
 
             listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));

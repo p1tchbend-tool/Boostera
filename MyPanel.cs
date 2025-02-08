@@ -8,30 +8,8 @@ namespace Boostera
 {
     public partial class MyPanel : Control
     {
-        [Browsable(true)]
-        [Description("角丸の半径")]
-        [Category("表示")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int Radius
-        {
-            get
-            {
-                if (_Radius < 0) return 0;
-
-                var diameter = (uint)_Radius * 2;
-                if (Width < diameter || Height < diameter)
-                    return ((Width < Height) ? Width : Height) / 2;
-
-                return _Radius;
-            }
-            set
-            {
-                _Radius = value;
-                Refresh();
-            }
-        }
-
-        int _Radius = int.MaxValue;
+        public int Radius { get; set; } = 1;
 
         public MyPanel()
         {
