@@ -11,6 +11,7 @@ namespace Boostera
         [Browsable(true)]
         [Description("角丸の半径")]
         [Category("表示")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int Radius
         {
             get

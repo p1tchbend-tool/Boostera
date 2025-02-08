@@ -654,7 +654,7 @@ namespace Boostera
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (Keyboard.IsKeyDown(Key.Escape))
+            if ((NativeMethods.GetAsyncKeyState((int)Keys.Escape) & 0x8000) != 0)
             {
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
