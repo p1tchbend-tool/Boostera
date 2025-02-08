@@ -9,7 +9,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Input;
 
 namespace Boostera
 {
@@ -39,18 +38,47 @@ namespace Boostera
             WriteIndented = true
         };
 
+        private int initialWidth = 0;
+        private int initialHeight = 0;
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_DPICHANGED = 0x02E0;
+            if (m.Msg == WM_DPICHANGED)
+            {
+                float f = NativeMethods.GetDpiForSystem();
+                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+                return;
+            };
+            base.WndProc(ref m);
+        }
+
         public Form1()
         {
             if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
-
-            InitializeComponent();
 
             Program.ProgramHotKey.OnHotKey += (s, e) =>
             {
                 if (((HotKey.HotKeyEventArgs)e).Id == Program.HotKeyShowForm) ShowSearchForm();
             };
 
+            InitializeComponent();
+
+            initialWidth = this.Width;
+            initialHeight = this.Height;
+
             float f = NativeMethods.GetDpiForSystem();
+            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+            this.Shown += (s, eventArgs) =>
+            {
+                this.Hide();
+                this.WindowState = FormWindowState.Minimized;
+            };
+
             listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
             listBox1.Height = listBox1.ItemHeight * 10;
 

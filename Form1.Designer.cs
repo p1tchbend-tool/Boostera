@@ -28,357 +28,348 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.myPanel1 = new Boostera.MyPanel();
-            this.myPanel2 = new Boostera.MyPanel();
-            this.myPanel3 = new Boostera.MyPanel();
-            this.myPanel4 = new Boostera.MyPanel();
-            this.myPanel5 = new Boostera.MyPanel();
-            this.myPanel6 = new Boostera.MyPanel();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.panel11 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
+            textBox1 = new System.Windows.Forms.TextBox();
+            listBox1 = new System.Windows.Forms.ListBox();
+            timer1 = new System.Windows.Forms.Timer(components);
+            timer2 = new System.Windows.Forms.Timer(components);
+            label1 = new System.Windows.Forms.Label();
+            timer3 = new System.Windows.Forms.Timer(components);
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
+            notifyIcon1 = new System.Windows.Forms.NotifyIcon(components);
+            contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
+            myPanel1 = new MyPanel();
+            myPanel2 = new MyPanel();
+            myPanel3 = new MyPanel();
+            myPanel4 = new MyPanel();
+            myPanel5 = new MyPanel();
+            myPanel6 = new MyPanel();
+            panel12 = new System.Windows.Forms.Panel();
+            panel11 = new System.Windows.Forms.Panel();
+            panel2 = new System.Windows.Forms.Panel();
+            panel6 = new System.Windows.Forms.Panel();
+            panel5 = new System.Windows.Forms.Panel();
+            panel10 = new System.Windows.Forms.Panel();
+            panel9 = new System.Windows.Forms.Panel();
+            panel8 = new System.Windows.Forms.Panel();
+            panel4 = new System.Windows.Forms.Panel();
+            panel1 = new System.Windows.Forms.Panel();
+            panel7 = new System.Windows.Forms.Panel();
+            panel3 = new System.Windows.Forms.Panel();
+            SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(18, 94);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 4, 14);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(724, 41);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            textBox1.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            textBox1.Font = new System.Drawing.Font("メイリオ", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox1.ForeColor = System.Drawing.Color.White;
+            textBox1.Location = new System.Drawing.Point(18, 94);
+            textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 4, 14);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new System.Drawing.Size(724, 41);
+            textBox1.TabIndex = 0;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // listBox1
             // 
-            this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.listBox1.Font = new System.Drawing.Font("メイリオ", 20F);
-            this.listBox1.ForeColor = System.Drawing.Color.White;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 41;
-            this.listBox1.Location = new System.Drawing.Point(18, 166);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(760, 410);
-            this.listBox1.TabIndex = 1;
+            listBox1.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            listBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            listBox1.Font = new System.Drawing.Font("メイリオ", 20F);
+            listBox1.ForeColor = System.Drawing.Color.White;
+            listBox1.FormattingEnabled = true;
+            listBox1.Location = new System.Drawing.Point(18, 166);
+            listBox1.Margin = new System.Windows.Forms.Padding(2);
+            listBox1.Name = "listBox1";
+            listBox1.ScrollAlwaysVisible = true;
+            listBox1.Size = new System.Drawing.Size(760, 410);
+            listBox1.TabIndex = 1;
             // 
             // timer1
             // 
-            this.timer1.Interval = 20;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            timer1.Interval = 20;
+            timer1.Tick += timer1_Tick;
             // 
             // timer2
             // 
-            this.timer2.Interval = 600000;
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            timer2.Interval = 600000;
+            timer2.Tick += timer2_Tick;
             // 
             // label1
             // 
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.label1.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(50, 101);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(400, 24);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "「SPACE」 で TTL マクロの検索開始...";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            label1.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            label1.Font = new System.Drawing.Font("メイリオ", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label1.ForeColor = System.Drawing.Color.Gray;
+            label1.Location = new System.Drawing.Point(50, 101);
+            label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 6);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(400, 24);
+            label1.TabIndex = 3;
+            label1.Text = "「SPACE」 で TTL マクロの検索開始...";
+            label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            label1.Click += label1_Click;
             // 
             // timer3
             // 
-            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            timer3.Tick += timer3_Tick;
             // 
             // toolTip1
             // 
-            this.toolTip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(31)))), ((int)(((byte)(31)))));
-            this.toolTip1.ForeColor = System.Drawing.Color.White;
-            this.toolTip1.OwnerDraw = true;
+            toolTip1.BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
+            toolTip1.ForeColor = System.Drawing.Color.White;
+            toolTip1.OwnerDraw = true;
             // 
             // notifyIcon1
             // 
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
-            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
-            this.notifyIcon1.Text = "Boostera";
-            this.notifyIcon1.Visible = true;
+            notifyIcon1.ContextMenuStrip = contextMenuStrip1;
+            notifyIcon1.Icon = (System.Drawing.Icon)resources.GetObject("notifyIcon1.Icon");
+            notifyIcon1.Text = "Boostera";
+            notifyIcon1.Visible = true;
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // myPanel1
             // 
-            this.myPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.myPanel1.ForeColor = System.Drawing.Color.White;
-            this.myPanel1.Location = new System.Drawing.Point(9, 86);
-            this.myPanel1.Margin = new System.Windows.Forms.Padding(2, 8, 2, 2);
-            this.myPanel1.Name = "myPanel1";
-            this.myPanel1.Radius = 5;
-            this.myPanel1.Size = new System.Drawing.Size(781, 56);
-            this.myPanel1.TabIndex = 5;
+            myPanel1.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            myPanel1.ForeColor = System.Drawing.Color.White;
+            myPanel1.Location = new System.Drawing.Point(9, 86);
+            myPanel1.Margin = new System.Windows.Forms.Padding(2, 8, 2, 2);
+            myPanel1.Name = "myPanel1";
+            myPanel1.Size = new System.Drawing.Size(781, 56);
+            myPanel1.TabIndex = 5;
             // 
             // myPanel2
             // 
-            this.myPanel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.myPanel2.ForeColor = System.Drawing.Color.White;
-            this.myPanel2.Location = new System.Drawing.Point(375, 20);
-            this.myPanel2.Margin = new System.Windows.Forms.Padding(2);
-            this.myPanel2.Name = "myPanel2";
-            this.myPanel2.Radius = 5;
-            this.myPanel2.Size = new System.Drawing.Size(412, 56);
-            this.myPanel2.TabIndex = 6;
+            myPanel2.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            myPanel2.ForeColor = System.Drawing.Color.White;
+            myPanel2.Location = new System.Drawing.Point(375, 20);
+            myPanel2.Margin = new System.Windows.Forms.Padding(2);
+            myPanel2.Name = "myPanel2";
+            myPanel2.Size = new System.Drawing.Size(412, 56);
+            myPanel2.TabIndex = 6;
             // 
             // myPanel3
             // 
-            this.myPanel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.myPanel3.ForeColor = System.Drawing.Color.White;
-            this.myPanel3.Location = new System.Drawing.Point(9, 152);
-            this.myPanel3.Margin = new System.Windows.Forms.Padding(2, 8, 2, 2);
-            this.myPanel3.Name = "myPanel3";
-            this.myPanel3.Radius = 1;
-            this.myPanel3.Size = new System.Drawing.Size(781, 435);
-            this.myPanel3.TabIndex = 13;
-            this.myPanel3.Visible = false;
+            myPanel3.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            myPanel3.ForeColor = System.Drawing.Color.White;
+            myPanel3.Location = new System.Drawing.Point(9, 152);
+            myPanel3.Margin = new System.Windows.Forms.Padding(2, 8, 2, 2);
+            myPanel3.Name = "myPanel3";
+            myPanel3.Size = new System.Drawing.Size(781, 435);
+            myPanel3.TabIndex = 13;
+            myPanel3.Visible = false;
             // 
             // myPanel4
             // 
-            this.myPanel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.myPanel4.ForeColor = System.Drawing.Color.White;
-            this.myPanel4.Location = new System.Drawing.Point(9, 7);
-            this.myPanel4.Margin = new System.Windows.Forms.Padding(2);
-            this.myPanel4.Name = "myPanel4";
-            this.myPanel4.Radius = 7;
-            this.myPanel4.Size = new System.Drawing.Size(70, 56);
-            this.myPanel4.TabIndex = 15;
+            myPanel4.BackColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            myPanel4.ForeColor = System.Drawing.Color.White;
+            myPanel4.Location = new System.Drawing.Point(9, 7);
+            myPanel4.Margin = new System.Windows.Forms.Padding(2);
+            myPanel4.Name = "myPanel4";
+            myPanel4.Size = new System.Drawing.Size(70, 56);
+            myPanel4.TabIndex = 15;
             // 
             // myPanel5
             // 
-            this.myPanel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.myPanel5.ForeColor = System.Drawing.Color.White;
-            this.myPanel5.Location = new System.Drawing.Point(83, 7);
-            this.myPanel5.Margin = new System.Windows.Forms.Padding(2);
-            this.myPanel5.Name = "myPanel5";
-            this.myPanel5.Radius = 7;
-            this.myPanel5.Size = new System.Drawing.Size(60, 56);
-            this.myPanel5.TabIndex = 16;
+            myPanel5.BackColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            myPanel5.ForeColor = System.Drawing.Color.White;
+            myPanel5.Location = new System.Drawing.Point(83, 7);
+            myPanel5.Margin = new System.Windows.Forms.Padding(2);
+            myPanel5.Name = "myPanel5";
+            myPanel5.Size = new System.Drawing.Size(60, 56);
+            myPanel5.TabIndex = 16;
             // 
             // myPanel6
             // 
-            this.myPanel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.myPanel6.ForeColor = System.Drawing.Color.White;
-            this.myPanel6.Location = new System.Drawing.Point(147, 7);
-            this.myPanel6.Margin = new System.Windows.Forms.Padding(2);
-            this.myPanel6.Name = "myPanel6";
-            this.myPanel6.Radius = 4;
-            this.myPanel6.Size = new System.Drawing.Size(60, 56);
-            this.myPanel6.TabIndex = 17;
-            this.myPanel6.Visible = false;
+            myPanel6.BackColor = System.Drawing.Color.FromArgb(100, 100, 100);
+            myPanel6.ForeColor = System.Drawing.Color.White;
+            myPanel6.Location = new System.Drawing.Point(147, 7);
+            myPanel6.Margin = new System.Windows.Forms.Padding(2);
+            myPanel6.Name = "myPanel6";
+            myPanel6.Size = new System.Drawing.Size(60, 56);
+            myPanel6.TabIndex = 17;
+            myPanel6.Visible = false;
             // 
             // panel12
             // 
-            this.panel12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel12.BackgroundImage = global::Boostera.Properties.Resources.hide;
-            this.panel12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel12.Location = new System.Drawing.Point(604, 33);
-            this.panel12.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(30, 30);
-            this.panel12.TabIndex = 19;
+            panel12.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel12.BackgroundImage = Properties.Resources.hide;
+            panel12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel12.Location = new System.Drawing.Point(604, 33);
+            panel12.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel12.Name = "panel12";
+            panel12.Size = new System.Drawing.Size(30, 30);
+            panel12.TabIndex = 19;
             // 
             // panel11
             // 
-            this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel11.BackgroundImage = global::Boostera.Properties.Resources.show;
-            this.panel11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel11.Location = new System.Drawing.Point(640, 33);
-            this.panel11.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(30, 30);
-            this.panel11.TabIndex = 18;
+            panel11.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel11.BackgroundImage = Properties.Resources.show;
+            panel11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel11.Location = new System.Drawing.Point(640, 33);
+            panel11.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel11.Name = "panel11";
+            panel11.Size = new System.Drawing.Size(30, 30);
+            panel11.TabIndex = 18;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel2.BackgroundImage = global::Boostera.Properties.Resources.connect;
-            this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel2.Location = new System.Drawing.Point(712, 33);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(30, 30);
-            this.panel2.TabIndex = 14;
+            panel2.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel2.BackgroundImage = Properties.Resources.connect;
+            panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel2.Location = new System.Drawing.Point(712, 33);
+            panel2.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel2.Name = "panel2";
+            panel2.Size = new System.Drawing.Size(30, 30);
+            panel2.TabIndex = 14;
             // 
             // panel6
             // 
-            this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel6.BackgroundImage = global::Boostera.Properties.Resources.layout_columns_negate;
-            this.panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel6.Location = new System.Drawing.Point(424, 33);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(30, 30);
-            this.panel6.TabIndex = 8;
+            panel6.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel6.BackgroundImage = Properties.Resources.layout_columns_negate;
+            panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel6.Location = new System.Drawing.Point(424, 33);
+            panel6.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel6.Name = "panel6";
+            panel6.Size = new System.Drawing.Size(30, 30);
+            panel6.TabIndex = 8;
             // 
             // panel5
             // 
-            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel5.BackgroundImage = global::Boostera.Properties.Resources.layout_rows_negate;
-            this.panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel5.Location = new System.Drawing.Point(460, 33);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(30, 30);
-            this.panel5.TabIndex = 7;
+            panel5.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel5.BackgroundImage = Properties.Resources.layout_rows_negate;
+            panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel5.Location = new System.Drawing.Point(460, 33);
+            panel5.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel5.Name = "panel5";
+            panel5.Size = new System.Drawing.Size(30, 30);
+            panel5.TabIndex = 7;
             // 
             // panel10
             // 
-            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel10.BackgroundImage = global::Boostera.Properties.Resources.close;
-            this.panel10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel10.Location = new System.Drawing.Point(676, 33);
-            this.panel10.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(30, 30);
-            this.panel10.TabIndex = 12;
+            panel10.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel10.BackgroundImage = Properties.Resources.close;
+            panel10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel10.Location = new System.Drawing.Point(676, 33);
+            panel10.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel10.Name = "panel10";
+            panel10.Size = new System.Drawing.Size(30, 30);
+            panel10.TabIndex = 12;
             // 
             // panel9
             // 
-            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel9.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel9.BackgroundImage")));
-            this.panel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel9.Location = new System.Drawing.Point(496, 33);
-            this.panel9.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(30, 30);
-            this.panel9.TabIndex = 11;
+            panel9.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel9.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel9.BackgroundImage");
+            panel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel9.Location = new System.Drawing.Point(496, 33);
+            panel9.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel9.Name = "panel9";
+            panel9.Size = new System.Drawing.Size(30, 30);
+            panel9.TabIndex = 11;
             // 
             // panel8
             // 
-            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel8.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel8.BackgroundImage")));
-            this.panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel8.Location = new System.Drawing.Point(532, 33);
-            this.panel8.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(30, 30);
-            this.panel8.TabIndex = 10;
+            panel8.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel8.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel8.BackgroundImage");
+            panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel8.Location = new System.Drawing.Point(532, 33);
+            panel8.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel8.Name = "panel8";
+            panel8.Size = new System.Drawing.Size(30, 30);
+            panel8.TabIndex = 10;
             // 
             // panel4
             // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel4.BackgroundImage = global::Boostera.Properties.Resources.minimize;
-            this.panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel4.Location = new System.Drawing.Point(568, 33);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(30, 30);
-            this.panel4.TabIndex = 9;
+            panel4.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel4.BackgroundImage = Properties.Resources.minimize;
+            panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel4.Location = new System.Drawing.Point(568, 33);
+            panel4.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel4.Name = "panel4";
+            panel4.Size = new System.Drawing.Size(30, 30);
+            panel4.TabIndex = 9;
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel1.BackgroundImage = global::Boostera.Properties.Resources.search;
-            this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel1.Location = new System.Drawing.Point(748, 99);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(30, 30);
-            this.panel1.TabIndex = 2;
+            panel1.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel1.BackgroundImage = Properties.Resources.search;
+            panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel1.Location = new System.Drawing.Point(748, 99);
+            panel1.Margin = new System.Windows.Forms.Padding(2);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(30, 30);
+            panel1.TabIndex = 2;
             // 
             // panel7
             // 
-            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel7.BackgroundImage = global::Boostera.Properties.Resources.arrow_negate;
-            this.panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel7.Location = new System.Drawing.Point(388, 33);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(30, 30);
-            this.panel7.TabIndex = 10;
+            panel7.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel7.BackgroundImage = Properties.Resources.arrow_negate;
+            panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel7.Location = new System.Drawing.Point(388, 33);
+            panel7.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel7.Name = "panel7";
+            panel7.Size = new System.Drawing.Size(30, 30);
+            panel7.TabIndex = 10;
             // 
             // panel3
             // 
-            this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(23)))), ((int)(((byte)(23)))));
-            this.panel3.BackgroundImage = global::Boostera.Properties.Resources.setting;
-            this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.panel3.Location = new System.Drawing.Point(748, 33);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 8);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(30, 30);
-            this.panel3.TabIndex = 5;
+            panel3.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel3.BackgroundImage = Properties.Resources.setting;
+            panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel3.Location = new System.Drawing.Point(748, 33);
+            panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 8);
+            panel3.Name = "panel3";
+            panel3.Size = new System.Drawing.Size(30, 30);
+            panel3.TabIndex = 5;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.Green;
-            this.ClientSize = new System.Drawing.Size(808, 610);
-            this.ControlBox = false;
-            this.Controls.Add(this.panel12);
-            this.Controls.Add(this.panel11);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel6);
-            this.Controls.Add(this.panel5);
-            this.Controls.Add(this.panel10);
-            this.Controls.Add(this.panel9);
-            this.Controls.Add(this.panel8);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel7);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.myPanel1);
-            this.Controls.Add(this.myPanel2);
-            this.Controls.Add(this.myPanel3);
-            this.Controls.Add(this.myPanel4);
-            this.Controls.Add(this.myPanel5);
-            this.Controls.Add(this.myPanel6);
-            this.DoubleBuffered = true;
-            this.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximizeBox = false;
-            this.Name = "Form1";
-            this.Opacity = 0D;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            BackColor = System.Drawing.Color.Green;
+            ClientSize = new System.Drawing.Size(808, 610);
+            ControlBox = false;
+            Controls.Add(panel12);
+            Controls.Add(panel11);
+            Controls.Add(panel2);
+            Controls.Add(panel6);
+            Controls.Add(panel5);
+            Controls.Add(panel10);
+            Controls.Add(panel9);
+            Controls.Add(panel8);
+            Controls.Add(panel4);
+            Controls.Add(label1);
+            Controls.Add(panel1);
+            Controls.Add(panel7);
+            Controls.Add(listBox1);
+            Controls.Add(textBox1);
+            Controls.Add(panel3);
+            Controls.Add(myPanel1);
+            Controls.Add(myPanel2);
+            Controls.Add(myPanel3);
+            Controls.Add(myPanel4);
+            Controls.Add(myPanel5);
+            Controls.Add(myPanel6);
+            DoubleBuffered = true;
+            ForeColor = System.Drawing.SystemColors.ControlText;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            Margin = new System.Windows.Forms.Padding(2);
+            MaximizeBox = false;
+            Name = "Form1";
+            Opacity = 0D;
+            ShowInTaskbar = false;
+            StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            Load += Form1_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

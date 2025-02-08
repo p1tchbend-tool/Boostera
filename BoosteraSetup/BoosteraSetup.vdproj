@@ -122,6 +122,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -400,7 +408,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Boostera"
         "ProductCode" = "8:{85FE1287-0CFB-47E5-B34D-599478FA80B9}"
-        "PackageCode" = "8:{C9A99EB8-D122-4A84-8806-0CE73DFA889B}"
+        "PackageCode" = "8:{AA4698C6-36D7-4077-910A-1D22A320E3A6}"
         "UpgradeCode" = "8:{E2BB7EAD-4543-42CB-AAB6-3850798A4948}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -531,7 +539,7 @@
             "Target" = "8:_E4D389BAABA74D6BB28802D2083A5277"
             "Folder" = "8:_9F405F8EC7AE4F2E9CE630385FA2A16B"
             "WorkingFolder" = "8:_C8C594D2A5BA4FE9810266BE5703FD40"
-            "Icon" = "8:"
+            "Icon" = "8:_448F603D41FA490DB2FB360632F44907"
             "Feature" = "8:"
             }
         }

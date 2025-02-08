@@ -29,24 +29,48 @@ namespace Boostera
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
 
+        private int initialWidth = 0;
+        private int initialHeight = 0;
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_DPICHANGED = 0x02E0;
+            if (m.Msg == WM_DPICHANGED)
+            {
+                float f = NativeMethods.GetDpiForSystem();
+                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+                return;
+            };
+            base.WndProc(ref m);
+        }
+
         public Form3(string ttermproPath, string winscpPath, string boosteraKeyPath)
         {
             InitializeComponent();
-            this.Shown += (s, e) => textBox13.Focus();
 
-            this.ttermproPath = ttermproPath;
-            this.winscpPath = winscpPath;
-            this.boosteraKeyPath = boosteraKeyPath;
-            comboBox2.SelectedIndex = 0;
+            initialWidth = this.Width;
+            initialHeight = this.Height;
+
+            float f = NativeMethods.GetDpiForSystem();
+            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
+            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
+            listBox1.Height = listBox1.ItemHeight * 16;
 
             listBox1.Visible = false;
             listBox1.Left = label12.Left;
             listBox1.Top = comboBox2.Top;
             listBox1.Width = textBox13.Width + 1;
 
-            float f = NativeMethods.GetDpiForSystem();
-            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
-            listBox1.Height = listBox1.ItemHeight * 16;
+            this.Shown += (s, e) => textBox13.Focus();
+
+            this.ttermproPath = ttermproPath;
+            this.winscpPath = winscpPath;
+            this.boosteraKeyPath = boosteraKeyPath;
+            comboBox2.SelectedIndex = 0;
 
             toolTip1.SetToolTip(comboBox2, "接続先のプロトコルを選択してください。\nSSHはTeraTerm、SFTPはWinSCPの事前設定が必要です。");
             toolTip1.SetToolTip(textBox5, "接続先のホストを入力してください。");
@@ -301,6 +325,55 @@ namespace Boostera
                 }
             };
 
+            toolTip1.Draw += (s, e) =>
+            {
+                e.DrawBackground();
+                e.DrawBorder();
+                e.DrawText(TextFormatFlags.WordBreak);
+            };
+
+            this.FormClosing += (s, e) =>
+            {
+                if (listBox1.Visible)
+                {
+                    e.Cancel = true;
+                    textBox13.Text = string.Empty;
+                    listBox1.Visible = false;
+                    textBox13.Focus();
+                }
+            };
+
+            if (comboBox2.SelectedIndex == SSH)
+            {
+                textBox1.Text = "22";
+                label5.Enabled = true;
+                textBox3.Enabled = true;
+                panel1.Enabled = true;
+                panel3.Enabled = true;
+                label14.Enabled = true;
+                textBox12.Enabled = true;
+            }
+            else if (comboBox2.SelectedIndex == RDP)
+            {
+                textBox1.Text = "3389";
+                label5.Enabled = false;
+                textBox3.Enabled = false;
+                panel1.Enabled = false;
+                panel3.Enabled = false;
+                label14.Enabled = false;
+                textBox12.Enabled = false;
+            }
+            else if (comboBox2.SelectedIndex == SFTP)
+            {
+                textBox1.Text = "22";
+                label5.Enabled = true;
+                textBox3.Enabled = true;
+                panel1.Enabled = true;
+                panel3.Enabled = true;
+                label14.Enabled = false;
+                textBox12.Enabled = false;
+            }
+
             if (checkBox3.Checked)
             {
                 label7.Enabled = true;
@@ -337,24 +410,6 @@ namespace Boostera
                 label15.Enabled = false;
                 checkBox1.Enabled = false;
             }
-
-            toolTip1.Draw += (s, e) =>
-            {
-                e.DrawBackground();
-                e.DrawBorder();
-                e.DrawText(TextFormatFlags.WordBreak);
-            };
-
-            this.FormClosing += (s, e) =>
-            {
-                if (listBox1.Visible)
-                {
-                    e.Cancel = true;
-                    textBox13.Text = string.Empty;
-                    listBox1.Visible = false;
-                    textBox13.Focus();
-                }
-            };
         }
 
         private void Form3_Load(object sender, EventArgs e)
