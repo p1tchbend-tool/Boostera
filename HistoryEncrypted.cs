@@ -43,8 +43,8 @@ namespace Boostera
         {
             if (!File.Exists(boosteraKeyPath)) CreateKey(boosteraKeyPath);
 
-            var key = Encoding.UTF8.GetBytes(Membership.GeneratePassword(32, 0));
-            var iv = Encoding.UTF8.GetBytes(Membership.GeneratePassword(16, 0));
+            var key = Encoding.UTF8.GetBytes(new Guid().ToString("N"));
+            var iv = Encoding.UTF8.GetBytes(new Guid().ToString("N").Substring(0, 16));
 
             using (var myRijndael = new RijndaelManaged())
             {
