@@ -386,7 +386,7 @@ namespace Boostera
 
             if (isForwarding)
             {
-                var arguments = EscapedTextForTtl(forwardingHost) + ":" + forwardingPort + " /ssh2";
+                var arguments = forwardingHost + ":" + forwardingPort + " /ssh2";
                 if (isHide)
                 {
                     arguments += " /V";
@@ -395,17 +395,17 @@ namespace Boostera
                 {
                     arguments += " /I";
                 }
-                arguments += " /ssh-L" + forwardingLocalPort + ":" + EscapedTextForTtl(host) + ":" + port;
+                arguments += " /ssh-L" + forwardingLocalPort + ":" + host + ":" + port;
 
                 if (!string.IsNullOrEmpty(forwardingPrivateKey))
                 {
-                    arguments += " /auth=publickey /user=" + EscapedTextForTtl(forwardingUser) + " /keyfile=\"" + forwardingPrivateKey + "\"";
+                    arguments += " /auth=publickey /user=" + forwardingUser + " /keyfile=\"" + forwardingPrivateKey + "\"";
                 }
                 else
                 {
-                    arguments += " /auth=password /user=" + EscapedTextForTtl(forwardingUser);
+                    arguments += " /auth=password /user=" + forwardingUser;
                 }
-                if (!string.IsNullOrEmpty(forwardingPassword)) arguments += " /passwd=" + EscapedTextForTtl(forwardingPassword);
+                if (!string.IsNullOrEmpty(forwardingPassword)) arguments += " /passwd=\"" + forwardingPassword + "\"";
 
                 var windowTitle = forwardingUser + "@" + forwardingHost;
                 arguments += " /W=" + windowTitle;
@@ -430,18 +430,18 @@ namespace Boostera
                 }
                 else
                 {
-                    arguments = EscapedTextForTtl(host) + ":" + port + " /ssh2";
+                    arguments = host + ":" + port + " /ssh2";
                 }
 
                 if (!string.IsNullOrEmpty(privateKey))
                 {
-                    arguments += " /auth=publickey /user=" + EscapedTextForTtl(user) + " /keyfile=\"" + privateKey + "\"";
+                    arguments += " /auth=publickey /user=" + user + " /keyfile=\"" + privateKey + "\"";
                 }
                 else
                 {
-                    arguments += " /auth=password /user=" + EscapedTextForTtl(user);
+                    arguments += " /auth=password /user=" + user;
                 }
-                if (!string.IsNullOrEmpty(password)) arguments += " /passwd=" + EscapedTextForTtl(password);
+                if (!string.IsNullOrEmpty(password)) arguments += " /passwd=\"" + password + "\"";
 
                 if (!string.IsNullOrEmpty(logonScript))
                 {
@@ -686,19 +686,19 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
                 var tag = textBox11.Text;
 
                 var ttl = TTL_TEMPLATE.Replace("{{Protocol}}", protocolText);
-                ttl = ttl.Replace("{{Host}}", EscapedTextForTtl(host));
-                ttl = ttl.Replace("{{User}}", EscapedTextForTtl(user));
+                ttl = ttl.Replace("{{Host}}", host);
+                ttl = ttl.Replace("{{User}}", user);
                 ttl = ttl.Replace("{{Port}}", port);
                 ttl = ttl.Replace("{{PrivateKey}}", privateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
-                ttl = ttl.Replace("{{Password}}", EscapedTextForTtl(password));
+                ttl = ttl.Replace("{{Password}}", password);
                 ttl = ttl.Replace("{{LogonScript}}", EscapedTextForTtl(logonScript));
                 ttl = ttl.Replace("{{IsForwarding}}", isForwarding.ToString().ToLower());
-                ttl = ttl.Replace("{{ForwardingHost}}", EscapedTextForTtl(forwardingHost));
-                ttl = ttl.Replace("{{ForwardingUser}}", EscapedTextForTtl(forwardingUser));
+                ttl = ttl.Replace("{{ForwardingHost}}", forwardingHost);
+                ttl = ttl.Replace("{{ForwardingUser}}", forwardingUser);
                 ttl = ttl.Replace("{{ForwardingPort}}", forwardingPort);
                 ttl = ttl.Replace("{{ForwardingLocalPort}}", forwardingLocalPort);
                 ttl = ttl.Replace("{{ForwardingPrivateKey}}", forwardingPrivateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
-                ttl = ttl.Replace("{{ForwardingPassword}}", EscapedTextForTtl(forwardingPassword));
+                ttl = ttl.Replace("{{ForwardingPassword}}", forwardingPassword);
                 ttl = ttl.Replace("{{IsHide}}", isHide.ToString().ToLower());
                 ttl = ttl.Replace("{{WinscpPath}}", winscpPath.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
                 ttl = ttl.Replace("{{Tag}}", EscapedTextForTtl(tag));
@@ -729,20 +729,20 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
                 var ttl = File.ReadAllText(ttlFilePath);
 
                 comboBox2.Text = RegexMatchedGroupText(ttl, @"^Protocol\s+=\s+'(.*?)'");
-                textBox5.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Host\s+=\s+'(.*?)'"));
-                textBox4.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^User\s+=\s+'(.*?)'"));
+                textBox5.Text = RegexMatchedGroupText(ttl, @"^Host\s+=\s+'(.*?)'");
+                textBox4.Text = RegexMatchedGroupText(ttl, @"^User\s+=\s+'(.*?)'");
                 textBox1.Text = RegexMatchedGroupText(ttl, @"^Port\s+=\s+'(.*?)'");
                 textBox3.Text = RegexMatchedGroupText(ttl, @"^PrivateKey\s+=\s+'(.*?)'")
                     .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-                textBox2.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'"));
+                textBox2.Text = RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'");
                 textBox12.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'"));
                 checkBox3.Checked = RegexMatchedGroupText(ttl, @"^IsForwarding\s+=\s+'(.*?)'") == "true";
-                textBox6.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'"));
-                textBox10.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'"));
+                textBox6.Text = RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'");
+                textBox10.Text = RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'");
                 textBox9.Text = RegexMatchedGroupText(ttl, @"^ForwardingPort\s+=\s+'(.*?)'");
                 textBox7.Text = RegexMatchedGroupText(ttl, @"^ForwardingPrivateKey\s+=\s+'(.*?)'")
                     .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-                textBox8.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^ForwardingPassword\s+=\s+'(.*?)'"));
+                textBox8.Text = RegexMatchedGroupText(ttl, @"^ForwardingPassword\s+=\s+'(.*?)'");
                 checkBox1.Checked = RegexMatchedGroupText(ttl, @"^IsHide\s+=\s+'(.*?)'") == "true";
                 textBox11.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Tag\s+=\s+'(.*?)'"));
             }
@@ -855,8 +855,9 @@ if IsForwarding == 'true' then
     end if
 
     if ForwardingPassword != '' then
-        strconcat buf ' /passwd='
+        strconcat buf ' /passwd=""'
         strconcat buf ForwardingPassword
+        strconcat buf '""'
     end if
 
     strconcat buf ' /W='
@@ -894,8 +895,9 @@ if Protocol == 'SSH' then
     end if
 
     if Password != '' then
-        strconcat buf ' /passwd='
+        strconcat buf ' /passwd=""'
         strconcat buf Password
+        strconcat buf '""'
     end if
 
     strconcat buf ' /W='
