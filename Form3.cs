@@ -436,7 +436,7 @@ namespace Boostera
                 try
                 {
                     Process.Start(psi);
-                    Thread.Sleep(200);
+                    Thread.Sleep(1000);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -471,8 +471,8 @@ namespace Boostera
                             Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
 
                         var script = @"wait ''
-mpause 200
-sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
+mpause 1000
+sendln '" + logonScript + "'\r\n" +
 "filedelete '" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "'";
 
                         File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"), script);
@@ -614,6 +614,54 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
             textBox9.SelectionStart = textBox9.Text.Length;
         }
 
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+            textBox5.Text = textBox5.Text.Replace("'", "");
+            textBox5.SelectionStart = textBox5.Text.Length;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+            textBox4.Text = textBox4.Text.Replace("'", "");
+            textBox4.SelectionStart = textBox4.Text.Length;
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            textBox2.Text = textBox2.Text.Replace("'", "");
+            textBox2.SelectionStart = textBox2.Text.Length;
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            textBox6.Text = textBox6.Text.Replace("'", "");
+            textBox6.SelectionStart = textBox6.Text.Length;
+        }
+
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+            textBox10.Text = textBox10.Text.Replace("'", "");
+            textBox10.SelectionStart = textBox10.Text.Length;
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+            textBox8.Text = textBox8.Text.Replace("'", "");
+            textBox8.SelectionStart = textBox8.Text.Length;
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+            textBox11.Text = textBox11.Text.Replace("'", "");
+            textBox11.SelectionStart = textBox11.Text.Length;
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+            textBox12.Text = textBox12.Text.Replace("'", "\"");
+            textBox12.SelectionStart = textBox12.Text.Length;
+        }
+
         private void textBox13_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox13.Text))
@@ -640,24 +688,6 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
             matchedHistories.ForEach(x => listBox1.Items.Add(x));
             listBox1.EndUpdate();
             if (listBox1.Items.Count != 0) listBox1.SelectedIndex = 0;
-        }
-
-        private string EscapedTextForTtl (string text)
-        {
-            if (string.IsNullOrEmpty(text)) return text;
-            text = text.Replace("\"", "#34");
-            text = text.Replace("'", "#39");
-            text = text.Replace(";", "#59");
-            return text;
-        }
-
-        private string UnscapedTextForTtl(string text)
-        {
-            if (string.IsNullOrEmpty(text)) return text;
-            text = text.Replace("#34", "\"");
-            text = text.Replace("#39", "'");
-            text = text.Replace("#59", ";");
-            return text;
         }
 
         private void label6_Click(object sender, EventArgs e)
@@ -711,7 +741,7 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
                 ttl = ttl.Replace("{{Port}}", port);
                 ttl = ttl.Replace("{{PrivateKey}}", privateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
                 ttl = ttl.Replace("{{Password}}", password);
-                ttl = ttl.Replace("{{LogonScript}}", EscapedTextForTtl(logonScript));
+                ttl = ttl.Replace("{{LogonScript}}", logonScript);
                 ttl = ttl.Replace("{{IsForwarding}}", isForwarding.ToString().ToLower());
                 ttl = ttl.Replace("{{ForwardingHost}}", forwardingHost);
                 ttl = ttl.Replace("{{ForwardingUser}}", forwardingUser);
@@ -721,7 +751,7 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
                 ttl = ttl.Replace("{{ForwardingPassword}}", forwardingPassword);
                 ttl = ttl.Replace("{{IsHide}}", isHide.ToString().ToLower());
                 ttl = ttl.Replace("{{WinscpPath}}", winscpPath.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
-                ttl = ttl.Replace("{{Tag}}", EscapedTextForTtl(tag));
+                ttl = ttl.Replace("{{Tag}}", tag);
 
                 var ttlFileName = protocolText + "_" + user + "@" + host;
                 if (!string.IsNullOrEmpty(tag)) ttlFileName += "_" + tag;
@@ -755,7 +785,7 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
                 textBox3.Text = RegexMatchedGroupText(ttl, @"^PrivateKey\s+=\s+'(.*?)'")
                     .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
                 textBox2.Text = RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'");
-                textBox12.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'"));
+                textBox12.Text = RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'");
                 checkBox3.Checked = RegexMatchedGroupText(ttl, @"^IsForwarding\s+=\s+'(.*?)'") == "true";
                 textBox6.Text = RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'");
                 textBox10.Text = RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'");
@@ -764,7 +794,7 @@ sendln '" + EscapedTextForTtl(logonScript) + "'\r\n" +
                     .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
                 textBox8.Text = RegexMatchedGroupText(ttl, @"^ForwardingPassword\s+=\s+'(.*?)'");
                 checkBox1.Checked = RegexMatchedGroupText(ttl, @"^IsHide\s+=\s+'(.*?)'") == "true";
-                textBox11.Text = UnscapedTextForTtl(RegexMatchedGroupText(ttl, @"^Tag\s+=\s+'(.*?)'"));
+                textBox11.Text = RegexMatchedGroupText(ttl, @"^Tag\s+=\s+'(.*?)'");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -844,17 +874,19 @@ expandenv ForwardingPrivateKey
 expandenv WinscpPath
 
 buf = ''
-if IsForwarding == 'true' then
+strcompare IsForwarding 'true'
+if result == 0 then
     strconcat buf ForwardingHost
     strconcat buf ':'
     strconcat buf ForwardingPort
     strconcat buf ' /ssh2'
 
-    if IsHide == 'true' then
+    strcompare IsHide 'true'
+    if result == 0 then
         strconcat buf ' /V'
     else
         strconcat buf ' /I'
-    end if
+    endif
 
     strconcat buf ' /ssh-L'
     strconcat buf forwardingLocalPort
@@ -863,7 +895,8 @@ if IsForwarding == 'true' then
     strconcat buf ':'
     strconcat buf Port
 
-    if ForwardingPrivateKey != '' then
+    strcompare ForwardingPrivateKey ''
+    if result != 0 then
         strconcat buf ' /auth=publickey /user='
         strconcat buf ForwardingUser
         strconcat buf ' /keyfile=""'
@@ -872,38 +905,44 @@ if IsForwarding == 'true' then
     else
         strconcat buf ' /auth=password /user='
         strconcat buf ForwardingUser
-    end if
+    endif
 
-    if ForwardingPassword != '' then
+    strcompare ForwardingPassword ''
+    if result != 0 then
         strconcat buf ' /passwd=""'
         strconcat buf ForwardingPassword
         strconcat buf '""'
-    end if
+    endif
 
     strconcat buf ' /W='
     strconcat buf ForwardingUser
-    trconcat buf '@'
+    strconcat buf '@'
     strconcat buf ForwardingHost
 
     connect buf
     wait ''
-    mpause 200
+    mpause 1000
+    unlink
 endif
 
 buf = ''
-if Protocol == 'SSH' then
-    if IsForwarding == 'true' then
+strcompare Protocol 'SSH'
+if result == 0 then
+
+    strcompare IsForwarding 'true'
+    if result == 0 then
         strconcat buf 'localhost:'
         strconcat buf forwardingLocalPort
-        strconcat buf ' /nosecuritywarning /ssh2:'
+        strconcat buf ' /nosecuritywarning /ssh2'
     else
         strconcat buf Host
         strconcat buf ':'
         strconcat buf Port
-        strconcat buf ' /ssh2:'
-    end if
+        strconcat buf ' /ssh2'
+    endif
 
-    if PrivateKey != '' then
+    strcompare PrivateKey ''
+    if result != 0 then
         strconcat buf ' /auth=publickey /user='
         strconcat buf User
         strconcat buf ' /keyfile=""'
@@ -912,30 +951,36 @@ if Protocol == 'SSH' then
     else
         strconcat buf ' /auth=password /user='
         strconcat buf User
-    end if
+    endif
 
-    if Password != '' then
+    strcompare Password ''
+    if result != 0 then
         strconcat buf ' /passwd=""'
         strconcat buf Password
         strconcat buf '""'
-    end if
+    endif
 
     strconcat buf ' /W='
     strconcat buf User
-    trconcat buf '@'
+    strconcat buf '@'
     strconcat buf Host
 
     connect buf
-    if LogonScript != '' then
-        wait ''
-        mpause 200
-        sendln LogonScript
-    end if
 
-else if Protocol == 'RDP' then
+    strcompare LogonScript ''
+    if result != 0 then
+        wait ''
+        mpause 1000
+        sendln LogonScript
+    endif
+endif
+
+strcompare Protocol 'RDP'
+if result == 0 then
     strconcat buf 'cmdkey'
 
-    if IsForwarding == 'true' then
+    strcompare IsForwarding 'true'
+    if result == 0 then
         strconcat buf ' /generic:TERMSRV/localhost /user:'
         strconcat buf User
         strconcat buf ' /pass:'
@@ -947,14 +992,15 @@ else if Protocol == 'RDP' then
         strconcat buf User
         strconcat buf ' /pass:'
         strconcat buf Password
-    end if
+    endif
 
     exec buf 'minimize' 1
 
     buf = ''
     strconcat buf 'mstsc'
 
-    if IsForwarding == 'true' then
+    strcompare IsForwarding 'true'
+    if result == 0 then
         strconcat buf ' /v:localhost:'
         strconcat buf forwardingLocalPort
     else
@@ -962,15 +1008,20 @@ else if Protocol == 'RDP' then
         strconcat buf Host
         strconcat buf ':'
         strconcat buf Port
-    end if
+    endif
 
     exec buf
+endif
 
-else if Protocol == 'SFTP' then
+strcompare Protocol 'SFTP'
+if result == 0 then
     strconcat buf WinscpPath
 
-    if IsForwarding == 'true' then
-        if Password != '' then
+    strcompare IsForwarding 'true'
+    if result == 0 then
+
+        strcompare Password ''
+        if result != 0 then
             strconcat buf ' sftp://'
             strconcat buf User
             strconcat buf ':'
@@ -982,17 +1033,19 @@ else if Protocol == 'SFTP' then
             strconcat buf User
             strconcat buf '@localhost:'
             strconcat buf forwardingLocalPort
-        end if
+        endif
 
-        if PrivateKey != '' then
+        strcompare PrivateKey ''
+        if result != 0 then
             strconcat buf ' /privatekey=""'
             strconcat buf PrivateKey
             strconcat buf '""'
-        end if
+        endif
 
         strconcat buf ' /hostkey=""*""'
     else
-        if Password != '' then
+        strcompare Password ''
+        if result != 0 then
             strconcat buf ' sftp://'
             strconcat buf User
             strconcat buf ':'
@@ -1008,14 +1061,15 @@ else if Protocol == 'SFTP' then
             strconcat buf Host
             strconcat buf ':'
             strconcat buf Port
-        end if
+        endif
 
-        if PrivateKey != '' then
+        strcompare PrivateKey ''
+        if result != 0 then
             strconcat buf ' /privatekey=""'
             strconcat buf PrivateKey
             strconcat buf '""'
-        end if
-    end if
+        endif
+    endif
 
     strconcat buf ' /sessionname='
     strconcat buf User
@@ -1023,8 +1077,7 @@ else if Protocol == 'SFTP' then
     strconcat buf Host
 
     exec buf
-end if
-
+endif
 ";
     }
 }
