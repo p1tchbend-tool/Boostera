@@ -48,6 +48,26 @@ namespace Boostera
             listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
             listBox1.Height = listBox1.ItemHeight * 16;
 
+            toolTip1.SetToolTip(comboBox2, "接続先のプロトコルを選択してください。\nSSHはTeraTerm、SFTPはWinSCPの事前設定が必要です。");
+            toolTip1.SetToolTip(textBox5, "接続先のホストを入力してください。");
+            toolTip1.SetToolTip(textBox4, "接続先のユーザーを入力してください。");
+            toolTip1.SetToolTip(textBox1, "接続先のポートを入力してください。");
+            toolTip1.SetToolTip(textBox3, "接続先の秘密鍵のパスを入力してください。");
+            toolTip1.SetToolTip(textBox2, "接続先のパスワード／パスフレーズを入力してください。");
+            toolTip1.SetToolTip(textBox12, "接続時に実行するコマンドを入力してください。");
+            toolTip1.SetToolTip(checkBox3, "SSHトンネリングを使用する場合、チェックを入れてください。");
+            toolTip1.SetToolTip(textBox6, "SSHトンネリングで利用するホストを入力してください。");
+            toolTip1.SetToolTip(textBox10, "SSHトンネリングで利用するユーザーを入力してください。");
+            toolTip1.SetToolTip(textBox9, "SSHトンネリングで利用するポートを入力してください。");
+            toolTip1.SetToolTip(textBox7, "SSHトンネリングで利用する秘密鍵のパスを入力してください。");
+            toolTip1.SetToolTip(textBox8, "SSHトンネリングで利用するパスワード／パスフレーズを入力してください。");
+            toolTip1.SetToolTip(checkBox1, "SSHトンネリングで利用する接続先を、非表示のウィンドウで起動する場合、チェックを入れてください。\n" +
+                "非表示で起動したウィンドウは、Boosteraの機能で再表示及び終了可能です。");
+            toolTip1.SetToolTip(textBox11, "ヒストリーの検索や、エクスポート時のファイル名に使用するタグを入力してください。");
+            toolTip1.SetToolTip(button2, "現在の接続設定をTTLマクロとしてエクスポートします。");
+            toolTip1.SetToolTip(button3, "TTLマクロをこの画面に読み込みます。\nBoosteraでエクスポートしたマクロのみ、インポート可能です。");
+            toolTip1.SetToolTip(button1, "現在の設定でホストに接続します。");
+
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
             listBox1.MouseMove += (s, e) =>
             {

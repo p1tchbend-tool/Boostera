@@ -81,7 +81,7 @@ namespace Boostera
             // 
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "HotKey";
-            this.Load += new System.EventHandler(this.HotKey_Load);
+            this.Load += new EventHandler(this.HotKey_Load);
             this.ResumeLayout(false);
 
         }
