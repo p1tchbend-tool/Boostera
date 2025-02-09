@@ -41,22 +41,6 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_DPICHANGED = 0x02E0;
-            if (m.Msg == WM_DPICHANGED)
-            {
-                if (initialWidth == null) initialWidth = this.Width;
-                this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-
-                if (initialHeight == null) initialHeight = this.Height;
-                this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-
-                return;
-            };
-            base.WndProc(ref m);
-        }
-
         public Form1()
         {
             if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
@@ -93,15 +77,12 @@ namespace Boostera
                 }
             };
 
-            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (NativeMethods.GetDpiForSystem() / 96f));
-            listBox1.Height = listBox1.ItemHeight * 10;
-
+            listBox1.Height = (int)Math.Round(listBox1.ItemHeight * (NativeMethods.GetDpiForSystem() / 96f)) * 20;
             listBox1.Parent = myPanel3;
             listBox1.Left = 0;
             listBox1.Top = 0;
             listBox1.Width = myPanel3.Width;
-            listBox1.Height = myPanel3.Height;
-            myPanel3.Height = listBox1.Height - 25;
+            myPanel3.Height = listBox1.Height;
 
             myPanel4.Left = myPanel2.Left - 2;
             myPanel4.Top = myPanel2.Top - 2;
@@ -191,7 +172,7 @@ namespace Boostera
                 }
                 finally { isShowingChildForm = false; }
             };
-            
+
             panel3.MouseClick += (s, e) =>
             {
                 if (e.Button != MouseButtons.Left) return;
@@ -303,7 +284,7 @@ namespace Boostera
 
                         var area = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea;
                         var width = area.Width / 2;
-                        NativeMethods.MoveWindow(ps[0].MainWindowHandle,area.Left, area.Top, width, area.Height, 1);
+                        NativeMethods.MoveWindow(ps[0].MainWindowHandle, area.Left, area.Top, width, area.Height, 1);
 
                         NativeMethods.SetForegroundWindow(ps[0].MainWindowHandle);
                     }
@@ -664,6 +645,7 @@ namespace Boostera
             timer1.Start();
             timer2.Start();
             timer3.Start();
+            timer4.Start();
         }
 
         private void timer3_Tick(object sender, EventArgs e)
@@ -706,6 +688,12 @@ namespace Boostera
         private void timer2_Tick(object sender, EventArgs e)
         {
             EnumerateAsync();
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
         }
 
         private async void EnumerateAsync()

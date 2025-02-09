@@ -24,22 +24,6 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_DPICHANGED = 0x02E0;
-            if (m.Msg == WM_DPICHANGED)
-            {
-                if (initialWidth == null) initialWidth = this.Width;
-                this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-
-                if (initialHeight == null) initialHeight = this.Height;
-                this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-
-                return;
-            };
-            base.WndProc(ref m);
-        }
-
         public Form2(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key)
         {
             InitializeComponent();
@@ -129,6 +113,14 @@ namespace Boostera
 
             Program.ChangeFont(this);
             Program.SortTabIndex(this);
+
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
         }
     }
 }

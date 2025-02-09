@@ -57,6 +57,7 @@
             panel1 = new System.Windows.Forms.Panel();
             panel7 = new System.Windows.Forms.Panel();
             panel3 = new System.Windows.Forms.Panel();
+            timer4 = new System.Windows.Forms.Timer(components);
             SuspendLayout();
             // 
             // textBox1
@@ -330,6 +331,11 @@
             panel3.Size = new System.Drawing.Size(30, 30);
             panel3.TabIndex = 5;
             // 
+            // timer4
+            // 
+            timer4.Interval = 1000;
+            timer4.Tick += timer4_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -401,6 +407,7 @@
         private MyPanel myPanel6;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel12;
+        private System.Windows.Forms.Timer timer4;
     }
 }
 
