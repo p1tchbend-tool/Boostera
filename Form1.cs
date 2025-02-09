@@ -60,6 +60,10 @@ namespace Boostera
 
             this.Shown += (s, e) =>
             {
+                textBox1.Text = string.Empty;
+                label1.Visible = true;
+                listBox1.Visible = false;
+
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
@@ -77,12 +81,8 @@ namespace Boostera
                 }
             };
 
-            listBox1.Height = (int)Math.Round(listBox1.ItemHeight * (NativeMethods.GetDpiForSystem() / 96f)) * 20;
-            listBox1.Parent = myPanel3;
-            listBox1.Left = 0;
-            listBox1.Top = 0;
-            listBox1.Width = myPanel3.Width;
-            myPanel3.Height = listBox1.Height;
+            listBox1.Left = listBox1.Left - 2;
+            listBox1.Width = listBox1.Width + 6;
 
             myPanel4.Left = myPanel2.Left - 2;
             myPanel4.Top = myPanel2.Top - 2;
@@ -91,10 +91,6 @@ namespace Boostera
             myPanel5.Left = myPanel1.Left - 2;
             myPanel5.Top = myPanel1.Top - 2;
             myPanel5.Size = new Size(myPanel1.Width + 4, myPanel1.Height + 4);
-
-            myPanel6.Left = myPanel3.Left - 2;
-            myPanel6.Top = myPanel3.Top - 2;
-            myPanel6.Size = new Size(myPanel3.Width + 4, myPanel3.Height + 4);
 
             this.Leave += (s, e) =>
             {
@@ -564,14 +560,12 @@ namespace Boostera
             if (string.IsNullOrEmpty(textBox1.Text))
             {
                 label1.Visible = true;
-                myPanel3.Visible = false;
-                myPanel6.Visible = false;
+                listBox1.Visible = false;
             }
             else
             {
                 label1.Visible = false;
-                myPanel6.Visible = true;
-                myPanel3.Visible = true;
+                listBox1.Visible = true;
             }
 
             var searchWords = textBox1.Text.ToLower().Split(new string[] { " ", "　" }, StringSplitOptions.RemoveEmptyEntries);

@@ -570,12 +570,13 @@
             listBox1.Font = new System.Drawing.Font("メイリオ", 20F);
             listBox1.ForeColor = System.Drawing.Color.White;
             listBox1.FormattingEnabled = true;
-            listBox1.Location = new System.Drawing.Point(287, 687);
+            listBox1.Location = new System.Drawing.Point(11, 75);
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(277, 41);
+            listBox1.Size = new System.Drawing.Size(775, 656);
             listBox1.TabIndex = 29;
+            listBox1.Visible = false;
             // 
             // textBox13
             // 

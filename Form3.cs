@@ -69,12 +69,6 @@ namespace Boostera
             toolTip1.SetToolTip(button3, "TTLマクロをこの画面に読み込みます。\nBoosteraでエクスポートしたマクロのみ、インポート可能です。");
             toolTip1.SetToolTip(button1, "現在の設定でホストに接続します。");
 
-            listBox1.Height = (int)Math.Round(listBox1.ItemHeight * (NativeMethods.GetDpiForSystem() / 96f)) * 16;
-            listBox1.Visible = false;
-            listBox1.Left = label12.Left;
-            listBox1.Top = comboBox2.Top;
-            listBox1.Width = textBox13.Width + 4;
-
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
             listBox1.MouseMove += (s, e) =>
             {

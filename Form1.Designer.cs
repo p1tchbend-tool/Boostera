@@ -41,10 +41,8 @@
             contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(components);
             myPanel1 = new MyPanel();
             myPanel2 = new MyPanel();
-            myPanel3 = new MyPanel();
             myPanel4 = new MyPanel();
             myPanel5 = new MyPanel();
-            myPanel6 = new MyPanel();
             panel12 = new System.Windows.Forms.Panel();
             panel11 = new System.Windows.Forms.Panel();
             panel2 = new System.Windows.Forms.Panel();
@@ -83,11 +81,11 @@
             listBox1.Font = new System.Drawing.Font("メイリオ", 20F);
             listBox1.ForeColor = System.Drawing.Color.White;
             listBox1.FormattingEnabled = true;
-            listBox1.Location = new System.Drawing.Point(18, 166);
+            listBox1.Location = new System.Drawing.Point(9, 152);
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(760, 410);
+            listBox1.Size = new System.Drawing.Size(780, 615);
             listBox1.TabIndex = 1;
             // 
             // timer1
@@ -157,17 +155,6 @@
             myPanel2.Size = new System.Drawing.Size(412, 56);
             myPanel2.TabIndex = 6;
             // 
-            // myPanel3
-            // 
-            myPanel3.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
-            myPanel3.ForeColor = System.Drawing.Color.White;
-            myPanel3.Location = new System.Drawing.Point(9, 152);
-            myPanel3.Margin = new System.Windows.Forms.Padding(2, 8, 2, 2);
-            myPanel3.Name = "myPanel3";
-            myPanel3.Size = new System.Drawing.Size(781, 435);
-            myPanel3.TabIndex = 13;
-            myPanel3.Visible = false;
-            // 
             // myPanel4
             // 
             myPanel4.BackColor = System.Drawing.Color.FromArgb(100, 100, 100);
@@ -187,17 +174,6 @@
             myPanel5.Name = "myPanel5";
             myPanel5.Size = new System.Drawing.Size(60, 56);
             myPanel5.TabIndex = 16;
-            // 
-            // myPanel6
-            // 
-            myPanel6.BackColor = System.Drawing.Color.FromArgb(100, 100, 100);
-            myPanel6.ForeColor = System.Drawing.Color.White;
-            myPanel6.Location = new System.Drawing.Point(147, 7);
-            myPanel6.Margin = new System.Windows.Forms.Padding(2);
-            myPanel6.Name = "myPanel6";
-            myPanel6.Size = new System.Drawing.Size(60, 56);
-            myPanel6.TabIndex = 17;
-            myPanel6.Visible = false;
             // 
             // panel12
             // 
@@ -341,7 +317,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.Green;
-            ClientSize = new System.Drawing.Size(808, 610);
+            ClientSize = new System.Drawing.Size(810, 800);
             ControlBox = false;
             Controls.Add(panel12);
             Controls.Add(panel11);
@@ -360,10 +336,8 @@
             Controls.Add(panel3);
             Controls.Add(myPanel1);
             Controls.Add(myPanel2);
-            Controls.Add(myPanel3);
             Controls.Add(myPanel4);
             Controls.Add(myPanel5);
-            Controls.Add(myPanel6);
             DoubleBuffered = true;
             ForeColor = System.Drawing.SystemColors.ControlText;
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -400,11 +374,9 @@
         private System.Windows.Forms.Panel panel10;
         private MyPanel myPanel1;
         private MyPanel myPanel2;
-        private MyPanel myPanel3;
         private System.Windows.Forms.Panel panel2;
         private MyPanel myPanel4;
         private MyPanel myPanel5;
-        private MyPanel myPanel6;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Timer timer4;
