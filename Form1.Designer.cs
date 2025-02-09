@@ -85,7 +85,7 @@
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(780, 615);
+            listBox1.Size = new System.Drawing.Size(780, 492);
             listBox1.TabIndex = 1;
             // 
             // timer1
@@ -309,7 +309,7 @@
             // 
             // timer4
             // 
-            timer4.Interval = 1000;
+            timer4.Interval = 500;
             timer4.Tick += timer4_Tick;
             // 
             // Form1
@@ -317,7 +317,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.Green;
-            ClientSize = new System.Drawing.Size(810, 800);
+            ClientSize = new System.Drawing.Size(810, 670);
             ControlBox = false;
             Controls.Add(panel12);
             Controls.Add(panel11);
