@@ -21,17 +21,19 @@ namespace Boostera
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Keys Key { get; set; }
 
-        private int initialWidth = 0;
-        private int initialHeight = 0;
+        private static int? initialWidth = null;
+        private static int? initialHeight = null;
 
         protected override void WndProc(ref Message m)
         {
             const int WM_DPICHANGED = 0x02E0;
             if (m.Msg == WM_DPICHANGED)
             {
-                float f = NativeMethods.GetDpiForSystem();
-                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
-                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+                if (initialWidth == null) initialWidth = this.Width;
+                this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+
+                if (initialHeight == null) initialHeight = this.Height;
+                this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
                 return;
             };
@@ -42,12 +44,11 @@ namespace Boostera
         {
             InitializeComponent();
 
-            initialWidth = this.Width;
-            initialHeight = this.Height;
+            if (initialWidth == null) initialWidth = this.Width;
+            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
-            float f = NativeMethods.GetDpiForSystem();
-            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
-            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+            if (initialHeight == null) initialHeight = this.Height;
+            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
             label7.Text = string.Empty;
             this.Shown += (s, e) => firstLabel.Focus();

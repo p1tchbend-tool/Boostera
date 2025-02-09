@@ -38,17 +38,19 @@ namespace Boostera
             WriteIndented = true
         };
 
-        private int initialWidth = 0;
-        private int initialHeight = 0;
+        private static int? initialWidth = null;
+        private static int? initialHeight = null;
 
         protected override void WndProc(ref Message m)
         {
             const int WM_DPICHANGED = 0x02E0;
             if (m.Msg == WM_DPICHANGED)
             {
-                float f = NativeMethods.GetDpiForSystem();
-                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
-                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+                if (initialWidth == null) initialWidth = this.Width;
+                this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+
+                if (initialHeight == null) initialHeight = this.Height;
+                this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
                 return;
             };
@@ -66,21 +68,32 @@ namespace Boostera
 
             InitializeComponent();
 
-            initialWidth = this.Width;
-            initialHeight = this.Height;
+            if (initialWidth == null) initialWidth = this.Width;
+            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
-            float f = NativeMethods.GetDpiForSystem();
-            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
-            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+            if (initialHeight == null) initialHeight = this.Height;
+            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
-            this.Shown += (s, eventArgs) =>
+            this.Shown += (s, e) =>
             {
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
+
+                using (var form2 = new Form2(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
+                {
+                    form2.Show();
+                    form2.Close();
+                };
+                using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyPath))
+                {
+                    form3.Show();
+                    form3.Hide();
+                    form3.Close();
+                }
             };
 
-            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (NativeMethods.GetDpiForSystem() / 96f));
             listBox1.Height = listBox1.ItemHeight * 10;
 
             listBox1.Parent = myPanel3;
@@ -137,7 +150,7 @@ namespace Boostera
             item3.ForeColor = Color.FromArgb(255, 255, 255);
             item3.Click += (s, e) =>
             {
-                var result = MessageBox.Show("終了しますか？", "", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("終了しますか？", "Boostera", MessageBoxButtons.YesNo);
                 if (result != DialogResult.Yes) return;
 
                 this.Close();

@@ -29,17 +29,19 @@ namespace Boostera
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
 
-        private int initialWidth = 0;
-        private int initialHeight = 0;
+        private static int? initialWidth = null;
+        private static int? initialHeight = null;
 
         protected override void WndProc(ref Message m)
         {
             const int WM_DPICHANGED = 0x02E0;
             if (m.Msg == WM_DPICHANGED)
             {
-                float f = NativeMethods.GetDpiForSystem();
-                this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
-                this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
+                if (initialWidth == null) initialWidth = this.Width;
+                this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+
+                if (initialHeight == null) initialHeight = this.Height;
+                this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
                 return;
             };
@@ -50,20 +52,11 @@ namespace Boostera
         {
             InitializeComponent();
 
-            initialWidth = this.Width;
-            initialHeight = this.Height;
+            if (initialWidth == null) initialWidth = this.Width;
+            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
-            float f = NativeMethods.GetDpiForSystem();
-            this.Width = (int)Math.Round(initialWidth * (this.DeviceDpi / f));
-            this.Height = (int)Math.Round(initialHeight * (this.DeviceDpi / f));
-
-            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (f / 96f));
-            listBox1.Height = listBox1.ItemHeight * 16;
-
-            listBox1.Visible = false;
-            listBox1.Left = label12.Left;
-            listBox1.Top = comboBox2.Top;
-            listBox1.Width = textBox13.Width + 1;
+            if (initialHeight == null) initialHeight = this.Height;
+            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
 
             this.Shown += (s, e) => textBox13.Focus();
 
@@ -91,6 +84,14 @@ namespace Boostera
             toolTip1.SetToolTip(button2, "現在の接続設定をTTLマクロとしてエクスポートします。");
             toolTip1.SetToolTip(button3, "TTLマクロをこの画面に読み込みます。\nBoosteraでエクスポートしたマクロのみ、インポート可能です。");
             toolTip1.SetToolTip(button1, "現在の設定でホストに接続します。");
+
+            listBox1.ItemHeight = (int)Math.Round(listBox1.ItemHeight * (NativeMethods.GetDpiForSystem() / 96f));
+            listBox1.Height = listBox1.ItemHeight * 16;
+
+            listBox1.Visible = false;
+            listBox1.Left = label12.Left;
+            listBox1.Top = comboBox2.Top;
+            listBox1.Width = textBox13.Width + 1;
 
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
             listBox1.MouseMove += (s, e) =>
