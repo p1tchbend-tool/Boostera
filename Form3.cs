@@ -470,7 +470,7 @@ namespace Boostera
                 try
                 {
                     Process.Start(psi);
-                    Thread.Sleep(1000);
+                    Thread.Sleep(3000);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -505,7 +505,7 @@ namespace Boostera
                             Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
 
                         var script = @"wait ''
-mpause 1000
+mpause 3000
 sendln '" + logonScript + "'\r\n" +
 "filedelete '" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "'";
 
@@ -961,7 +961,7 @@ if result == 0 then
 
     connect buf
     wait ''
-    mpause 1000
+    mpause 3000
     unlink
 endif
 
@@ -1010,7 +1010,7 @@ if result == 0 then
     strcompare LogonScript ''
     if result != 0 then
         wait ''
-        mpause 1000
+        mpause 3000
         sendln LogonScript
     endif
 endif
