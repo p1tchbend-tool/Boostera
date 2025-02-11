@@ -106,12 +106,15 @@ namespace Boostera
                 textBox1.Text = history.Port;
                 textBox3.Text = history.PrivateKey;
                 textBox2.Text = history.Password;
+                textBox12.Text = history.LogonScript;
                 checkBox3.Checked = history.IsForwarding;
                 textBox6.Text = history.ForwardingHost;
                 textBox10.Text = history.ForwardingUser;
                 textBox9.Text = history.ForwardingPort;
                 textBox7.Text = history.ForwardingPrivateKey;
                 textBox8.Text = history.ForwardingPassword;
+                checkBox1.Checked = history.IsHide;
+                textBox11.Text = history.Tag;
 
                 textBox13.Text = string.Empty;
                 listBox1.Visible = false;
@@ -131,12 +134,15 @@ namespace Boostera
                     textBox1.Text = history.Port;
                     textBox3.Text = history.PrivateKey;
                     textBox2.Text = history.Password;
+                    textBox12.Text = history.LogonScript;
                     checkBox3.Checked = history.IsForwarding;
                     textBox6.Text = history.ForwardingHost;
                     textBox10.Text = history.ForwardingUser;
                     textBox9.Text = history.ForwardingPort;
                     textBox7.Text = history.ForwardingPrivateKey;
                     textBox8.Text = history.ForwardingPassword;
+                    checkBox1.Checked = history.IsHide;
+                    textBox11.Text = history.Tag;
                 }
             };
 
@@ -154,12 +160,15 @@ namespace Boostera
                     textBox1.Text = history.Port;
                     textBox3.Text = history.PrivateKey;
                     textBox2.Text = history.Password;
+                    textBox12.Text = history.LogonScript;
                     checkBox3.Checked = history.IsForwarding;
                     textBox6.Text = history.ForwardingHost;
                     textBox10.Text = history.ForwardingUser;
                     textBox9.Text = history.ForwardingPort;
                     textBox7.Text = history.ForwardingPrivateKey;
                     textBox8.Text = history.ForwardingPassword;
+                    checkBox1.Checked = history.IsHide;
+                    textBox11.Text = history.Tag;
                 }
                 else if (e.KeyCode == Keys.Up)
                 {
@@ -204,13 +213,14 @@ namespace Boostera
                 textBox1.Text = history.Port;
                 textBox3.Text = history.PrivateKey;
                 textBox2.Text = history.Password;
+                textBox12.Text = history.LogonScript;
                 checkBox3.Checked = history.IsForwarding;
                 textBox6.Text = history.ForwardingHost;
                 textBox10.Text = history.ForwardingUser;
                 textBox9.Text = history.ForwardingPort;
                 textBox7.Text = history.ForwardingPrivateKey;
                 textBox8.Text = history.ForwardingPassword;
-                textBox12.Text = history.LogonScript;
+                checkBox1.Checked = history.IsHide;
                 textBox11.Text = history.Tag;
 
                 listBox1.SelectedIndex = 0;
@@ -620,8 +630,8 @@ sendln '" + logonScript + "'\r\n" +
                 uniqueKey = protocolText + "://" + user + "@" + host + " #" + tag;
             }
 
-            var hitory = new History(uniqueKey, protocol, host, user, port, privateKey, password, isForwarding, forwardingHost,
-                forwardingUser, forwardingPort, forwardingLocalPort, isHide, forwardingPrivateKey, forwardingPassword, tag, logonScript, searchKey);
+            var hitory = new History(uniqueKey, searchKey, protocol, host, user, port, privateKey, password, logonScript,
+                isForwarding, forwardingHost, forwardingUser, forwardingPort, forwardingPrivateKey, forwardingPassword, isHide, tag);
 
             histories.RemoveAll(x => x.UniqueKey == uniqueKey);
             histories.Insert(0, hitory);
@@ -639,61 +649,51 @@ sendln '" + logonScript + "'\r\n" +
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             textBox1.Text = Regex.Replace(textBox1.Text, @"[^\d]", string.Empty);
-            textBox1.SelectionStart = textBox1.Text.Length;
         }
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
             textBox9.Text = Regex.Replace(textBox9.Text, @"[^\d]", string.Empty);
-            textBox9.SelectionStart = textBox9.Text.Length;
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
             textBox5.Text = textBox5.Text.Replace("'", "");
-            textBox5.SelectionStart = textBox5.Text.Length;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
             textBox4.Text = textBox4.Text.Replace("'", "");
-            textBox4.SelectionStart = textBox4.Text.Length;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             textBox2.Text = textBox2.Text.Replace("'", "");
-            textBox2.SelectionStart = textBox2.Text.Length;
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
             textBox6.Text = textBox6.Text.Replace("'", "");
-            textBox6.SelectionStart = textBox6.Text.Length;
         }
 
         private void textBox10_TextChanged(object sender, EventArgs e)
         {
             textBox10.Text = textBox10.Text.Replace("'", "");
-            textBox10.SelectionStart = textBox10.Text.Length;
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
         {
             textBox8.Text = textBox8.Text.Replace("'", "");
-            textBox8.SelectionStart = textBox8.Text.Length;
         }
 
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
             textBox11.Text = textBox11.Text.Replace("'", "");
-            textBox11.SelectionStart = textBox11.Text.Length;
         }
 
         private void textBox12_TextChanged(object sender, EventArgs e)
         {
             textBox12.Text = textBox12.Text.Replace("'", "\"");
-            textBox12.SelectionStart = textBox12.Text.Length;
         }
 
         private void textBox13_TextChanged(object sender, EventArgs e)
