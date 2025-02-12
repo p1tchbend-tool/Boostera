@@ -38,17 +38,47 @@ namespace Boostera
             this.Shown += (s, e) => firstLabel.Focus();
 
             textBox4.Text = ttermproPath;
-            textBox4.TextChanged += (s, e) => textBox4.Text = textBox4.Text.Replace("\"", "");
+            textBox4.TextChanged += (s, e) =>
+            {
+                var caret = textBox4.SelectionStart;
+                textBox4.Text = textBox4.Text.Replace("\"", "");
+                textBox4.SelectionStart = caret;
+            };
             textBox1.Text = ttpmacroPath;
-            textBox1.TextChanged += (s, e) => textBox1.Text = textBox1.Text.Replace("\"", "");
+            textBox1.TextChanged += (s, e) =>
+            {
+                var caret = textBox1.SelectionStart;
+                textBox1.Text = textBox1.Text.Replace("\"", "");
+                textBox1.SelectionStart = caret;
+            };
             textBox6.Text = winscpPath;
-            textBox6.TextChanged += (s, e) => textBox6.Text = textBox6.Text.Replace("\"", "");
+            textBox6.TextChanged += (s, e) =>
+            {
+                var caret = textBox6.SelectionStart;
+                textBox6.Text = textBox6.Text.Replace("\"", "");
+                textBox6.SelectionStart = caret;
+            };
             textBox7.Text = boosteraKeyPath;
-            textBox7.TextChanged += (s, e) => textBox7.Text = textBox7.Text.Replace("\"", "");
+            textBox7.TextChanged += (s, e) =>
+            {
+                var caret = textBox7.SelectionStart;
+                textBox7.Text = textBox7.Text.Replace("\"", "");
+                textBox7.SelectionStart = caret;
+            };
             textBox2.Text = searchFolder;
-            textBox2.TextChanged += (s, e) => textBox2.Text = textBox2.Text.Replace("\"", "");
+            textBox2.TextChanged += (s, e) =>
+            {
+                var caret = textBox2.SelectionStart;
+                textBox2.Text = textBox2.Text.Replace("\"", "");
+                textBox2.SelectionStart = caret;
+            };
             textBox3.Text = searchExclusionFolders;
-            textBox3.TextChanged += (s, e) => textBox3.Text = textBox3.Text.Replace("\"", "");
+            textBox3.TextChanged += (s, e) =>
+            {
+                var caret = textBox3.SelectionStart;
+                textBox3.Text = textBox3.Text.Replace("\"", "");
+                textBox3.SelectionStart = caret;
+            };
 
             checkBox1.Checked = isStartUp;
             ModKey = modKey;

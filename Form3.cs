@@ -648,52 +648,72 @@ sendln '" + logonScript + "'\r\n" +
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox1.SelectionStart;
             textBox1.Text = Regex.Replace(textBox1.Text, @"[^\d]", string.Empty);
+            textBox1.SelectionStart = caret;
         }
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox9.SelectionStart;
             textBox9.Text = Regex.Replace(textBox9.Text, @"[^\d]", string.Empty);
+            textBox9.SelectionStart = caret;
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox5.SelectionStart;
             textBox5.Text = textBox5.Text.Replace("'", "");
+            textBox5.SelectionStart = caret;
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox4.SelectionStart;
             textBox4.Text = textBox4.Text.Replace("'", "");
+            textBox4.SelectionStart = caret;
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox2.SelectionStart;
             textBox2.Text = textBox2.Text.Replace("'", "");
+            textBox2.SelectionStart = caret;
         }
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox6.SelectionStart;
             textBox6.Text = textBox6.Text.Replace("'", "");
+            textBox6.SelectionStart = caret;
         }
 
         private void textBox10_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox10.SelectionStart;
             textBox10.Text = textBox10.Text.Replace("'", "");
+            textBox10.SelectionStart = caret;
         }
 
         private void textBox8_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox8.SelectionStart;
             textBox8.Text = textBox8.Text.Replace("'", "");
+            textBox8.SelectionStart = caret;
         }
 
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox11.SelectionStart;
             textBox11.Text = textBox11.Text.Replace("'", "");
+            textBox11.SelectionStart = caret;
         }
 
         private void textBox12_TextChanged(object sender, EventArgs e)
         {
+            var caret = textBox12.SelectionStart;
             textBox12.Text = textBox12.Text.Replace("'", "\"");
+            textBox12.SelectionStart = caret;
         }
 
         private void textBox13_TextChanged(object sender, EventArgs e)
