@@ -89,7 +89,7 @@ namespace Boostera
         public HotKey()
         {
             InitializeComponent();
-            this.Visible = false;
+            this.Hide();
         }
     }
 }

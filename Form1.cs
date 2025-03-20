@@ -197,11 +197,10 @@ namespace Boostera
                         }
                         catch { }
 
-                        Microsoft.Win32.RegistryKey regkey =
-                            Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                        var regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
                         if (isStartUp)
                         {
-                            regkey.SetValue(Application.ProductName, Application.ExecutablePath);
+                            regkey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
                         }
                         else
                         {
@@ -617,11 +616,10 @@ namespace Boostera
             }
             catch { }
 
-            Microsoft.Win32.RegistryKey regkey =
-                Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            var regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
             if (isStartUp)
             {
-                regkey.SetValue(Application.ProductName, Application.ExecutablePath);
+                regkey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
             }
             else
             {

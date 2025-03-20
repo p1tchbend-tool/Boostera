@@ -17,6 +17,7 @@ namespace Boostera
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
         private string boosteraMacroFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Boostera");
+        private string sshFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".ssh");
         private List<History> histories = new List<History>();
         private int preIndex = ListBox.NoMatches;
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
@@ -282,6 +283,9 @@ namespace Boostera
 
                 using (var openFileDialog = new OpenFileDialog())
                 {
+                    if (!Directory.Exists(sshFolder)) Directory.CreateDirectory(sshFolder);
+                    openFileDialog.InitialDirectory = sshFolder;
+
                     if (openFileDialog.ShowDialog() == DialogResult.OK) textBox3.Text = openFileDialog.FileName;
                 }
             };
@@ -308,6 +312,9 @@ namespace Boostera
 
                 using (var openFileDialog = new OpenFileDialog())
                 {
+                    if (!Directory.Exists(sshFolder)) Directory.CreateDirectory(sshFolder);
+                    openFileDialog.InitialDirectory = sshFolder;
+
                     if (openFileDialog.ShowDialog() == DialogResult.OK) textBox7.Text = openFileDialog.FileName;
                 }
             };
@@ -427,6 +434,8 @@ namespace Boostera
         private void button1_Click(object sender, EventArgs e)
         {
             if (listBox1.Visible) return;
+
+            this.Hide();
 
             Random random = new Random();
             var forwardingLocalPort = random.Next(49152, 65535).ToString();
@@ -754,10 +763,9 @@ sendln '" + logonScript + "'\r\n" +
             try
             {
                 var targetFolder = string.Empty;
-
-                if (!Directory.Exists(boosteraMacroFolder)) Directory.CreateDirectory(boosteraMacroFolder);
                 using (var openFileDialog = new OpenFileDialog())
                 {
+                    if (!Directory.Exists(boosteraMacroFolder)) Directory.CreateDirectory(boosteraMacroFolder);
                     openFileDialog.InitialDirectory = boosteraMacroFolder;
                     openFileDialog.FileName = "Folder";
                     openFileDialog.Filter = "Folder|.";
@@ -825,7 +833,10 @@ sendln '" + logonScript + "'\r\n" +
                 var ttlFilePath = string.Empty;
                 using (var openFileDialog = new OpenFileDialog())
                 {
+                    if (!Directory.Exists(boosteraMacroFolder)) Directory.CreateDirectory(boosteraMacroFolder);
+                    openFileDialog.InitialDirectory = boosteraMacroFolder;
                     openFileDialog.Filter = "TTL|*.ttl";
+
                     if (openFileDialog.ShowDialog() == DialogResult.OK) ttlFilePath = openFileDialog.FileName;
                 }
 
