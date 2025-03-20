@@ -389,7 +389,10 @@ namespace Boostera
             {
                 if (e.Button != MouseButtons.Left) return;
 
-                var ps = Process.GetProcessesByName("ttermpro");
+                var ps = Process.GetProcessesByName("ttermpro")
+                    .OrderByDescending(p => p.StartTime)
+                    .ToArray();
+
                 if (ps.Length != 0)
                 {
                     var result = MessageBox.Show("すべて終了しますか？\n※コマンド実行中でも終了します。", "", MessageBoxButtons.YesNo);
@@ -419,7 +422,7 @@ namespace Boostera
 
                     Thread.Sleep(1000);
 
-                    for (int i = ps.Length - 1; i >= 0; i--)
+                    for (int i = 0; i < ps.Length; i++)
                     {
                         NativeMethods.PostMessage(ps[i].MainWindowHandle, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
                     }
