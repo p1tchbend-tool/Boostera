@@ -7,8 +7,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Boostera
 {
@@ -25,8 +27,8 @@ namespace Boostera
         private int modkey = HotKey.MOD_KEY_ALT;
         private Keys key = Keys.T;
 
-        private List<IntPtr> hwnds = new List<IntPtr>();
-        private List<IntPtr> hwnds_darkmode = new List<IntPtr>();
+        private List<IntPtr> ttermproHwnds = new List<IntPtr>();
+        private List<IntPtr> ttermproHwndsTopMost = new List<IntPtr>();
         private List<Index> files = new List<Index>();
         private List<Index> files_shadow = new List<Index>();
         private bool isEnumeration = false;
@@ -220,11 +222,11 @@ namespace Boostera
                 if (e.Button != MouseButtons.Left) return;
 
                 var ps = Process.GetProcessesByName("ttermpro");
-                for (int j = 0; j < 2; j++)
+                for (int i = 0; i < 2; i++)  // 一度では反映されない場合があるため、2回実行
                 {
-                    for (int i = 0; i < ps.Length; i++)
+                    for (int j = 0; j < ps.Length; j++)
                     {
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_MINIMIZE);
+                        NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_MINIMIZE);
                     }
                 }
                 this.Hide();
@@ -236,13 +238,13 @@ namespace Boostera
                 if (e.Button != MouseButtons.Left) return;
 
                 var ps = Process.GetProcessesByName("ttermpro");
-                for (int j = 0; j < 2; j++)
+                for (int i = 0; i < 2; i++)  // 一度では反映されない場合があるため、2回実行
                 {
                     if (ps.Length == 1)
                     {
                         NativeMethods.ShowWindow(ps[0].MainWindowHandle, NativeMethods.SW_RESTORE);
 
-                        var area = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea;
+                        var area = Screen.FromPoint(Cursor.Position).WorkingArea;
                         var height = area.Height / 2;
                         NativeMethods.MoveWindow(ps[0].MainWindowHandle, area.Left, area.Top, area.Width, height, 1);
 
@@ -250,15 +252,15 @@ namespace Boostera
                     }
                     else
                     {
-                        for (int i = 0; i < ps.Length; i++)
+                        for (int j = 0; j < ps.Length; j++)
                         {
-                            NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_RESTORE);
+                            NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_RESTORE);
 
-                            var area = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea;
+                            var area = Screen.FromPoint(Cursor.Position).WorkingArea;
                             var height = area.Height / ps.Length;
-                            NativeMethods.MoveWindow(ps[i].MainWindowHandle, area.Left, area.Top + i * height, area.Width, height, 1);
+                            NativeMethods.MoveWindow(ps[j].MainWindowHandle, area.Left, area.Top + j * height, area.Width, height, 1);
 
-                            NativeMethods.SetForegroundWindow(ps[i].MainWindowHandle);
+                            NativeMethods.SetForegroundWindow(ps[j].MainWindowHandle);
                         }
                     }
                 }
@@ -271,13 +273,13 @@ namespace Boostera
                 if (e.Button != MouseButtons.Left) return;
 
                 var ps = Process.GetProcessesByName("ttermpro");
-                for (int j = 0; j < 2; j++)
+                for (int i = 0; i < 2; i++)  // 一度では反映されない場合があるため、2回実行
                 {
                     if (ps.Length == 1)
                     {
                         NativeMethods.ShowWindow(ps[0].MainWindowHandle, NativeMethods.SW_RESTORE);
 
-                        var area = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea;
+                        var area = Screen.FromPoint(Cursor.Position).WorkingArea;
                         var width = area.Width / 2;
                         NativeMethods.MoveWindow(ps[0].MainWindowHandle, area.Left, area.Top, width, area.Height, 1);
 
@@ -285,15 +287,15 @@ namespace Boostera
                     }
                     else
                     {
-                        for (int i = 0; i < ps.Length; i++)
+                        for (int j = 0; j < ps.Length; j++)
                         {
-                            NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_RESTORE);
+                            NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_RESTORE);
 
-                            var area = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea;
+                            var area = Screen.FromPoint(Cursor.Position).WorkingArea;
                             var width = area.Width / ps.Length;
-                            NativeMethods.MoveWindow(ps[i].MainWindowHandle, area.Left + i * width, area.Top, width, area.Height, 1);
+                            NativeMethods.MoveWindow(ps[j].MainWindowHandle, area.Left + j * width, area.Top, width, area.Height, 1);
 
-                            NativeMethods.SetForegroundWindow(ps[i].MainWindowHandle);
+                            NativeMethods.SetForegroundWindow(ps[j].MainWindowHandle);
                         }
                     }
                 }
@@ -327,15 +329,15 @@ namespace Boostera
                 if (!isTopMost)
                 {
                     var ps = Process.GetProcessesByName("ttermpro");
-                    for (int j = 0; j < 2; j++)
+                    for (int i = 0; i < 2; i++)  // 一度では反映されない場合があるため、2回実行
                     {
-                        for (int i = 0; i < ps.Length; i++)
+                        for (int j = 0; j < ps.Length; j++)
                         {
                             NativeMethods.SetWindowPos(
-                                ps[i].MainWindowHandle, NativeMethods.HWND_NOTOPMOST, 0, 0, 0, 0, NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOMOVE | NativeMethods.SWP_SHOWWINDOW);
+                                ps[j].MainWindowHandle, NativeMethods.HWND_NOTOPMOST, 0, 0, 0, 0, NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOMOVE | NativeMethods.SWP_SHOWWINDOW);
                         }
                     }
-                    hwnds = new List<IntPtr>();
+                    ttermproHwndsTopMost = new List<IntPtr>();
                 }
             };
 
@@ -344,39 +346,39 @@ namespace Boostera
                 if (e.Button != MouseButtons.Left) return;
 
                 var ps = Process.GetProcessesByName("ttermpro");
-                for (int j = 0; j < 2; j++)
+                for (int i = 0; i < 2; i++)  // 一度では反映されない場合があるため、2回実行
                 {
                     var length = ps.Length;
-                    var i = 0;
-                    var area = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea;
+                    var j = 0;
+                    var area = Screen.FromPoint(Cursor.Position).WorkingArea;
                     var width = area.Width / 2;
                     var height = area.Height / 2;
 
                     while (true)
                     {
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_RESTORE);
-                        NativeMethods.MoveWindow(ps[i].MainWindowHandle, area.Left, area.Top, width, height, 1);
-                        NativeMethods.SetForegroundWindow(ps[i].MainWindowHandle);
-                        i++;
-                        if (i >= length) break;
+                        NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_RESTORE);
+                        NativeMethods.MoveWindow(ps[j].MainWindowHandle, area.Left, area.Top, width, height, 1);
+                        NativeMethods.SetForegroundWindow(ps[j].MainWindowHandle);
+                        j++;
+                        if (j >= length) break;
 
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_RESTORE);
-                        NativeMethods.MoveWindow(ps[i].MainWindowHandle, area.Left + width, area.Top, width, height, 1);
-                        NativeMethods.SetForegroundWindow(ps[i].MainWindowHandle);
-                        i++;
-                        if (i >= length) break;
+                        NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_RESTORE);
+                        NativeMethods.MoveWindow(ps[j].MainWindowHandle, area.Left + width, area.Top, width, height, 1);
+                        NativeMethods.SetForegroundWindow(ps[j].MainWindowHandle);
+                        j++;
+                        if (j >= length) break;
 
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_RESTORE);
-                        NativeMethods.MoveWindow(ps[i].MainWindowHandle, area.Left, area.Top + height, width, height, 1);
-                        NativeMethods.SetForegroundWindow(ps[i].MainWindowHandle);
-                        i++;
-                        if (i >= length) break;
+                        NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_RESTORE);
+                        NativeMethods.MoveWindow(ps[j].MainWindowHandle, area.Left, area.Top + height, width, height, 1);
+                        NativeMethods.SetForegroundWindow(ps[j].MainWindowHandle);
+                        j++;
+                        if (j >= length) break;
 
-                        NativeMethods.ShowWindow(ps[i].MainWindowHandle, NativeMethods.SW_RESTORE);
-                        NativeMethods.MoveWindow(ps[i].MainWindowHandle, area.Left + width, area.Top + height, width, height, 1);
-                        NativeMethods.SetForegroundWindow(ps[i].MainWindowHandle);
-                        i++;
-                        if (i >= length) break;
+                        NativeMethods.ShowWindow(ps[j].MainWindowHandle, NativeMethods.SW_RESTORE);
+                        NativeMethods.MoveWindow(ps[j].MainWindowHandle, area.Left + width, area.Top + height, width, height, 1);
+                        NativeMethods.SetForegroundWindow(ps[j].MainWindowHandle);
+                        j++;
+                        if (j >= length) break;
                     }
                 }
                 this.Hide();
@@ -393,10 +395,8 @@ namespace Boostera
                     var result = MessageBox.Show("すべて終了しますか？\n※コマンド実行中でも終了します。", "", MessageBoxButtons.YesNo);
                     if (result != DialogResult.Yes) return;
 
-                    for (int i = 0; i < ps.Length; i++)
-                    {
-                        NativeMethods.PostMessage(ps[i].MainWindowHandle, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
-                    }
+                    this.Hide();
+                    this.WindowState = FormWindowState.Minimized;
 
                     for (int i = 0; i < ps.Length; i++)
                     {
@@ -410,12 +410,20 @@ namespace Boostera
                                 var className = new StringBuilder(256);
                                 NativeMethods.GetClassName(hWnd, className, className.Capacity);
 
-                                if (className.ToString() == "VTWin32") NativeMethods.PostMessage(hWnd, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
+                                if (className.ToString() == "VTWin32") NativeMethods.ShowWindow(hWnd, NativeMethods.SW_SHOW);
                             }
                             return true;
 
                         }, IntPtr.Zero);
                     }
+
+                    Thread.Sleep(1000);
+
+                    for (int i = ps.Length - 1; i >= 0; i--)
+                    {
+                        NativeMethods.PostMessage(ps[i].MainWindowHandle, NativeMethods.WM_ENDTERATERM, IntPtr.Zero, IntPtr.Zero);
+                    }
+                    ttermproHwnds = new List<IntPtr>();
                 }
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
@@ -645,25 +653,25 @@ namespace Boostera
             var ps = Process.GetProcessesByName("ttermpro");
             foreach (Process p in ps)
             {
-                if (!hwnds_darkmode.Any(x => x == p.MainWindowHandle))
+                if (!ttermproHwnds.Any(x => x == p.MainWindowHandle))
                 {
                     var value = 1;
                     NativeMethods.DwmSetWindowAttribute(
                         p.MainWindowHandle, NativeMethods.DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, (uint)Marshal.SizeOf(typeof(int)));
-                    hwnds_darkmode.Add(p.MainWindowHandle);
+                    ttermproHwnds.Add(p.MainWindowHandle);
                 }
 
                 if (!isTopMost) continue;
-                if (!hwnds.Any(x => x == p.MainWindowHandle))
+                if (!ttermproHwndsTopMost.Any(x => x == p.MainWindowHandle))  // 一度では反映されない場合があるため、2回実行
                 {
-                    for (int j = 0; j < 2; j++)
+                    for (int i = 0; i < 2; i++)
                     {
                         NativeMethods.ShowWindow(p.MainWindowHandle, NativeMethods.SW_RESTORE);
                         NativeMethods.SetForegroundWindow(p.MainWindowHandle);
                         NativeMethods.SetWindowPos(
                             p.MainWindowHandle, NativeMethods.HWND_TOPMOST, 0, 0, 0, 0, NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOMOVE);
                     }
-                    hwnds.Add(p.MainWindowHandle);
+                    ttermproHwndsTopMost.Add(p.MainWindowHandle);
                 }
             }
         }
