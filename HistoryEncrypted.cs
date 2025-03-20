@@ -42,19 +42,19 @@ namespace Boostera
         {
             if (!File.Exists(boosteraKeyPath)) CreateKey(boosteraKeyPath);
 
-            var key = Encoding.UTF8.GetBytes(new Guid().ToString("N"));
-            var iv = Encoding.UTF8.GetBytes(new Guid().ToString("N").Substring(0, 16));
+            var key = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString("N"));
+            var iv = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString("N").Substring(0, 16));
 
-            using (var myRijndael = new RijndaelManaged())
+            using (var aes = Aes.Create())
             {
-                myRijndael.BlockSize = 128;
-                myRijndael.KeySize = 256;
-                myRijndael.Mode = CipherMode.CBC;
-                myRijndael.Padding = PaddingMode.PKCS7;
-                myRijndael.Key = key;
-                myRijndael.IV = iv;
+                aes.BlockSize = 128;
+                aes.KeySize = 256;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                aes.Key = key;
+                aes.IV = iv;
 
-                var encryptor = myRijndael.CreateEncryptor(myRijndael.Key, myRijndael.IV);
+                var encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
 
                 byte[] encrypted;
                 using (var mStream = new MemoryStream())
@@ -74,7 +74,7 @@ namespace Boostera
 
                 var historyEncrypted = new HistoryEncrypted(
                     Convert.ToBase64String(rsa.Encrypt(key, false)), Convert.ToBase64String(rsa.Encrypt(iv, false)), Convert.ToBase64String(encrypted));
-                return (historyEncrypted);
+                return historyEncrypted;
             }
         }
 
@@ -86,16 +86,16 @@ namespace Boostera
             var key = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Key), false);
             var iv = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Iv), false);
 
-            using (var rijndael = new RijndaelManaged())
+            using (var aes = Aes.Create())
             {
-                rijndael.BlockSize = 128;
-                rijndael.KeySize = 256;
-                rijndael.Mode = CipherMode.CBC;
-                rijndael.Padding = PaddingMode.PKCS7;
-                rijndael.Key = key;
-                rijndael.IV = iv;
+                aes.BlockSize = 128;
+                aes.KeySize = 256;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                aes.Key = key;
+                aes.IV = iv;
 
-                var decryptor = rijndael.CreateDecryptor(rijndael.Key, rijndael.IV);
+                var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
                 var plain = string.Empty;
                 using (var mStream = new MemoryStream(Convert.FromBase64String(historyEncrypted.Data)))
@@ -104,7 +104,7 @@ namespace Boostera
                     {
                         using (var sr = new StreamReader(ctStream))
                         {
-                            plain = sr.ReadLine();
+                            plain = sr.ReadToEnd();
                         }
                     }
                 }
