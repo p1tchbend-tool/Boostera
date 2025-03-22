@@ -75,6 +75,11 @@
             button2 = new System.Windows.Forms.Button();
             button3 = new System.Windows.Forms.Button();
             timer1 = new System.Windows.Forms.Timer(components);
+            textBox15 = new System.Windows.Forms.TextBox();
+            textBox14 = new System.Windows.Forms.TextBox();
+            label16 = new System.Windows.Forms.Label();
+            label17 = new System.Windows.Forms.Label();
+            label18 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -213,7 +218,7 @@
             button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             button1.Font = new System.Drawing.Font("メイリオ", 10.2F);
             button1.ForeColor = System.Drawing.Color.White;
-            button1.Location = new System.Drawing.Point(717, 700);
+            button1.Location = new System.Drawing.Point(717, 740);
             button1.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(65, 28);
@@ -271,7 +276,7 @@
             groupBox1.Controls.Add(textBox10);
             groupBox1.Controls.Add(checkBox3);
             groupBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            groupBox1.Location = new System.Drawing.Point(11, 370);
+            groupBox1.Location = new System.Drawing.Point(11, 410);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(773, 260);
             groupBox1.TabIndex = 22;
@@ -517,7 +522,7 @@
             label13.AutoSize = true;
             label13.BackColor = System.Drawing.Color.Transparent;
             label13.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label13.Location = new System.Drawing.Point(11, 651);
+            label13.Location = new System.Drawing.Point(11, 691);
             label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(52, 21);
@@ -530,7 +535,7 @@
             textBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox11.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
             textBox11.ForeColor = System.Drawing.Color.White;
-            textBox11.Location = new System.Drawing.Point(214, 650);
+            textBox11.Location = new System.Drawing.Point(214, 690);
             textBox11.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox11.Name = "textBox11";
             textBox11.Size = new System.Drawing.Size(568, 23);
@@ -574,7 +579,7 @@
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(775, 656);
+            listBox1.Size = new System.Drawing.Size(775, 697);
             listBox1.TabIndex = 29;
             listBox1.Visible = false;
             // 
@@ -629,7 +634,7 @@
             button2.BackColor = System.Drawing.Color.FromArgb(22, 22, 22);
             button2.Font = new System.Drawing.Font("メイリオ", 10.2F);
             button2.ForeColor = System.Drawing.Color.White;
-            button2.Location = new System.Drawing.Point(11, 700);
+            button2.Location = new System.Drawing.Point(11, 740);
             button2.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(130, 28);
@@ -643,7 +648,7 @@
             button3.BackColor = System.Drawing.Color.FromArgb(22, 22, 22);
             button3.Font = new System.Drawing.Font("メイリオ", 10.2F);
             button3.ForeColor = System.Drawing.Color.White;
-            button3.Location = new System.Drawing.Point(150, 700);
+            button3.Location = new System.Drawing.Point(150, 740);
             button3.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(130, 28);
@@ -657,6 +662,68 @@
             timer1.Interval = 500;
             timer1.Tick += timer1_Tick;
             // 
+            // textBox15
+            // 
+            textBox15.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
+            textBox15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox15.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox15.ForeColor = System.Drawing.Color.White;
+            textBox15.Location = new System.Drawing.Point(474, 360);
+            textBox15.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
+            textBox15.Name = "textBox15";
+            textBox15.Size = new System.Drawing.Size(100, 23);
+            textBox15.TabIndex = 36;
+            textBox15.Text = "3000";
+            textBox15.TextChanged += textBox15_TextChanged;
+            // 
+            // textBox14
+            // 
+            textBox14.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
+            textBox14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox14.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox14.ForeColor = System.Drawing.Color.White;
+            textBox14.Location = new System.Drawing.Point(270, 360);
+            textBox14.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
+            textBox14.Name = "textBox14";
+            textBox14.Size = new System.Drawing.Size(100, 23);
+            textBox14.TabIndex = 37;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.BackColor = System.Drawing.Color.Transparent;
+            label16.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label16.Location = new System.Drawing.Point(214, 363);
+            label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label16.Name = "label16";
+            label16.Size = new System.Drawing.Size(52, 21);
+            label16.TabIndex = 38;
+            label16.Text = "文字列";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.BackColor = System.Drawing.Color.Transparent;
+            label17.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label17.Location = new System.Drawing.Point(376, 363);
+            label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(94, 21);
+            label17.TabIndex = 39;
+            label17.Text = "が表示された";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.BackColor = System.Drawing.Color.Transparent;
+            label18.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label18.Location = new System.Drawing.Point(580, 363);
+            label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label18.Name = "label18";
+            label18.Size = new System.Drawing.Size(108, 21);
+            label18.TabIndex = 40;
+            label18.Text = "ミリ秒後に実行";
+            // 
             // Form3
             // 
             AcceptButton = button1;
@@ -664,8 +731,13 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ClientSize = new System.Drawing.Size(796, 741);
+            ClientSize = new System.Drawing.Size(794, 781);
             Controls.Add(listBox1);
+            Controls.Add(label18);
+            Controls.Add(label17);
+            Controls.Add(label16);
+            Controls.Add(textBox14);
+            Controls.Add(textBox15);
             Controls.Add(panel7);
             Controls.Add(label6);
             Controls.Add(textBox13);
@@ -755,5 +827,10 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox textBox15;
+        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
     }
 }

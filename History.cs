@@ -12,7 +12,7 @@
         public string Password { get; set; }
         public string LogonScript { get; set; }
         public string WaitingString { get; set; }
-        public int WaitingTime { get; set; }
+        public string WaitingTime { get; set; }
         public bool IsForwarding { get; set; }
         public string ForwardingHost { get; set; }
         public string ForwardingUser { get; set; }
@@ -28,7 +28,7 @@
         }
 
         public History(string uniqueKey, string searchKey, int protocol, string host, string user, string port, string privateKey, string password,
-            string logonScript, string waitingString, int waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
+            string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
             string forwardingPort, string forwardingPrivateKey, string forwardingPassword, bool isHide, string tag)
         {
             UniqueKey = uniqueKey;

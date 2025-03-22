@@ -57,6 +57,8 @@ namespace Boostera
             toolTip1.SetToolTip(textBox3, "接続先の秘密鍵のパスを入力してください。");
             toolTip1.SetToolTip(textBox2, "接続先のパスワード／パスフレーズを入力してください。");
             toolTip1.SetToolTip(textBox12, "接続時に実行するコマンドを入力してください。");
+            toolTip1.SetToolTip(textBox14, "指定した文字列が表示されるまで、コマンドの実行を待機します。\n空白の場合、任意の文字が表示されるまで、コマンドの実行を待機します。");
+            toolTip1.SetToolTip(textBox15, "文字列が表示されてから、コマンドを実行するまでの待機時間を入力してください。");
             toolTip1.SetToolTip(checkBox3, "SSHトンネリングを使用する場合、チェックを入れてください。");
             toolTip1.SetToolTip(textBox6, "SSHトンネリングで利用するホストを入力してください。");
             toolTip1.SetToolTip(textBox10, "SSHトンネリングで利用するユーザーを入力してください。");
@@ -108,6 +110,8 @@ namespace Boostera
                 textBox3.Text = history.PrivateKey;
                 textBox2.Text = history.Password;
                 textBox12.Text = history.LogonScript;
+                textBox14.Text = history.WaitingString;
+                textBox15.Text = history.WaitingTime;
                 checkBox3.Checked = history.IsForwarding;
                 textBox6.Text = history.ForwardingHost;
                 textBox10.Text = history.ForwardingUser;
@@ -136,6 +140,8 @@ namespace Boostera
                     textBox3.Text = history.PrivateKey;
                     textBox2.Text = history.Password;
                     textBox12.Text = history.LogonScript;
+                    textBox14.Text = history.WaitingString;
+                    textBox15.Text = history.WaitingTime;
                     checkBox3.Checked = history.IsForwarding;
                     textBox6.Text = history.ForwardingHost;
                     textBox10.Text = history.ForwardingUser;
@@ -162,6 +168,8 @@ namespace Boostera
                     textBox3.Text = history.PrivateKey;
                     textBox2.Text = history.Password;
                     textBox12.Text = history.LogonScript;
+                    textBox14.Text = history.WaitingString;
+                    textBox15.Text = history.WaitingTime;
                     checkBox3.Checked = history.IsForwarding;
                     textBox6.Text = history.ForwardingHost;
                     textBox10.Text = history.ForwardingUser;
@@ -215,6 +223,8 @@ namespace Boostera
                 textBox3.Text = history.PrivateKey;
                 textBox2.Text = history.Password;
                 textBox12.Text = history.LogonScript;
+                textBox14.Text = history.WaitingString;
+                textBox15.Text = history.WaitingTime;
                 checkBox3.Checked = history.IsForwarding;
                 textBox6.Text = history.ForwardingHost;
                 textBox10.Text = history.ForwardingUser;
@@ -238,6 +248,11 @@ namespace Boostera
                     panel3.Enabled = true;
                     label14.Enabled = true;
                     textBox12.Enabled = true;
+                    textBox14.Enabled = true;
+                    textBox15.Enabled = true;
+                    label16.Enabled = true;
+                    label17.Enabled = true;
+                    label18.Enabled = true;
                 }
                 else if (comboBox2.SelectedIndex == RDP)
                 {
@@ -248,6 +263,11 @@ namespace Boostera
                     panel3.Enabled = false;
                     label14.Enabled = false;
                     textBox12.Enabled = false;
+                    textBox14.Enabled = false;
+                    textBox15.Enabled = false;
+                    label16.Enabled = false;
+                    label17.Enabled = false;
+                    label18.Enabled = false;
                 }
                 else if (comboBox2.SelectedIndex == SFTP)
                 {
@@ -258,6 +278,11 @@ namespace Boostera
                     panel3.Enabled = true;
                     label14.Enabled = false;
                     textBox12.Enabled = false;
+                    textBox14.Enabled = false;
+                    textBox15.Enabled = false;
+                    label16.Enabled = false;
+                    label17.Enabled = false;
+                    label18.Enabled = false;
                 }
             };
 
@@ -346,6 +371,11 @@ namespace Boostera
                 panel3.Enabled = true;
                 label14.Enabled = true;
                 textBox12.Enabled = true;
+                textBox14.Enabled = true;
+                textBox15.Enabled = true;
+                label16.Enabled = true;
+                label17.Enabled = true;
+                label18.Enabled = true;
             }
             else if (comboBox2.SelectedIndex == RDP)
             {
@@ -356,6 +386,11 @@ namespace Boostera
                 panel3.Enabled = false;
                 label14.Enabled = false;
                 textBox12.Enabled = false;
+                textBox14.Enabled = false;
+                textBox15.Enabled = false;
+                label16.Enabled = false;
+                label17.Enabled = false;
+                label18.Enabled = false;
             }
             else if (comboBox2.SelectedIndex == SFTP)
             {
@@ -366,6 +401,11 @@ namespace Boostera
                 panel3.Enabled = true;
                 label14.Enabled = false;
                 textBox12.Enabled = false;
+                textBox14.Enabled = false;
+                textBox15.Enabled = false;
+                label16.Enabled = false;
+                label17.Enabled = false;
+                label18.Enabled = false;
             }
 
             if (checkBox3.Checked)
@@ -448,6 +488,8 @@ namespace Boostera
             var privateKey = textBox3.Text;
             var password = textBox2.Text;
             var logonScript = textBox12.Text;
+            var waitingString = textBox14.Text;
+            var waitingTime = textBox15.Text;
             var isForwarding = checkBox3.Checked;
             var forwardingHost = textBox6.Text;
             var forwardingUser = textBox10.Text;
@@ -522,14 +564,15 @@ namespace Boostera
                     {
                         if (!Directory.Exists(Path.Combine(Program.BoosteraDataFolder, ".temp")))
                             Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
+                        var tempTtlPath = Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl");
 
-                        var script = @"wait ''
-mpause 3000
-sendln '" + logonScript + "'\r\n" +
-"filedelete '" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "'";
+                        var script = $@"wait '{waitingString}'
+mpause {waitingTime}
+sendln '{logonScript}'
+filedelete '""{tempTtlPath}""'";
 
-                        File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl"), script);
-                        arguments += " /M=\"" + Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl") + "\"";
+                        File.WriteAllText(tempTtlPath, script);
+                        arguments += " /M=\"" + tempTtlPath + "\"";
                     }
                     catch { }
                 }
@@ -639,8 +682,9 @@ sendln '" + logonScript + "'\r\n" +
                 uniqueKey = protocolText + "://" + user + "@" + host + " #" + tag;
             }
 
-            var hitory = new History(uniqueKey, searchKey, protocol, host, user, port, privateKey, password, logonScript,
-                isForwarding, forwardingHost, forwardingUser, forwardingPort, forwardingPrivateKey, forwardingPassword, isHide, tag);
+            var hitory = new History(uniqueKey, searchKey, protocol, host, user, port, privateKey, password,
+                logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser,
+                forwardingPort, forwardingPrivateKey, forwardingPassword, isHide, tag);
 
             histories.RemoveAll(x => x.UniqueKey == uniqueKey);
             histories.Insert(0, hitory);
@@ -659,6 +703,8 @@ sendln '" + logonScript + "'\r\n" +
         {
             var caret = textBox1.SelectionStart;
             textBox1.Text = Regex.Replace(textBox1.Text, @"[^\d]", string.Empty);
+            textBox1.Text = Regex.Replace(textBox1.Text, @"^(?!0$)0+", string.Empty);
+            if (string.IsNullOrEmpty(textBox1.Text)) textBox1.Text = "0";
             textBox1.SelectionStart = caret;
         }
 
@@ -666,6 +712,8 @@ sendln '" + logonScript + "'\r\n" +
         {
             var caret = textBox9.SelectionStart;
             textBox9.Text = Regex.Replace(textBox9.Text, @"[^\d]", string.Empty);
+            textBox9.Text = Regex.Replace(textBox9.Text, @"^(?!0$)0+", string.Empty);
+            if (string.IsNullOrEmpty(textBox9.Text)) textBox9.Text = "0";
             textBox9.SelectionStart = caret;
         }
 
@@ -723,6 +771,22 @@ sendln '" + logonScript + "'\r\n" +
             var caret = textBox12.SelectionStart;
             textBox12.Text = textBox12.Text.Replace("'", "\"");
             textBox12.SelectionStart = caret;
+        }
+
+        private void textBox14_TextChanged(object sender, EventArgs e)
+        {
+            var caret = textBox14.SelectionStart;
+            textBox14.Text = textBox14.Text.Replace("'", "");
+            textBox14.SelectionStart = caret;
+        }
+
+        private void textBox15_TextChanged(object sender, EventArgs e)
+        {
+            var caret = textBox15.SelectionStart;
+            textBox15.Text = Regex.Replace(textBox15.Text, @"[^\d]", string.Empty);
+            textBox15.Text = Regex.Replace(textBox15.Text, @"^(?!0$)0+", string.Empty);
+            if (string.IsNullOrEmpty(textBox15.Text)) textBox15.Text = "0";
+            textBox15.SelectionStart = caret;
         }
 
         private void textBox13_TextChanged(object sender, EventArgs e)
@@ -788,6 +852,8 @@ sendln '" + logonScript + "'\r\n" +
                 var privateKey = textBox3.Text;
                 var password = textBox2.Text;
                 var logonScript = textBox12.Text;
+                var waitingString = textBox14.Text;
+                var waitingTime = textBox15.Text;
                 var isForwarding = checkBox3.Checked;
                 var forwardingHost = textBox6.Text;
                 var forwardingUser = textBox10.Text;
@@ -804,6 +870,8 @@ sendln '" + logonScript + "'\r\n" +
                 ttl = ttl.Replace("{{PrivateKey}}", privateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
                 ttl = ttl.Replace("{{Password}}", password);
                 ttl = ttl.Replace("{{LogonScript}}", logonScript);
+                ttl = ttl.Replace("{{WaitingString}}", waitingString);
+                ttl = ttl.Replace("{{WaitingTime}}", waitingTime);
                 ttl = ttl.Replace("{{IsForwarding}}", isForwarding.ToString().ToLower());
                 ttl = ttl.Replace("{{ForwardingHost}}", forwardingHost);
                 ttl = ttl.Replace("{{ForwardingUser}}", forwardingUser);
@@ -851,6 +919,8 @@ sendln '" + logonScript + "'\r\n" +
                     .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
                 textBox2.Text = RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'");
                 textBox12.Text = RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'");
+                textBox14.Text = RegexMatchedGroupText(ttl, @"^WaitingString\s+=\s+'(.*?)'");
+                textBox15.Text = RegexMatchedGroupText(ttl, @"^WaitingTime\s+=\s+'(.*?)'");
                 checkBox3.Checked = RegexMatchedGroupText(ttl, @"^IsForwarding\s+=\s+'(.*?)'") == "true";
                 textBox6.Text = RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'");
                 textBox10.Text = RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'");
@@ -929,6 +999,8 @@ Port = '{{Port}}'
 PrivateKey = '{{PrivateKey}}'
 Password = '{{Password}}'
 LogonScript = '{{LogonScript}}'
+WaitingString = '{{WaitingString}}'
+WaitingTime = '{{WaitingTime}}'
 IsForwarding = '{{IsForwarding}}'
 ForwardingHost = '{{ForwardingHost}}'
 ForwardingUser = '{{ForwardingUser}}'
@@ -1040,8 +1112,8 @@ if result == 0 then
 
     strcompare LogonScript ''
     if result != 0 then
-        wait ''
-        mpause 3000
+        wait WaitingString
+        mpause WaitingTime
         sendln LogonScript
     endif
 endif
