@@ -569,7 +569,7 @@ namespace Boostera
                         var script = $@"wait '{waitingString}'
 mpause {waitingTime}
 sendln '{logonScript}'
-filedelete '""{tempTtlPath}""'";
+filedelete '{tempTtlPath}'";
 
                         File.WriteAllText(tempTtlPath, script);
                         arguments += " /M=\"" + tempTtlPath + "\"";
