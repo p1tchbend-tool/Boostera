@@ -9,7 +9,7 @@
 * ポートフォワーディングを利用した踏み台経由の接続
 * ウィンドウレイアウト管理
   
-使用には「TeraTerm」が必要となりますので、[公式リポジトリ](https://github.com/TeraTermProject/osdn-download/releases) より別途インストールしてください。  
+使用には「TeraTerm」が必要となりますので、[公式リポジトリ](https://github.com/TeraTermProject/teraterm/releases/latest) より別途インストールしてください。  
 またSFTP機能を利用する場合は「WinSCP」が必要となりますので、[公式サイト](https://winscp.net/eng/download.php) より別途インストールしてください。  
 
 ## インストール
