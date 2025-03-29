@@ -5,30 +5,30 @@ using System.Text;
 
 namespace Boostera
 {
-    public class HistoryEncrypted
+    public class EncryptedText
     {
         public string Key { get; set; }
         public string Iv { get; set; }
         public string Data { get; set; }
 
-        public HistoryEncrypted(string key, string iv, string data)
+        public EncryptedText(string key, string iv, string data)
         {
             Key = key;
             Iv = iv;
             Data = data;
         }
 
-        public static bool CreateKey(string boosteraKeyPath)
+        public static bool CreateKey(string keyPath)
         {
             try
             {
-                if (!Directory.Exists(Path.GetDirectoryName(boosteraKeyPath))) Directory.CreateDirectory(Path.GetDirectoryName(boosteraKeyPath));
-                if (!File.Exists(boosteraKeyPath))
+                if (!Directory.Exists(Path.GetDirectoryName(keyPath))) Directory.CreateDirectory(Path.GetDirectoryName(keyPath));
+                if (!File.Exists(keyPath))
                 {
                     using (var rsa = new RSACryptoServiceProvider(3072))
                     {
                         var privateKey = rsa.ToXmlString(true);
-                        File.WriteAllText(boosteraKeyPath, privateKey);
+                        File.WriteAllText(keyPath, privateKey);
 
                         return true;
                     }
@@ -38,9 +38,9 @@ namespace Boostera
             catch { throw; }
         }
 
-        public static HistoryEncrypted EncryptData(string data, string boosteraKeyPath)
+        public static EncryptedText Encrypt(string data, string keyPath)
         {
-            if (!File.Exists(boosteraKeyPath)) CreateKey(boosteraKeyPath);
+            if (!File.Exists(keyPath)) CreateKey(keyPath);
 
             var key = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString("N"));
             var iv = Encoding.UTF8.GetBytes(Guid.NewGuid().ToString("N").Substring(0, 16));
@@ -70,21 +70,21 @@ namespace Boostera
                 }
 
                 var rsa = new RSACryptoServiceProvider(3072);
-                rsa.FromXmlString(File.ReadAllText(boosteraKeyPath));
+                rsa.FromXmlString(File.ReadAllText(keyPath));
 
-                var historyEncrypted = new HistoryEncrypted(
+                var encryptedText = new EncryptedText(
                     Convert.ToBase64String(rsa.Encrypt(key, false)), Convert.ToBase64String(rsa.Encrypt(iv, false)), Convert.ToBase64String(encrypted));
-                return historyEncrypted;
+                return encryptedText;
             }
         }
 
-        public static string DecryptData(HistoryEncrypted historyEncrypted, string boosteraKeyPath)
+        public static string Decrypt(EncryptedText encryptedText, string keyPath)
         {
             var rsa = new RSACryptoServiceProvider(3072);
-            rsa.FromXmlString(File.ReadAllText(boosteraKeyPath));
+            rsa.FromXmlString(File.ReadAllText(keyPath));
 
-            var key = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Key), false);
-            var iv = rsa.Decrypt(Convert.FromBase64String(historyEncrypted.Iv), false);
+            var key = rsa.Decrypt(Convert.FromBase64String(encryptedText.Key), false);
+            var iv = rsa.Decrypt(Convert.FromBase64String(encryptedText.Iv), false);
 
             using (var aes = Aes.Create())
             {
@@ -98,7 +98,7 @@ namespace Boostera
                 var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
                 var plain = string.Empty;
-                using (var mStream = new MemoryStream(Convert.FromBase64String(historyEncrypted.Data)))
+                using (var mStream = new MemoryStream(Convert.FromBase64String(encryptedText.Data)))
                 {
                     using (var ctStream = new CryptoStream(mStream, decryptor, CryptoStreamMode.Read))
                     {

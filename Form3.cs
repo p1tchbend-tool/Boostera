@@ -201,8 +201,8 @@ namespace Boostera
 
             try
             {
-                var historyEncrypted = JsonSerializer.Deserialize<HistoryEncrypted>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.json")));
-                var historyJson = HistoryEncrypted.DecryptData(historyEncrypted, boosteraKeyPath);
+                var historyEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.json")));
+                var historyJson = EncryptedText.Decrypt(historyEncrypted, boosteraKeyPath);
                 histories = JsonSerializer.Deserialize<List<History>>(historyJson);
             }
             catch { }
@@ -455,19 +455,6 @@ namespace Boostera
             Program.ChangeFont(this);
             Program.SortTabIndex(this);
 
-            try
-            {
-                if (!File.Exists(boosteraKeyPath))
-                {
-                    if (HistoryEncrypted.CreateKey(boosteraKeyPath))
-                    {
-                        MessageBox.Show("接続情報保護用のシークレットが作成されました。\nこれは他の人に共有しないように注意してください。\n\n" +
-                            boosteraKeyPath, "Boostera");
-                    }
-                }
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-
             timer1.Start();
         }
 
@@ -692,7 +679,7 @@ filedelete '{tempTtlPath}'";
 
             try
             {
-                var historyEncrypted = HistoryEncrypted.EncryptData(JsonSerializer.Serialize(histories), boosteraKeyPath);
+                var historyEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(histories), boosteraKeyPath);
                 var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
             }

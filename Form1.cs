@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Boostera
 {
@@ -46,6 +45,19 @@ namespace Boostera
         public Form1()
         {
             if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
+
+            try
+            {
+                if (!File.Exists(boosteraKeyPath))
+                {
+                    if (EncryptedText.CreateKey(boosteraKeyPath))
+                    {
+                        MessageBox.Show("秘密情報保護用のシークレットが作成されました。\nこれは他の人に共有しないように注意してください。\n\n" +
+                            boosteraKeyPath, "Boostera");
+                    }
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
 
             Program.ProgramHotKey.OnHotKey += (s, e) =>
             {
