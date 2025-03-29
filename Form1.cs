@@ -620,7 +620,9 @@ namespace Boostera
             this.TransparencyKey = Color.Green;
             try
             {
-                files = JsonSerializer.Deserialize<List<Index>>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "search.index")));
+                var indexEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "search.index")));
+                var indexJson = EncryptedText.Decrypt(indexEncrypted, boosteraKeyPath);
+                files = JsonSerializer.Deserialize<List<Index>>(indexJson);
             }
             catch { }
 
@@ -728,7 +730,9 @@ namespace Boostera
                 files = files_shadow;
                 try
                 {
-                    File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "search.index"), JsonSerializer.Serialize(files_shadow, jsonSerializerOptions));
+                    var indexEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(files_shadow, jsonSerializerOptions), boosteraKeyPath);
+                    var indexJson = JsonSerializer.Serialize(indexEncrypted, jsonSerializerOptions);
+                    File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "search.index"), indexJson);
                 }
                 catch { }
             });
