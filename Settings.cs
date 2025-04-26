@@ -10,12 +10,14 @@ namespace Boostera
         public string SearchFolder { get; set; }
         public string SearchExclusionFolders { get; set; }
         public string BoosteraKeyPath { get; set; }
+        public bool IsLogging { get; set; }
+        public string LogFolder { get; set; }
         public bool IsStartUp { get; set; }
         public int ModKey { get; set; }
         public Keys Key { get; set; }
 
-        public Settings(string ttermproPath, string ttpmacroPath, string winscpPath,
-            string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key) 
+        public Settings(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath,
+            string searchFolder, string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key) 
         {
             TtermproPath = ttermproPath;
             TtpmacroPath = ttpmacroPath;
@@ -23,6 +25,8 @@ namespace Boostera
             BoosteraKeyPath = boosteraKeyPath;
             SearchFolder = searchFolder;
             SearchExclusionFolders = searchExclusionFolders;
+            IsLogging = isLogging;
+            LogFolder = logFolder;
             IsStartUp = isStartUp;
             ModKey = modKey;
             Key = key;

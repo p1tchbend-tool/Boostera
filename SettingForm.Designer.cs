@@ -51,6 +51,8 @@
             timer1 = new System.Windows.Forms.Timer(components);
             label10 = new System.Windows.Forms.Label();
             checkBox2 = new System.Windows.Forms.CheckBox();
+            label11 = new System.Windows.Forms.Label();
+            textBox8 = new System.Windows.Forms.TextBox();
             SuspendLayout();
             // 
             // textBox1
@@ -163,7 +165,7 @@
             label5.BackColor = System.Drawing.Color.Transparent;
             label5.Font = new System.Drawing.Font("メイリオ", 9.75F);
             label5.ForeColor = System.Drawing.Color.White;
-            label5.Location = new System.Drawing.Point(12, 257);
+            label5.Location = new System.Drawing.Point(12, 292);
             label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(178, 20);
@@ -176,7 +178,7 @@
             label6.BackColor = System.Drawing.Color.Transparent;
             label6.Font = new System.Drawing.Font("メイリオ", 9.75F);
             label6.ForeColor = System.Drawing.Color.White;
-            label6.Location = new System.Drawing.Point(12, 292);
+            label6.Location = new System.Drawing.Point(12, 327);
             label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label6.Name = "label6";
             label6.Size = new System.Drawing.Size(152, 20);
@@ -188,7 +190,7 @@
             textBox5.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox5.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox5.ForeColor = System.Drawing.Color.White;
-            textBox5.Location = new System.Drawing.Point(284, 289);
+            textBox5.Location = new System.Drawing.Point(284, 324);
             textBox5.Margin = new System.Windows.Forms.Padding(2);
             textBox5.Name = "textBox5";
             textBox5.ReadOnly = true;
@@ -202,7 +204,7 @@
             checkBox1.BackColor = System.Drawing.Color.Transparent;
             checkBox1.Checked = true;
             checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            checkBox1.Location = new System.Drawing.Point(284, 257);
+            checkBox1.Location = new System.Drawing.Point(284, 292);
             checkBox1.Margin = new System.Windows.Forms.Padding(2);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new System.Drawing.Size(31, 22);
@@ -216,7 +218,7 @@
             label7.BackColor = System.Drawing.Color.Transparent;
             label7.Font = new System.Drawing.Font("メイリオ", 9.75F);
             label7.ForeColor = System.Drawing.Color.White;
-            label7.Location = new System.Drawing.Point(520, 292);
+            label7.Location = new System.Drawing.Point(520, 327);
             label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(230, 20);
@@ -317,6 +319,33 @@
             checkBox2.TabIndex = 21;
             checkBox2.Text = " ";
             checkBox2.UseVisualStyleBackColor = false;
+            checkBox2.CheckedChanged += checkBox2_CheckedChanged;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.BackColor = System.Drawing.Color.Transparent;
+            label11.Font = new System.Drawing.Font("メイリオ", 9.75F);
+            label11.ForeColor = System.Drawing.Color.White;
+            label11.Location = new System.Drawing.Point(12, 257);
+            label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label11.Name = "label11";
+            label11.Size = new System.Drawing.Size(152, 20);
+            label11.TabIndex = 22;
+            label11.Text = "ログの保存先フォルダ：";
+            // 
+            // textBox8
+            // 
+            textBox8.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
+            textBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox8.Font = new System.Drawing.Font("メイリオ", 9.75F);
+            textBox8.ForeColor = System.Drawing.Color.White;
+            textBox8.Location = new System.Drawing.Point(284, 255);
+            textBox8.Margin = new System.Windows.Forms.Padding(2);
+            textBox8.Name = "textBox8";
+            textBox8.Size = new System.Drawing.Size(699, 27);
+            textBox8.TabIndex = 23;
+            textBox8.Text = "C:\\";
             // 
             // SettingForm
             // 
@@ -324,7 +353,9 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ClientSize = new System.Drawing.Size(994, 331);
+            ClientSize = new System.Drawing.Size(994, 366);
+            Controls.Add(textBox8);
+            Controls.Add(label11);
             Controls.Add(checkBox2);
             Controls.Add(label10);
             Controls.Add(label9);
@@ -384,5 +415,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox8;
     }
 }

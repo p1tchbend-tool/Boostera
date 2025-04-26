@@ -22,6 +22,8 @@ namespace Boostera
         private string searchFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
         private string[] searchExclusionFolders = new string[] {
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
+        private bool isLogging = true;
+        private string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\log");
         private bool isStartUp = true;
         private int modkey = HotKey.MOD_KEY_ALT;
         private Keys key = Keys.T;
@@ -45,6 +47,7 @@ namespace Boostera
         public MainForm()
         {
             if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
+            if (!Directory.Exists(logFolder)) Directory.CreateDirectory(logFolder);
 
             try
             {
@@ -82,16 +85,22 @@ namespace Boostera
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
 
-                using (var form2 = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
+                using (var settingForm = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath,
+                    searchFolder, string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key))
                 {
-                    form2.Show();
-                    form2.Close();
+                    settingForm.Show();
+                    settingForm.Close();
                 };
-                using (var form3 = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
+                using (var envForm = new EnvForm())
                 {
-                    form3.Show();
-                    form3.Hide();
-                    form3.Close();
+                    envForm.Show();
+                    envForm.Close();
+                }
+                using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
+                {
+                    connectionForm.Show();
+                    connectionForm.Hide();
+                    connectionForm.Close();
                 }
             };
 
@@ -191,37 +200,55 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form2 = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
+                    using (var settingForm = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath,
+                        searchFolder, string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key))
                     {
-                        form2.ShowDialog();
-                        if (!string.IsNullOrEmpty(form2.TtermproPath) && File.Exists(form2.TtermproPath)) ttermproPath = form2.TtermproPath;
-                        if (!string.IsNullOrEmpty(form2.TtpmacroPath) && File.Exists(form2.TtpmacroPath)) ttpmacroPath = form2.TtpmacroPath;
-                        if (!string.IsNullOrEmpty(form2.WinscpPath) && File.Exists(form2.WinscpPath)) winscpPath = form2.WinscpPath;
-                        if (!string.IsNullOrEmpty(form2.BoosteraKeyPath) && File.Exists(form2.BoosteraKeyPath)) boosteraKeyPath = form2.BoosteraKeyPath;
-                        if (!string.IsNullOrEmpty(form2.SearchFolder) && Directory.Exists(form2.SearchFolder)) searchFolder = form2.SearchFolder;
-                        if (!string.IsNullOrEmpty(form2.SearchExclusionFolders)) searchExclusionFolders = form2.SearchExclusionFolders.Split(',');
-
-                        isStartUp = form2.IsStartUp;
-                        modkey = form2.ModKey;
-                        key = form2.Key;
+                        settingForm.ShowDialog();
+                        if (!string.IsNullOrEmpty(settingForm.TtermproPath) && File.Exists(settingForm.TtermproPath)) ttermproPath = settingForm.TtermproPath;
+                        if (!string.IsNullOrEmpty(settingForm.TtpmacroPath) && File.Exists(settingForm.TtpmacroPath)) ttpmacroPath = settingForm.TtpmacroPath;
+                        if (!string.IsNullOrEmpty(settingForm.WinscpPath) && File.Exists(settingForm.WinscpPath)) winscpPath = settingForm.WinscpPath;
+                        if (!string.IsNullOrEmpty(settingForm.BoosteraKeyPath) && File.Exists(settingForm.BoosteraKeyPath)) boosteraKeyPath = settingForm.BoosteraKeyPath;
+                        if (!string.IsNullOrEmpty(settingForm.SearchFolder) && Directory.Exists(settingForm.SearchFolder)) searchFolder = settingForm.SearchFolder;
+                        if (!string.IsNullOrEmpty(settingForm.SearchExclusionFolders)) searchExclusionFolders = settingForm.SearchExclusionFolders.Split(',');
+                        isLogging = settingForm.IsLogging;
+                        if (!string.IsNullOrEmpty(settingForm.LogFolder) && Directory.Exists(settingForm.LogFolder)) logFolder = settingForm.LogFolder;
+                        isStartUp = settingForm.IsStartUp;
+                        modkey = settingForm.ModKey;
+                        key = settingForm.Key;
 
                         try
                         {
-                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key);
+                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath,
+                                searchFolder, string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key);
                             File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
                         }
                         catch { }
 
-                        var regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
-                        if (isStartUp)
+                        try
                         {
-                            regkey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
+                            var regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                            if (isStartUp)
+                            {
+                                regkey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
+                            }
+                            else
+                            {
+                                regkey.DeleteValue(Application.ProductName, false);
+                            }
+                            regkey.Close();
                         }
-                        else
+                        catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+                        Task.Run(() =>
                         {
-                            regkey.DeleteValue(Application.ProductName, false);
-                        }
-                        regkey.Close();
+                            try
+                            {
+                                Environment.SetEnvironmentVariable("BOOSTERA_WinscpPath", winscpPath, EnvironmentVariableTarget.User);
+                                Environment.SetEnvironmentVariable("BOOSTERA_IsLogging", isLogging.ToString().ToLower(), EnvironmentVariableTarget.User);
+                                Environment.SetEnvironmentVariable("BOOSTERA_LogFolder", logFolder, EnvironmentVariableTarget.User);
+                            }
+                            catch { }
+                        });
 
                         this.Hide();
                         this.WindowState = FormWindowState.Minimized;
@@ -497,13 +524,13 @@ namespace Boostera
                 var index = listBox1.IndexFromPoint(e.Location);
                 if (index == ListBox.NoMatches)
                 {
-                    listBox1.Cursor = System.Windows.Forms.Cursors.Default;
+                    listBox1.Cursor = Cursors.Default;
                     toolTip1.Hide(listBox1);
                     return;
                 }
                 else
                 {
-                    listBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+                    listBox1.Cursor = Cursors.Hand;
                     listBox1.SelectedIndex = index;
                 }
 
@@ -642,22 +669,39 @@ namespace Boostera
                 boosteraKeyPath = settings.BoosteraKeyPath;
                 searchFolder = settings.SearchFolder;
                 searchExclusionFolders = settings.SearchExclusionFolders.Split(',');
+                isLogging = settings.IsLogging;
+                logFolder = settings.LogFolder;
                 isStartUp = settings.IsStartUp;
                 modkey = settings.ModKey;
                 key = settings.Key;
             }
             catch { }
 
-            var regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
-            if (isStartUp)
+            try
             {
-                regkey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
+                var regkey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+                if (isStartUp)
+                {
+                    regkey.SetValue(Application.ProductName, $@"""{Application.ExecutablePath}""");
+                }
+                else
+                {
+                    regkey.DeleteValue(Application.ProductName, false);
+                }
+                regkey.Close();
             }
-            else
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+
+            Task.Run(() =>
             {
-                regkey.DeleteValue(Application.ProductName, false);
-            }
-            regkey.Close();
+                try
+                {
+                    Environment.SetEnvironmentVariable("BOOSTERA_WinscpPath", winscpPath, EnvironmentVariableTarget.User);
+                    Environment.SetEnvironmentVariable("BOOSTERA_IsLogging", isLogging.ToString().ToLower(), EnvironmentVariableTarget.User);
+                    Environment.SetEnvironmentVariable("BOOSTERA_LogFolder", logFolder, EnvironmentVariableTarget.User);
+                }
+                catch { }
+            });
 
             Program.ProgramHotKey.Remove(Program.HotKeyShowForm);
             Program.ProgramHotKey.Add(modkey, key, Program.HotKeyShowForm);

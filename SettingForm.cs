@@ -10,9 +10,11 @@ namespace Boostera
         public string TtermproPath { get { return textBox4.Text; } }
         public string TtpmacroPath { get { return textBox1.Text; } }
         public string WinscpPath { get { return textBox6.Text; } }
+        public string BoosteraKeyPath { get { return textBox7.Text; } }
         public string SearchFolder { get { return textBox2.Text; } }
         public string SearchExclusionFolders { get { return textBox3.Text; } }
-        public string BoosteraKeyPath { get { return textBox7.Text; } }
+        public bool IsLogging { get { return checkBox2.Checked; } }
+        public string LogFolder { get { return textBox8.Text; } }
         public bool IsStartUp { get { return checkBox1.Checked; } }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -24,7 +26,8 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key)
+        public SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath,
+            string searchFolder, string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key)
         {
             InitializeComponent();
 
@@ -79,6 +82,25 @@ namespace Boostera
                 textBox3.Text = textBox3.Text.Replace("\"", "");
                 textBox3.SelectionStart = caret;
             };
+            textBox8.Text = logFolder;
+            textBox8.TextChanged += (s, e) =>
+            {
+                var caret = textBox8.SelectionStart;
+                textBox8.Text = textBox8.Text.Replace("\"", "");
+                textBox8.SelectionStart = caret;
+            };
+
+            checkBox2.Checked = isLogging;
+            if (checkBox2.Checked)
+            {
+                label11.Enabled = true;
+                textBox8.Enabled = true;
+            }
+            else
+            {
+                label11.Enabled = false;
+                textBox8.Enabled = false;
+            }
 
             checkBox1.Checked = isStartUp;
             ModKey = modKey;
@@ -151,6 +173,20 @@ namespace Boostera
         {
             this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
             this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                label11.Enabled = true;
+                textBox8.Enabled = true;
+            }
+            else
+            {
+                label11.Enabled = false;
+                textBox8.Enabled = false;
+            }
         }
     }
 }
