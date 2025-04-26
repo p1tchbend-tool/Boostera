@@ -1,6 +1,6 @@
 ﻿namespace Boostera
 {
-    partial class Form2
+    partial class SettingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingForm));
             textBox1 = new System.Windows.Forms.TextBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
@@ -318,7 +318,7 @@
             checkBox2.Text = " ";
             checkBox2.UseVisualStyleBackColor = false;
             // 
-            // Form2
+            // SettingForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -353,7 +353,7 @@
             Margin = new System.Windows.Forms.Padding(2);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "Form2";
+            Name = "SettingForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Boostera";
             Load += Form2_Load;

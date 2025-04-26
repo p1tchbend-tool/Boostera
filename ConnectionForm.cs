@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Boostera
 {
-    public partial class Form3 : Form
+    public partial class ConnectionForm : Form
     {
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
@@ -33,7 +33,7 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public Form3(string ttermproPath, string winscpPath, string boosteraKeyPath)
+        public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath)
         {
             InitializeComponent();
 

@@ -5,7 +5,7 @@ using System.ComponentModel;
 
 namespace Boostera
 {
-    public partial class Form2 : Form
+    public partial class SettingForm : Form
     {
         public string TtermproPath { get { return textBox4.Text; } }
         public string TtpmacroPath { get { return textBox1.Text; } }
@@ -24,7 +24,7 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public Form2(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key)
+        public SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder, string searchExclusionFolders, bool isStartUp, int modKey, Keys key)
         {
             InitializeComponent();
 

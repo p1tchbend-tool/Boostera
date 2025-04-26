@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Boostera
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string ttpmacroPath = @"C:\Program Files (x86)\teraterm5\ttpmacro.exe";
@@ -42,7 +42,7 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public Form1()
+        public MainForm()
         {
             if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
 
@@ -82,12 +82,12 @@ namespace Boostera
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
 
-                using (var form2 = new Form2(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
+                using (var form2 = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
                 {
                     form2.Show();
                     form2.Close();
                 };
-                using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyPath))
+                using (var form3 = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
                 {
                     form3.Show();
                     form3.Hide();
@@ -174,7 +174,7 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form3 = new Form3(ttermproPath, winscpPath, boosteraKeyPath))
+                    using (var form3 = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
                     {
                         form3.ShowDialog();
                     }
@@ -191,7 +191,7 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form2 = new Form2(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
+                    using (var form2 = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder, string.Join(",", searchExclusionFolders), isStartUp, modkey, key))
                     {
                         form2.ShowDialog();
                         if (!string.IsNullOrEmpty(form2.TtermproPath) && File.Exists(form2.TtermproPath)) ttermproPath = form2.TtermproPath;

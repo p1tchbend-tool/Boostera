@@ -1,6 +1,6 @@
 ﻿namespace Boostera
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             textBox1 = new System.Windows.Forms.TextBox();
             listBox1 = new System.Windows.Forms.ListBox();
             timer1 = new System.Windows.Forms.Timer(components);
@@ -324,7 +324,7 @@
             panel13.Size = new System.Drawing.Size(30, 30);
             panel13.TabIndex = 20;
             // 
-            // Form1
+            // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -357,7 +357,7 @@
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(2);
             MaximizeBox = false;
-            Name = "Form1";
+            Name = "MainForm";
             Opacity = 0D;
             StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             Load += Form1_Load;

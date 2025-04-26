@@ -1,6 +1,6 @@
 ﻿namespace Boostera
 {
-    partial class Form3
+    partial class ConnectionForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectionForm));
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
@@ -772,7 +772,7 @@
             panel8.Size = new System.Drawing.Size(28, 28);
             panel8.TabIndex = 42;
             // 
-            // Form3
+            // ConnectionForm
             // 
             AcceptButton = button1;
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -821,7 +821,7 @@
             Margin = new System.Windows.Forms.Padding(2);
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "Form3";
+            Name = "ConnectionForm";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "Boostera";
             Load += Form3_Load;
