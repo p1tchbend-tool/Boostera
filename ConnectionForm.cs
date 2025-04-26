@@ -16,6 +16,8 @@ namespace Boostera
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
+        private bool isLogging = true;
+        private string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\log");
         private string boosteraMacroFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Boostera");
         private string sshFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".ssh");
         private List<History> histories = new List<History>();
@@ -33,7 +35,7 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath)
+        public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath, bool isLogging, string logFolder)
         {
             InitializeComponent();
 
@@ -48,6 +50,16 @@ namespace Boostera
             this.ttermproPath = ttermproPath;
             this.winscpPath = winscpPath;
             this.boosteraKeyPath = boosteraKeyPath;
+            this.isLogging = isLogging;
+            this.logFolder = logFolder;
+            if (!Directory.Exists(logFolder))
+            {
+                try
+                {
+                    Directory.CreateDirectory(logFolder);
+                }
+                catch { }
+            }
             comboBox2.SelectedIndex = 0;
 
             toolTip1.SetToolTip(comboBox2, "接続先のプロトコルを選択してください。\nSSHはTeraTerm、SFTPはWinSCPの事前設定が必要です。");
@@ -512,6 +524,7 @@ namespace Boostera
             var port = textBox1.Text;
             var privateKey = textBox3.Text;
             var password = textBox2.Text;
+            var isEnvPassword = checkBox2.Checked;
             var logonScript = textBox12.Text;
             var waitingString = textBox14.Text;
             var waitingTime = textBox15.Text;
@@ -521,6 +534,7 @@ namespace Boostera
             var forwardingPort = textBox9.Text;
             var forwardingPrivateKey = textBox7.Text;
             var forwardingPassword = textBox8.Text;
+            var forwardingIsEnvPassword = checkBox4.Checked;
             var isHide = checkBox1.Checked;
             var tag = textBox11.Text;
 
@@ -708,8 +722,8 @@ filedelete '{tempTtlPath}'";
             }
 
             var hitory = new History(uniqueKey, searchKey, protocol, host, user, port, privateKey, password,
-                logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser,
-                forwardingPort, forwardingPrivateKey, forwardingPassword, isHide, tag);
+                isEnvPassword, logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser,
+                forwardingPort, forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag);
 
             histories.RemoveAll(x => x.UniqueKey == uniqueKey);
             histories.Insert(0, hitory);

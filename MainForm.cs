@@ -47,7 +47,14 @@ namespace Boostera
         public MainForm()
         {
             if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
-            if (!Directory.Exists(logFolder)) Directory.CreateDirectory(logFolder);
+            if (!Directory.Exists(logFolder))
+            {
+                try
+                {
+                    Directory.CreateDirectory(logFolder);
+                }
+                catch { }
+            }
 
             try
             {
@@ -96,7 +103,7 @@ namespace Boostera
                     envForm.Show();
                     envForm.Close();
                 }
-                using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
+                using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, isLogging, logFolder))
                 {
                     connectionForm.Show();
                     connectionForm.Hide();
@@ -183,7 +190,7 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
+                    using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, isLogging, logFolder))
                     {
                         connectionForm.ShowDialog();
                     }
