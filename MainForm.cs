@@ -183,9 +183,9 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var form3 = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
+                    using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath))
                     {
-                        form3.ShowDialog();
+                        connectionForm.ShowDialog();
                     }
                     this.Hide();
                     this.WindowState = FormWindowState.Minimized;
@@ -515,7 +515,18 @@ namespace Boostera
             panel13.MouseClick += (s, e) =>
             {
                 if (e.Button != MouseButtons.Left) return;
+                try
+                {
+                    isShowingChildForm = true;
 
+                    using (var envForm = new EnvForm())
+                    {
+                        envForm.ShowDialog();
+                    }
+                    this.Hide();
+                    this.WindowState = FormWindowState.Minimized;
+                }
+                finally { isShowingChildForm = false; }
             };
 
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);

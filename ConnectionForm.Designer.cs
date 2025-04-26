@@ -606,7 +606,7 @@
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(775, 738);
+            listBox1.Size = new System.Drawing.Size(775, 164);
             listBox1.TabIndex = 29;
             listBox1.Visible = false;
             // 
@@ -779,7 +779,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ClientSize = new System.Drawing.Size(794, 761);
+            ClientSize = new System.Drawing.Size(799, 761);
             Controls.Add(listBox1);
             Controls.Add(panel8);
             Controls.Add(checkBox2);
