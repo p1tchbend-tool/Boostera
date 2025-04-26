@@ -45,6 +45,8 @@
             panel2 = new System.Windows.Forms.Panel();
             panel1 = new System.Windows.Forms.Panel();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            panel9 = new System.Windows.Forms.Panel();
+            checkBox4 = new System.Windows.Forms.CheckBox();
             label15 = new System.Windows.Forms.Label();
             checkBox1 = new System.Windows.Forms.CheckBox();
             label7 = new System.Windows.Forms.Label();
@@ -80,6 +82,8 @@
             label16 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
             label18 = new System.Windows.Forms.Label();
+            checkBox2 = new System.Windows.Forms.CheckBox();
+            panel8 = new System.Windows.Forms.Panel();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -88,7 +92,7 @@
             label1.AutoSize = true;
             label1.BackColor = System.Drawing.Color.Transparent;
             label1.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label1.Location = new System.Drawing.Point(11, 121);
+            label1.Location = new System.Drawing.Point(11, 116);
             label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(66, 21);
@@ -100,7 +104,7 @@
             label2.AutoSize = true;
             label2.BackColor = System.Drawing.Color.Transparent;
             label2.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label2.Location = new System.Drawing.Point(11, 281);
+            label2.Location = new System.Drawing.Point(11, 256);
             label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(192, 21);
@@ -112,7 +116,7 @@
             label3.AutoSize = true;
             label3.BackColor = System.Drawing.Color.Transparent;
             label3.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label3.Location = new System.Drawing.Point(11, 161);
+            label3.Location = new System.Drawing.Point(11, 151);
             label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(80, 21);
@@ -124,7 +128,7 @@
             label4.AutoSize = true;
             label4.BackColor = System.Drawing.Color.Transparent;
             label4.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label4.Location = new System.Drawing.Point(11, 201);
+            label4.Location = new System.Drawing.Point(11, 185);
             label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label4.Name = "label4";
             label4.Size = new System.Drawing.Size(66, 21);
@@ -136,7 +140,7 @@
             label5.AutoSize = true;
             label5.BackColor = System.Drawing.Color.Transparent;
             label5.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label5.Location = new System.Drawing.Point(11, 241);
+            label5.Location = new System.Drawing.Point(11, 221);
             label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label5.Name = "label5";
             label5.Size = new System.Drawing.Size(66, 21);
@@ -147,12 +151,12 @@
             // 
             textBox4.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox4.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox4.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox4.ForeColor = System.Drawing.Color.White;
-            textBox4.Location = new System.Drawing.Point(214, 160);
+            textBox4.Location = new System.Drawing.Point(214, 150);
             textBox4.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox4.Name = "textBox4";
-            textBox4.Size = new System.Drawing.Size(568, 23);
+            textBox4.Size = new System.Drawing.Size(568, 27);
             textBox4.TabIndex = 9;
             textBox4.TextChanged += textBox4_TextChanged;
             // 
@@ -160,12 +164,12 @@
             // 
             textBox1.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox1.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox1.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox1.ForeColor = System.Drawing.Color.White;
-            textBox1.Location = new System.Drawing.Point(214, 200);
+            textBox1.Location = new System.Drawing.Point(214, 185);
             textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(568, 23);
+            textBox1.Size = new System.Drawing.Size(568, 27);
             textBox1.TabIndex = 10;
             textBox1.Text = "22";
             textBox1.TextChanged += textBox1_TextChanged;
@@ -174,12 +178,12 @@
             // 
             textBox2.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox2.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox2.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox2.ForeColor = System.Drawing.Color.White;
-            textBox2.Location = new System.Drawing.Point(214, 280);
+            textBox2.Location = new System.Drawing.Point(214, 255);
             textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             textBox2.Name = "textBox2";
-            textBox2.Size = new System.Drawing.Size(498, 23);
+            textBox2.Size = new System.Drawing.Size(498, 27);
             textBox2.TabIndex = 11;
             textBox2.UseSystemPasswordChar = true;
             textBox2.TextChanged += textBox2_TextChanged;
@@ -190,12 +194,12 @@
             textBox3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystem;
             textBox3.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox3.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox3.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox3.ForeColor = System.Drawing.Color.White;
-            textBox3.Location = new System.Drawing.Point(214, 240);
+            textBox3.Location = new System.Drawing.Point(214, 220);
             textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             textBox3.Name = "textBox3";
-            textBox3.Size = new System.Drawing.Size(498, 23);
+            textBox3.Size = new System.Drawing.Size(498, 27);
             textBox3.TabIndex = 12;
             textBox3.UseSystemPasswordChar = true;
             // 
@@ -203,12 +207,12 @@
             // 
             textBox5.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox5.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox5.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox5.ForeColor = System.Drawing.Color.White;
-            textBox5.Location = new System.Drawing.Point(214, 120);
+            textBox5.Location = new System.Drawing.Point(214, 115);
             textBox5.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox5.Name = "textBox5";
-            textBox5.Size = new System.Drawing.Size(568, 23);
+            textBox5.Size = new System.Drawing.Size(568, 27);
             textBox5.TabIndex = 13;
             textBox5.TextChanged += textBox5_TextChanged;
             // 
@@ -218,7 +222,7 @@
             button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             button1.Font = new System.Drawing.Font("メイリオ", 10.2F);
             button1.ForeColor = System.Drawing.Color.White;
-            button1.Location = new System.Drawing.Point(717, 740);
+            button1.Location = new System.Drawing.Point(717, 720);
             button1.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(65, 28);
@@ -232,7 +236,7 @@
             panel3.BackColor = System.Drawing.Color.Transparent;
             panel3.BackgroundImage = Properties.Resources.open;
             panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel3.Location = new System.Drawing.Point(754, 240);
+            panel3.Location = new System.Drawing.Point(754, 220);
             panel3.Name = "panel3";
             panel3.Size = new System.Drawing.Size(28, 28);
             panel3.TabIndex = 18;
@@ -242,7 +246,7 @@
             panel2.BackColor = System.Drawing.Color.Transparent;
             panel2.BackgroundImage = Properties.Resources.eye_show;
             panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel2.Location = new System.Drawing.Point(720, 280);
+            panel2.Location = new System.Drawing.Point(720, 255);
             panel2.Name = "panel2";
             panel2.Size = new System.Drawing.Size(28, 28);
             panel2.TabIndex = 17;
@@ -252,13 +256,15 @@
             panel1.BackColor = System.Drawing.Color.Transparent;
             panel1.BackgroundImage = Properties.Resources.eye_show;
             panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel1.Location = new System.Drawing.Point(720, 240);
+            panel1.Location = new System.Drawing.Point(720, 220);
             panel1.Name = "panel1";
             panel1.Size = new System.Drawing.Size(28, 28);
             panel1.TabIndex = 16;
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(panel9);
+            groupBox1.Controls.Add(checkBox4);
             groupBox1.Controls.Add(label15);
             groupBox1.Controls.Add(checkBox1);
             groupBox1.Controls.Add(label7);
@@ -276,19 +282,40 @@
             groupBox1.Controls.Add(textBox10);
             groupBox1.Controls.Add(checkBox3);
             groupBox1.Font = new System.Drawing.Font("メイリオ", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            groupBox1.Location = new System.Drawing.Point(11, 410);
+            groupBox1.Location = new System.Drawing.Point(11, 400);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(773, 260);
+            groupBox1.Size = new System.Drawing.Size(773, 268);
             groupBox1.TabIndex = 22;
             groupBox1.TabStop = false;
+            // 
+            // panel9
+            // 
+            panel9.BackColor = System.Drawing.Color.Transparent;
+            panel9.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel9.BackgroundImage");
+            panel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel9.Location = new System.Drawing.Point(731, 170);
+            panel9.Name = "panel9";
+            panel9.Size = new System.Drawing.Size(28, 28);
+            panel9.TabIndex = 43;
+            // 
+            // checkBox4
+            // 
+            checkBox4.AutoSize = true;
+            checkBox4.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            checkBox4.Location = new System.Drawing.Point(202, 205);
+            checkBox4.Name = "checkBox4";
+            checkBox4.Size = new System.Drawing.Size(314, 24);
+            checkBox4.TabIndex = 42;
+            checkBox4.Text = "パスワード／パスフレーズに環境変数を使用する";
+            checkBox4.UseVisualStyleBackColor = true;
             // 
             // label15
             // 
             label15.AutoSize = true;
             label15.BackColor = System.Drawing.Color.Transparent;
             label15.Enabled = false;
-            label15.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label15.Location = new System.Drawing.Point(6, 229);
+            label15.Font = new System.Drawing.Font("メイリオ", 10.2F);
+            label15.Location = new System.Drawing.Point(6, 233);
             label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label15.Name = "label15";
             label15.Size = new System.Drawing.Size(108, 21);
@@ -299,7 +326,7 @@
             // 
             checkBox1.AutoSize = true;
             checkBox1.BackColor = System.Drawing.Color.Transparent;
-            checkBox1.Location = new System.Drawing.Point(202, 230);
+            checkBox1.Location = new System.Drawing.Point(202, 234);
             checkBox1.Margin = new System.Windows.Forms.Padding(2);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new System.Drawing.Size(31, 22);
@@ -312,8 +339,8 @@
             label7.AutoSize = true;
             label7.BackColor = System.Drawing.Color.Transparent;
             label7.Enabled = false;
-            label7.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label7.Location = new System.Drawing.Point(6, 151);
+            label7.Font = new System.Drawing.Font("メイリオ", 10.2F);
+            label7.Location = new System.Drawing.Point(6, 136);
             label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label7.Name = "label7";
             label7.Size = new System.Drawing.Size(66, 21);
@@ -325,8 +352,8 @@
             label8.AutoSize = true;
             label8.BackColor = System.Drawing.Color.Transparent;
             label8.Enabled = false;
-            label8.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label8.Location = new System.Drawing.Point(6, 112);
+            label8.Font = new System.Drawing.Font("メイリオ", 10.2F);
+            label8.Location = new System.Drawing.Point(6, 101);
             label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label8.Name = "label8";
             label8.Size = new System.Drawing.Size(66, 21);
@@ -338,8 +365,8 @@
             label9.AutoSize = true;
             label9.BackColor = System.Drawing.Color.Transparent;
             label9.Enabled = false;
-            label9.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label9.Location = new System.Drawing.Point(6, 71);
+            label9.Font = new System.Drawing.Font("メイリオ", 10.2F);
+            label9.Location = new System.Drawing.Point(6, 66);
             label9.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label9.Name = "label9";
             label9.Size = new System.Drawing.Size(80, 21);
@@ -351,8 +378,8 @@
             label10.AutoSize = true;
             label10.BackColor = System.Drawing.Color.Transparent;
             label10.Enabled = false;
-            label10.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label10.Location = new System.Drawing.Point(6, 191);
+            label10.Font = new System.Drawing.Font("メイリオ", 10.2F);
+            label10.Location = new System.Drawing.Point(6, 171);
             label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(192, 21);
@@ -364,7 +391,7 @@
             label11.AutoSize = true;
             label11.BackColor = System.Drawing.Color.Transparent;
             label11.Enabled = false;
-            label11.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label11.Font = new System.Drawing.Font("メイリオ", 10.2F);
             label11.Location = new System.Drawing.Point(6, 31);
             label11.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label11.Name = "label11";
@@ -378,7 +405,7 @@
             panel4.BackgroundImage = Properties.Resources.open;
             panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             panel4.Enabled = false;
-            panel4.Location = new System.Drawing.Point(731, 150);
+            panel4.Location = new System.Drawing.Point(731, 135);
             panel4.Name = "panel4";
             panel4.Size = new System.Drawing.Size(28, 28);
             panel4.TabIndex = 28;
@@ -389,7 +416,7 @@
             panel5.BackgroundImage = Properties.Resources.eye_show;
             panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             panel5.Enabled = false;
-            panel5.Location = new System.Drawing.Point(697, 190);
+            panel5.Location = new System.Drawing.Point(697, 170);
             panel5.Name = "panel5";
             panel5.Size = new System.Drawing.Size(28, 28);
             panel5.TabIndex = 27;
@@ -400,7 +427,7 @@
             panel6.BackgroundImage = Properties.Resources.eye_show;
             panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             panel6.Enabled = false;
-            panel6.Location = new System.Drawing.Point(697, 150);
+            panel6.Location = new System.Drawing.Point(697, 135);
             panel6.Name = "panel6";
             panel6.Size = new System.Drawing.Size(28, 28);
             panel6.TabIndex = 26;
@@ -410,12 +437,12 @@
             textBox6.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox6.Enabled = false;
-            textBox6.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox6.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox6.ForeColor = System.Drawing.Color.White;
             textBox6.Location = new System.Drawing.Point(202, 30);
             textBox6.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox6.Name = "textBox6";
-            textBox6.Size = new System.Drawing.Size(557, 23);
+            textBox6.Size = new System.Drawing.Size(557, 27);
             textBox6.TabIndex = 25;
             textBox6.TextChanged += textBox6_TextChanged;
             // 
@@ -426,12 +453,12 @@
             textBox7.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox7.Enabled = false;
-            textBox7.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox7.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox7.ForeColor = System.Drawing.Color.White;
-            textBox7.Location = new System.Drawing.Point(202, 150);
+            textBox7.Location = new System.Drawing.Point(202, 135);
             textBox7.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             textBox7.Name = "textBox7";
-            textBox7.Size = new System.Drawing.Size(487, 23);
+            textBox7.Size = new System.Drawing.Size(487, 27);
             textBox7.TabIndex = 24;
             textBox7.UseSystemPasswordChar = true;
             // 
@@ -440,12 +467,12 @@
             textBox8.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox8.Enabled = false;
-            textBox8.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox8.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox8.ForeColor = System.Drawing.Color.White;
-            textBox8.Location = new System.Drawing.Point(202, 190);
+            textBox8.Location = new System.Drawing.Point(202, 170);
             textBox8.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             textBox8.Name = "textBox8";
-            textBox8.Size = new System.Drawing.Size(487, 23);
+            textBox8.Size = new System.Drawing.Size(487, 27);
             textBox8.TabIndex = 23;
             textBox8.UseSystemPasswordChar = true;
             textBox8.TextChanged += textBox8_TextChanged;
@@ -455,12 +482,12 @@
             textBox9.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox9.Enabled = false;
-            textBox9.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox9.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox9.ForeColor = System.Drawing.Color.White;
-            textBox9.Location = new System.Drawing.Point(202, 110);
+            textBox9.Location = new System.Drawing.Point(202, 100);
             textBox9.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox9.Name = "textBox9";
-            textBox9.Size = new System.Drawing.Size(557, 23);
+            textBox9.Size = new System.Drawing.Size(557, 27);
             textBox9.TabIndex = 22;
             textBox9.Text = "22";
             textBox9.TextChanged += textBox9_TextChanged;
@@ -470,12 +497,12 @@
             textBox10.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             textBox10.Enabled = false;
-            textBox10.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox10.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox10.ForeColor = System.Drawing.Color.White;
-            textBox10.Location = new System.Drawing.Point(202, 70);
+            textBox10.Location = new System.Drawing.Point(202, 65);
             textBox10.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox10.Name = "textBox10";
-            textBox10.Size = new System.Drawing.Size(557, 23);
+            textBox10.Size = new System.Drawing.Size(557, 27);
             textBox10.TabIndex = 21;
             textBox10.TextChanged += textBox10_TextChanged;
             // 
@@ -508,13 +535,13 @@
             comboBox2.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            comboBox2.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            comboBox2.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             comboBox2.ForeColor = System.Drawing.Color.White;
             comboBox2.FormattingEnabled = true;
             comboBox2.Items.AddRange(new object[] { "SSH", "RDP", "SFTP" });
             comboBox2.Location = new System.Drawing.Point(214, 75);
             comboBox2.Name = "comboBox2";
-            comboBox2.Size = new System.Drawing.Size(200, 24);
+            comboBox2.Size = new System.Drawing.Size(200, 28);
             comboBox2.TabIndex = 24;
             // 
             // label13
@@ -522,7 +549,7 @@
             label13.AutoSize = true;
             label13.BackColor = System.Drawing.Color.Transparent;
             label13.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label13.Location = new System.Drawing.Point(11, 691);
+            label13.Location = new System.Drawing.Point(11, 681);
             label13.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label13.Name = "label13";
             label13.Size = new System.Drawing.Size(52, 21);
@@ -533,12 +560,12 @@
             // 
             textBox11.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox11.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox11.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox11.ForeColor = System.Drawing.Color.White;
-            textBox11.Location = new System.Drawing.Point(214, 690);
+            textBox11.Location = new System.Drawing.Point(214, 680);
             textBox11.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox11.Name = "textBox11";
-            textBox11.Size = new System.Drawing.Size(568, 23);
+            textBox11.Size = new System.Drawing.Size(568, 27);
             textBox11.TabIndex = 26;
             textBox11.TextChanged += textBox11_TextChanged;
             // 
@@ -558,12 +585,12 @@
             // 
             textBox12.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox12.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox12.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox12.ForeColor = System.Drawing.Color.White;
             textBox12.Location = new System.Drawing.Point(214, 320);
             textBox12.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox12.Name = "textBox12";
-            textBox12.Size = new System.Drawing.Size(568, 23);
+            textBox12.Size = new System.Drawing.Size(568, 27);
             textBox12.TabIndex = 28;
             textBox12.TextChanged += textBox12_TextChanged;
             // 
@@ -575,11 +602,11 @@
             listBox1.Font = new System.Drawing.Font("メイリオ", 20F);
             listBox1.ForeColor = System.Drawing.Color.White;
             listBox1.FormattingEnabled = true;
-            listBox1.Location = new System.Drawing.Point(11, 75);
+            listBox1.Location = new System.Drawing.Point(11, 11);
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(775, 697);
+            listBox1.Size = new System.Drawing.Size(775, 738);
             listBox1.TabIndex = 29;
             listBox1.Visible = false;
             // 
@@ -634,7 +661,7 @@
             button2.BackColor = System.Drawing.Color.FromArgb(22, 22, 22);
             button2.Font = new System.Drawing.Font("メイリオ", 10.2F);
             button2.ForeColor = System.Drawing.Color.White;
-            button2.Location = new System.Drawing.Point(11, 740);
+            button2.Location = new System.Drawing.Point(11, 720);
             button2.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             button2.Name = "button2";
             button2.Size = new System.Drawing.Size(130, 28);
@@ -648,7 +675,7 @@
             button3.BackColor = System.Drawing.Color.FromArgb(22, 22, 22);
             button3.Font = new System.Drawing.Font("メイリオ", 10.2F);
             button3.ForeColor = System.Drawing.Color.White;
-            button3.Location = new System.Drawing.Point(150, 740);
+            button3.Location = new System.Drawing.Point(155, 720);
             button3.Margin = new System.Windows.Forms.Padding(2, 2, 5, 2);
             button3.Name = "button3";
             button3.Size = new System.Drawing.Size(130, 28);
@@ -666,12 +693,12 @@
             // 
             textBox15.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox15.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F);
+            textBox15.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox15.ForeColor = System.Drawing.Color.White;
-            textBox15.Location = new System.Drawing.Point(474, 360);
+            textBox15.Location = new System.Drawing.Point(474, 355);
             textBox15.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox15.Name = "textBox15";
-            textBox15.Size = new System.Drawing.Size(100, 23);
+            textBox15.Size = new System.Drawing.Size(100, 27);
             textBox15.TabIndex = 36;
             textBox15.Text = "3000";
             textBox15.TextChanged += textBox15_TextChanged;
@@ -680,23 +707,23 @@
             // 
             textBox14.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
             textBox14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            textBox14.Font = new System.Drawing.Font("BIZ UDPゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            textBox14.Font = new System.Drawing.Font("メイリオ", 9.75F);
             textBox14.ForeColor = System.Drawing.Color.White;
-            textBox14.Location = new System.Drawing.Point(270, 360);
+            textBox14.Location = new System.Drawing.Point(270, 355);
             textBox14.Margin = new System.Windows.Forms.Padding(2, 2, 10, 2);
             textBox14.Name = "textBox14";
-            textBox14.Size = new System.Drawing.Size(100, 23);
+            textBox14.Size = new System.Drawing.Size(100, 27);
             textBox14.TabIndex = 37;
             // 
             // label16
             // 
             label16.AutoSize = true;
             label16.BackColor = System.Drawing.Color.Transparent;
-            label16.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label16.Location = new System.Drawing.Point(214, 363);
+            label16.Font = new System.Drawing.Font("メイリオ", 9.75F);
+            label16.Location = new System.Drawing.Point(214, 357);
             label16.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label16.Name = "label16";
-            label16.Size = new System.Drawing.Size(52, 21);
+            label16.Size = new System.Drawing.Size(48, 20);
             label16.TabIndex = 38;
             label16.Text = "文字列";
             // 
@@ -704,11 +731,11 @@
             // 
             label17.AutoSize = true;
             label17.BackColor = System.Drawing.Color.Transparent;
-            label17.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label17.Location = new System.Drawing.Point(376, 363);
+            label17.Font = new System.Drawing.Font("メイリオ", 9.75F);
+            label17.Location = new System.Drawing.Point(376, 357);
             label17.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label17.Name = "label17";
-            label17.Size = new System.Drawing.Size(94, 21);
+            label17.Size = new System.Drawing.Size(87, 20);
             label17.TabIndex = 39;
             label17.Text = "が表示された";
             // 
@@ -716,13 +743,34 @@
             // 
             label18.AutoSize = true;
             label18.BackColor = System.Drawing.Color.Transparent;
-            label18.Font = new System.Drawing.Font("メイリオ", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label18.Location = new System.Drawing.Point(580, 363);
+            label18.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label18.Location = new System.Drawing.Point(579, 357);
             label18.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label18.Name = "label18";
-            label18.Size = new System.Drawing.Size(108, 21);
+            label18.Size = new System.Drawing.Size(100, 20);
             label18.TabIndex = 40;
             label18.Text = "ミリ秒後に実行";
+            // 
+            // checkBox2
+            // 
+            checkBox2.AutoSize = true;
+            checkBox2.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            checkBox2.Location = new System.Drawing.Point(214, 290);
+            checkBox2.Name = "checkBox2";
+            checkBox2.Size = new System.Drawing.Size(314, 24);
+            checkBox2.TabIndex = 41;
+            checkBox2.Text = "パスワード／パスフレーズに環境変数を使用する";
+            checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // panel8
+            // 
+            panel8.BackColor = System.Drawing.Color.Transparent;
+            panel8.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel8.BackgroundImage");
+            panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel8.Location = new System.Drawing.Point(754, 255);
+            panel8.Name = "panel8";
+            panel8.Size = new System.Drawing.Size(28, 28);
+            panel8.TabIndex = 42;
             // 
             // Form3
             // 
@@ -731,8 +779,10 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ClientSize = new System.Drawing.Size(794, 781);
+            ClientSize = new System.Drawing.Size(794, 761);
             Controls.Add(listBox1);
+            Controls.Add(panel8);
+            Controls.Add(checkBox2);
             Controls.Add(label18);
             Controls.Add(label17);
             Controls.Add(label16);
@@ -832,5 +882,9 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.CheckBox checkBox4;
     }
 }
