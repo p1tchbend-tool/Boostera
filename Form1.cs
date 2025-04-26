@@ -777,9 +777,9 @@ namespace Boostera
 
             this.Opacity = 0;
             this.WindowState = FormWindowState.Normal;
-            this.Left = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea.Left +
-                Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea.Width / 2 - this.Width / 2;
-            this.Top = Screen.FromPoint(System.Windows.Forms.Cursor.Position).WorkingArea.Height / 8;
+            this.Left = Screen.FromPoint(Cursor.Position).WorkingArea.Left +
+                Screen.FromPoint(Cursor.Position).WorkingArea.Width / 2 - this.Width / 2;
+            this.Top = Screen.FromPoint(Cursor.Position).WorkingArea.Height / 8;
             this.Show();
             this.Opacity = 100;
 
