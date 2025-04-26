@@ -311,7 +311,11 @@ namespace Boostera
                     if (!Directory.Exists(sshFolder)) Directory.CreateDirectory(sshFolder);
                     openFileDialog.InitialDirectory = sshFolder;
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK) textBox3.Text = openFileDialog.FileName;
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBox3.Text = openFileDialog.FileName;
+                        sshFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                    }
                 }
             };
 
@@ -340,10 +344,14 @@ namespace Boostera
                     if (!Directory.Exists(sshFolder)) Directory.CreateDirectory(sshFolder);
                     openFileDialog.InitialDirectory = sshFolder;
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK) textBox7.Text = openFileDialog.FileName;
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        textBox7.Text = openFileDialog.FileName;
+                        sshFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                    }
                 }
             };
-
+            
             toolTip1.Draw += (s, e) =>
             {
                 e.DrawBackground();
@@ -824,7 +832,11 @@ filedelete '{tempTtlPath}'";
                     openFileDialog.CheckFileExists = false;
                     openFileDialog.CheckPathExists = true;
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK) targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                        boosteraMacroFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                    }
                 }
 
                 if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
@@ -892,7 +904,11 @@ filedelete '{tempTtlPath}'";
                     openFileDialog.InitialDirectory = boosteraMacroFolder;
                     openFileDialog.Filter = "TTL|*.ttl";
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK) ttlFilePath = openFileDialog.FileName;
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        ttlFilePath = openFileDialog.FileName;
+                        boosteraMacroFolder = Path.GetDirectoryName(openFileDialog.FileName);
+                    }
                 }
 
                 if (string.IsNullOrEmpty(ttlFilePath) || !File.Exists(ttlFilePath)) return;
