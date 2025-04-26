@@ -155,6 +155,7 @@ namespace Boostera
             };
 
             toolTip1.SetToolTip(panel3, "設定");
+            toolTip1.SetToolTip(panel13, "環境変数マネージャー");
             toolTip1.SetToolTip(panel4, "TeraTerm 最小化");
             toolTip1.SetToolTip(panel5, "上下に並べる");
             toolTip1.SetToolTip(panel6, "左右に並べる");
@@ -482,6 +483,12 @@ namespace Boostera
                 }
                 this.Hide();
                 this.WindowState = FormWindowState.Minimized;
+            };
+
+            panel13.MouseClick += (s, e) =>
+            {
+                if (e.Button != MouseButtons.Left) return;
+
             };
 
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);

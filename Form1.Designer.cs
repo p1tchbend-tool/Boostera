@@ -56,6 +56,7 @@
             panel7 = new System.Windows.Forms.Panel();
             panel3 = new System.Windows.Forms.Panel();
             timer4 = new System.Windows.Forms.Timer(components);
+            panel13 = new System.Windows.Forms.Panel();
             SuspendLayout();
             // 
             // textBox1
@@ -149,10 +150,10 @@
             // 
             myPanel2.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             myPanel2.ForeColor = System.Drawing.Color.White;
-            myPanel2.Location = new System.Drawing.Point(377, 20);
+            myPanel2.Location = new System.Drawing.Point(345, 20);
             myPanel2.Margin = new System.Windows.Forms.Padding(2);
             myPanel2.Name = "myPanel2";
-            myPanel2.Size = new System.Drawing.Size(412, 56);
+            myPanel2.Size = new System.Drawing.Size(444, 56);
             myPanel2.TabIndex = 6;
             // 
             // myPanel4
@@ -180,7 +181,7 @@
             panel12.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel12.BackgroundImage = Properties.Resources.hide;
             panel12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel12.Location = new System.Drawing.Point(607, 33);
+            panel12.Location = new System.Drawing.Point(571, 33);
             panel12.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel12.Name = "panel12";
             panel12.Size = new System.Drawing.Size(30, 30);
@@ -191,7 +192,7 @@
             panel11.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel11.BackgroundImage = Properties.Resources.show;
             panel11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel11.Location = new System.Drawing.Point(643, 33);
+            panel11.Location = new System.Drawing.Point(607, 33);
             panel11.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel11.Name = "panel11";
             panel11.Size = new System.Drawing.Size(30, 30);
@@ -202,7 +203,7 @@
             panel2.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel2.BackgroundImage = Properties.Resources.connect;
             panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel2.Location = new System.Drawing.Point(715, 33);
+            panel2.Location = new System.Drawing.Point(679, 33);
             panel2.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel2.Name = "panel2";
             panel2.Size = new System.Drawing.Size(30, 30);
@@ -213,7 +214,7 @@
             panel6.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel6.BackgroundImage = Properties.Resources.layout_columns_negate;
             panel6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel6.Location = new System.Drawing.Point(427, 33);
+            panel6.Location = new System.Drawing.Point(391, 33);
             panel6.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel6.Name = "panel6";
             panel6.Size = new System.Drawing.Size(30, 30);
@@ -224,7 +225,7 @@
             panel5.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel5.BackgroundImage = Properties.Resources.layout_rows_negate;
             panel5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel5.Location = new System.Drawing.Point(463, 33);
+            panel5.Location = new System.Drawing.Point(427, 33);
             panel5.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel5.Name = "panel5";
             panel5.Size = new System.Drawing.Size(30, 30);
@@ -235,7 +236,7 @@
             panel10.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel10.BackgroundImage = Properties.Resources.close;
             panel10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel10.Location = new System.Drawing.Point(679, 33);
+            panel10.Location = new System.Drawing.Point(643, 33);
             panel10.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel10.Name = "panel10";
             panel10.Size = new System.Drawing.Size(30, 30);
@@ -246,7 +247,7 @@
             panel9.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel9.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel9.BackgroundImage");
             panel9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel9.Location = new System.Drawing.Point(499, 33);
+            panel9.Location = new System.Drawing.Point(463, 33);
             panel9.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel9.Name = "panel9";
             panel9.Size = new System.Drawing.Size(30, 30);
@@ -257,7 +258,7 @@
             panel8.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel8.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel8.BackgroundImage");
             panel8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel8.Location = new System.Drawing.Point(535, 33);
+            panel8.Location = new System.Drawing.Point(499, 33);
             panel8.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel8.Name = "panel8";
             panel8.Size = new System.Drawing.Size(30, 30);
@@ -268,7 +269,7 @@
             panel4.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel4.BackgroundImage = Properties.Resources.minimize;
             panel4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel4.Location = new System.Drawing.Point(571, 33);
+            panel4.Location = new System.Drawing.Point(535, 33);
             panel4.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel4.Name = "panel4";
             panel4.Size = new System.Drawing.Size(30, 30);
@@ -290,7 +291,7 @@
             panel7.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel7.BackgroundImage = Properties.Resources.arrow_negate;
             panel7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel7.Location = new System.Drawing.Point(391, 33);
+            panel7.Location = new System.Drawing.Point(355, 33);
             panel7.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel7.Name = "panel7";
             panel7.Size = new System.Drawing.Size(30, 30);
@@ -312,6 +313,17 @@
             timer4.Interval = 500;
             timer4.Tick += timer4_Tick;
             // 
+            // panel13
+            // 
+            panel13.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
+            panel13.BackgroundImage = (System.Drawing.Image)resources.GetObject("panel13.BackgroundImage");
+            panel13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            panel13.Location = new System.Drawing.Point(715, 33);
+            panel13.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
+            panel13.Name = "panel13";
+            panel13.Size = new System.Drawing.Size(30, 30);
+            panel13.TabIndex = 20;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -319,6 +331,7 @@
             BackColor = System.Drawing.Color.Green;
             ClientSize = new System.Drawing.Size(810, 670);
             ControlBox = false;
+            Controls.Add(panel13);
             Controls.Add(panel12);
             Controls.Add(panel11);
             Controls.Add(panel2);
@@ -380,6 +393,7 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Timer timer4;
+        private System.Windows.Forms.Panel panel13;
     }
 }
 
