@@ -368,7 +368,7 @@ namespace Boostera
             {
                 if (e.Button != MouseButtons.Left) return;
 
-                using (var envForm = new EnvForm())
+                using (var envForm = new EnvForm(boosteraKeyPath))
                 {
                     envForm.ShowDialog();
                     if (envForm.DialogResult != DialogResult.OK) return;
@@ -383,7 +383,7 @@ namespace Boostera
             {
                 if (e.Button != MouseButtons.Left) return;
 
-                using (var envForm = new EnvForm())
+                using (var envForm = new EnvForm(boosteraKeyPath))
                 {
                     envForm.ShowDialog();
                     if (envForm.DialogResult != DialogResult.OK) return;
@@ -465,6 +465,8 @@ namespace Boostera
                 label9.Enabled = true;
                 label10.Enabled = true;
                 label11.Enabled = true;
+                label15.Enabled = true;
+                label19.Enabled = true;
                 textBox6.Enabled = true;
                 textBox7.Enabled = true;
                 textBox8.Enabled = true;
@@ -473,8 +475,9 @@ namespace Boostera
                 panel4.Enabled = true;
                 panel5.Enabled = true;
                 panel6.Enabled = true;
-                label15.Enabled = true;
+                panel9.Enabled = true;
                 checkBox1.Enabled = true;
+                checkBox4.Enabled = true;
             }
             else
             {
@@ -483,6 +486,8 @@ namespace Boostera
                 label9.Enabled = false;
                 label10.Enabled = false;
                 label11.Enabled = false;
+                label15.Enabled = false;
+                label19.Enabled = false;
                 textBox6.Enabled = false;
                 textBox7.Enabled = false;
                 textBox8.Enabled = false;
@@ -491,8 +496,9 @@ namespace Boostera
                 panel4.Enabled = false;
                 panel5.Enabled = false;
                 panel6.Enabled = false;
-                label15.Enabled = false;
+                panel9.Enabled = false;
                 checkBox1.Enabled = false;
+                checkBox4.Enabled = false;
             }
         }
 
@@ -1003,6 +1009,7 @@ filedelete '{tempTtlPath}'";
                 label10.Enabled = true;
                 label11.Enabled = true;
                 label15.Enabled = true;
+                label19.Enabled = true;
                 textBox6.Enabled = true;
                 textBox7.Enabled = true;
                 textBox8.Enabled = true;
@@ -1023,6 +1030,7 @@ filedelete '{tempTtlPath}'";
                 label10.Enabled = false;
                 label11.Enabled = false;
                 label15.Enabled = false;
+                label19.Enabled = false;
                 textBox6.Enabled = false;
                 textBox7.Enabled = false;
                 textBox8.Enabled = false;

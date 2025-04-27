@@ -98,7 +98,7 @@ namespace Boostera
                     settingForm.Show();
                     settingForm.Close();
                 };
-                using (var envForm = new EnvForm())
+                using (var envForm = new EnvForm(boosteraKeyPath))
                 {
                     envForm.Show();
                     envForm.Close();
@@ -526,7 +526,7 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var envForm = new EnvForm())
+                    using (var envForm = new EnvForm(boosteraKeyPath))
                     {
                         envForm.ShowDialog();
                     }

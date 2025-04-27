@@ -183,6 +183,7 @@
             button4.TabIndex = 18;
             button4.Text = "エクスポート";
             button4.UseVisualStyleBackColor = false;
+            button4.Click += button4_Click;
             // 
             // button5
             // 
@@ -196,6 +197,7 @@
             button5.TabIndex = 19;
             button5.Text = "インポート";
             button5.UseVisualStyleBackColor = false;
+            button5.Click += button5_Click;
             // 
             // EnvForm
             // 

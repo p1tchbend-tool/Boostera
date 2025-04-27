@@ -84,6 +84,7 @@
             label18 = new System.Windows.Forms.Label();
             checkBox2 = new System.Windows.Forms.CheckBox();
             panel8 = new System.Windows.Forms.Panel();
+            label19 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -263,6 +264,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(label19);
             groupBox1.Controls.Add(panel9);
             groupBox1.Controls.Add(checkBox4);
             groupBox1.Controls.Add(label15);
@@ -304,9 +306,9 @@
             checkBox4.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
             checkBox4.Location = new System.Drawing.Point(202, 205);
             checkBox4.Name = "checkBox4";
-            checkBox4.Size = new System.Drawing.Size(314, 24);
+            checkBox4.Size = new System.Drawing.Size(32, 24);
             checkBox4.TabIndex = 42;
-            checkBox4.Text = "パスワード／パスフレーズに環境変数を使用する";
+            checkBox4.Text = " ";
             checkBox4.UseVisualStyleBackColor = true;
             // 
             // label15
@@ -772,6 +774,19 @@
             panel8.Size = new System.Drawing.Size(28, 28);
             panel8.TabIndex = 42;
             // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.BackColor = System.Drawing.Color.Transparent;
+            label19.Enabled = false;
+            label19.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label19.Location = new System.Drawing.Point(220, 206);
+            label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(295, 20);
+            label19.TabIndex = 44;
+            label19.Text = "パスワード／パスフレーズに環境変数を使用する";
+            // 
             // ConnectionForm
             // 
             AcceptButton = button1;
@@ -886,5 +901,6 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label label19;
     }
 }

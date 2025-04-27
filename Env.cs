@@ -5,10 +5,10 @@
         public string Key { get; set; }
         public string Value { get; set; }
 
-        public Env(string key, string value)
+        public Env(string Key, string Value)
         {
-            Key = key;
-            Value = value;
+            this.Key = Key;
+            this.Value = Value;
         }
     }
 }
