@@ -256,6 +256,14 @@ namespace Boostera
             }
             listView1.EndUpdate();
 
+            try
+            {
+                var envsEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(envs), boosteraKeyPath);
+                var envsJson = JsonSerializer.Serialize(envsEncrypted, jsonSerializerOptions);
+                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
+            }
+            catch { }
+
             Task.Run(() =>
             {
                 var id = Guid.NewGuid().ToString("N");
