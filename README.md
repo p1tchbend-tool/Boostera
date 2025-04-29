@@ -7,6 +7,7 @@
 * 接続履歴をTTLマクロとしてエクスポート
 * SSH、SFTP、リモートデスクトップの相互運用
 * ポートフォワーディングを利用した踏み台経由の接続
+* 環境変数マネージャー
 * ウィンドウレイアウト管理
   
 使用には「TeraTerm」が必要となりますので、[公式リポジトリ](https://github.com/TeraTermProject/teraterm/releases/latest) より別途インストールしてください。  

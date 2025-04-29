@@ -315,6 +315,11 @@
             "AssemblyAsmDisplayName" = "8:Launcher, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_E599E37FB1ED43E3AEDD5E90E18393B5"
+                    {
+                    "Name" = "8:Launcher.exe"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\bin\\Release\\net9.0-windows10.0.17763.0\\publish\\win-x64\\Launcher.exe"
             "TargetName" = "8:"
@@ -410,15 +415,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Boostera"
-        "ProductCode" = "8:{0142EB36-4ACC-41A3-997B-B392F1D89BF3}"
-        "PackageCode" = "8:{A6AB1532-94C6-4FAC-88FF-77729E282B3D}"
+        "ProductCode" = "8:{401E16C0-2275-478E-82A6-E4EC27066AB2}"
+        "PackageCode" = "8:{5A90BBB6-8B76-4436-8937-86282C2C8B3B}"
         "UpgradeCode" = "8:{E2BB7EAD-4543-42CB-AAB6-3850798A4948}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:3.1.3"
+        "ProductVersion" = "8:3.2.0"
         "Manufacturer" = "8:P1tchBend"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
