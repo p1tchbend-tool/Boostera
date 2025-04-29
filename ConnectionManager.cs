@@ -259,10 +259,12 @@ ForwardingIsEnvPassword = '{{ForwardingIsEnvPassword}}'
 IsHide = '{{IsHide}}'
 Tag = '{{Tag}}'
 
+getenv 'BOOSTERA_IsLogging' IsLogging
+getenv 'BOOSTERA_LogFolder' LogFolder
+getenv 'BOOSTERA_WinscpPath' WinscpPath
+
 expandenv PrivateKey
 expandenv ForwardingPrivateKey
-
-getenv 'BOOSTERA_WinscpPath' WinscpPath
 
 strcompare IsEnvPassword 'true'
 if result == 0 then
@@ -272,6 +274,23 @@ endif
 strcompare ForwardingIsEnvPassword 'true'
 if result == 0 then
     getenv ForwardingPassword ForwardingPassword
+endif
+
+strcompare IsLogging 'true'
+if result == 0 then
+    logFile = ''
+    strconcat logFile LogFolder
+    strconcat logFile '\'
+    strconcat logFile '%Y%m%d-%H%M%S_'
+    strconcat logFile User
+    strconcat logFile '@'
+    strconcat logFile Host
+    strconcat logFile '_#'
+    strconcat logFile Tag
+    strconcat logFile '.log'
+
+    logclose
+    logopen logFile
 endif
 
 buf = ''
