@@ -730,10 +730,9 @@ namespace Boostera
                 if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
 
                 Random random = new Random();
-                var ttlFilePath = connectionManager.ExportTtl(
-                    targetFolder, comboBox2.Text, textBox5.Text, textBox4.Text, textBox1.Text, textBox3.Text, textBox2.Text,
-                    textBox12.Text, textBox14.Text, textBox15.Text, checkBox3.Checked, textBox6.Text, textBox10.Text,
-                    textBox9.Text, random.Next(49152, 65535).ToString(), textBox7.Text, textBox8.Text, checkBox1.Checked, textBox11.Text);
+                var ttlFilePath = connectionManager.ExportTtl(targetFolder, comboBox2.Text, textBox5.Text, textBox4.Text, textBox1.Text, textBox3.Text,
+                    textBox2.Text, checkBox2.Checked, textBox12.Text, textBox14.Text, textBox15.Text, checkBox3.Checked, textBox6.Text, textBox10.Text,
+                    textBox9.Text, random.Next(49152, 65535).ToString(), textBox7.Text, textBox8.Text, checkBox4.Checked, checkBox1.Checked, textBox11.Text);
 
                 MessageBox.Show("TTL マクロをエクスポートしました。\n\n" + ttlFilePath, "Boostera");
             }
@@ -767,6 +766,7 @@ namespace Boostera
                 textBox1.Text = dict["Port"];
                 textBox3.Text = dict["PrivateKey"];
                 textBox2.Text = dict["Password"];
+                checkBox2.Checked = dict["IsEnvPassword"] == "true";
                 textBox12.Text = dict["LogonScript"];
                 textBox14.Text = dict["WaitingString"];
                 textBox15.Text = dict["WaitingTime"];
@@ -776,6 +776,7 @@ namespace Boostera
                 textBox9.Text = dict["ForwardingPort"];
                 textBox7.Text = dict["ForwardingPrivateKey"];
                 textBox8.Text = dict["ForwardingPassword"];
+                checkBox4.Checked = dict["ForwardingIsEnvPassword"] == "true";
                 checkBox1.Checked = dict["IsHide"] == "true";
                 textBox11.Text = dict["Tag"];
             }

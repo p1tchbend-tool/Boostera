@@ -13,6 +13,9 @@ namespace Boostera
             bool isEnvPassword, string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
             string forwardingPort, string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide)
         {
+            if (isEnvPassword) password = Environment.GetEnvironmentVariable(password, EnvironmentVariableTarget.User);
+            if (forwardingIsEnvPassword) forwardingPassword = Environment.GetEnvironmentVariable(forwardingPassword, EnvironmentVariableTarget.User);
+
             if (isForwarding)
             {
                 var arguments = forwardingHost + ":" + forwardingPort + " /ssh2";
@@ -159,9 +162,9 @@ filedelete '{tempTtlPath}'";
             }
         }
 
-        public string ExportTtl(string targetFolder, string protocolText, string host, string user, string port, string privateKey, string password,
-            string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
-            string forwardingPort, string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool isHide, string tag)
+        public string ExportTtl(string targetFolder, string protocolText, string host, string user, string port, string privateKey, string password, bool isEnvPassword,
+            string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser, string forwardingPort,
+            string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag)
         {
             var ttl = TTL_TEMPLATE.Replace("{{Protocol}}", protocolText);
             ttl = ttl.Replace("{{Host}}", host);
@@ -169,6 +172,7 @@ filedelete '{tempTtlPath}'";
             ttl = ttl.Replace("{{Port}}", port);
             ttl = ttl.Replace("{{PrivateKey}}", privateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
             ttl = ttl.Replace("{{Password}}", password);
+            ttl = ttl.Replace("{{IsEnvPassword}}", isEnvPassword.ToString().ToLower());
             ttl = ttl.Replace("{{LogonScript}}", logonScript);
             ttl = ttl.Replace("{{WaitingString}}", waitingString);
             ttl = ttl.Replace("{{WaitingTime}}", waitingTime);
@@ -179,6 +183,7 @@ filedelete '{tempTtlPath}'";
             ttl = ttl.Replace("{{ForwardingLocalPort}}", forwardingLocalPort);
             ttl = ttl.Replace("{{ForwardingPrivateKey}}", forwardingPrivateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
             ttl = ttl.Replace("{{ForwardingPassword}}", forwardingPassword);
+            ttl = ttl.Replace("{{ForwardingIsEnvPassword}}", forwardingIsEnvPassword.ToString().ToLower());
             ttl = ttl.Replace("{{IsHide}}", isHide.ToString().ToLower());
             ttl = ttl.Replace("{{Tag}}", tag);
 
@@ -203,6 +208,7 @@ filedelete '{tempTtlPath}'";
             dict.Add("PrivateKey", RegexMatchedGroupText(ttl, @"^PrivateKey\s+=\s+'(.*?)'")
                 .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)));
             dict.Add("Password", RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'"));
+            dict.Add("IsEnvPassword", RegexMatchedGroupText(ttl, @"^IsEnvPassword\s+=\s+'(.*?)'"));
             dict.Add("LogonScript", RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'"));
             dict.Add("WaitingString", RegexMatchedGroupText(ttl, @"^WaitingString\s+=\s+'(.*?)'"));
             dict.Add("WaitingTime", RegexMatchedGroupText(ttl, @"^WaitingTime\s+=\s+'(.*?)'"));
@@ -213,6 +219,7 @@ filedelete '{tempTtlPath}'";
             dict.Add("ForwardingPrivateKey", RegexMatchedGroupText(ttl, @"^ForwardingPrivateKey\s+=\s+'(.*?)'")
                 .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)));
             dict.Add("ForwardingPassword", RegexMatchedGroupText(ttl, @"^ForwardingPassword\s+=\s+'(.*?)'"));
+            dict.Add("ForwardingIsEnvPassword", RegexMatchedGroupText(ttl, @"^ForwardingIsEnvPassword\s+=\s+'(.*?)'"));
             dict.Add("IsHide", RegexMatchedGroupText(ttl, @"^IsHide\s+=\s+'(.*?)'"));
             dict.Add("Tag", RegexMatchedGroupText(ttl, @"^Tag\s+=\s+'(.*?)'"));
 
@@ -237,6 +244,7 @@ User = '{{User}}'
 Port = '{{Port}}'
 PrivateKey = '{{PrivateKey}}'
 Password = '{{Password}}'
+IsEnvPassword = '{{IsEnvPassword}}'
 LogonScript = '{{LogonScript}}'
 WaitingString = '{{WaitingString}}'
 WaitingTime = {{WaitingTime}}
@@ -247,14 +255,24 @@ ForwardingPort = '{{ForwardingPort}}'
 ForwardingLocalPort = '{{ForwardingLocalPort}}'
 ForwardingPrivateKey = '{{ForwardingPrivateKey}}'
 ForwardingPassword = '{{ForwardingPassword}}'
+ForwardingIsEnvPassword = '{{ForwardingIsEnvPassword}}'
 IsHide = '{{IsHide}}'
 Tag = '{{Tag}}'
 
 expandenv PrivateKey
 expandenv ForwardingPrivateKey
-expandenv WinscpPath
 
 getenv 'BOOSTERA_WinscpPath' WinscpPath
+
+strcompare IsEnvPassword 'true'
+if result == 0 then
+    getenv Password Password
+endif
+
+strcompare ForwardingIsEnvPassword 'true'
+if result == 0 then
+    getenv ForwardingPassword ForwardingPassword
+endif
 
 buf = ''
 strcompare IsForwarding 'true'
