@@ -724,7 +724,7 @@ namespace Boostera
             Program.ProgramHotKey.Remove(Program.HotKeyShowForm);
             Program.ProgramHotKey.Add(modkey, key, Program.HotKeyShowForm);
 
-            Program.ChangeFont(this);
+            Program.ChangeFontFamily(this, "メイリオ");
             Program.SortTabIndex(this);
             this.WindowState = FormWindowState.Normal;
 
