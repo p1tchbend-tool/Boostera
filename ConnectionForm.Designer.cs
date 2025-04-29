@@ -45,6 +45,7 @@
             panel2 = new System.Windows.Forms.Panel();
             panel1 = new System.Windows.Forms.Panel();
             groupBox1 = new System.Windows.Forms.GroupBox();
+            label19 = new System.Windows.Forms.Label();
             panel9 = new System.Windows.Forms.Panel();
             checkBox4 = new System.Windows.Forms.CheckBox();
             label15 = new System.Windows.Forms.Label();
@@ -84,7 +85,6 @@
             label18 = new System.Windows.Forms.Label();
             checkBox2 = new System.Windows.Forms.CheckBox();
             panel8 = new System.Windows.Forms.Panel();
-            label19 = new System.Windows.Forms.Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -289,6 +289,19 @@
             groupBox1.Size = new System.Drawing.Size(773, 268);
             groupBox1.TabIndex = 22;
             groupBox1.TabStop = false;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.BackColor = System.Drawing.Color.Transparent;
+            label19.Enabled = false;
+            label19.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
+            label19.Location = new System.Drawing.Point(220, 206);
+            label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(295, 20);
+            label19.TabIndex = 44;
+            label19.Text = "パスワード／パスフレーズに環境変数を使用する";
             // 
             // panel9
             // 
@@ -608,7 +621,7 @@
             listBox1.Margin = new System.Windows.Forms.Padding(2);
             listBox1.Name = "listBox1";
             listBox1.ScrollAlwaysVisible = true;
-            listBox1.Size = new System.Drawing.Size(775, 164);
+            listBox1.Size = new System.Drawing.Size(775, 738);
             listBox1.TabIndex = 29;
             listBox1.Visible = false;
             // 
@@ -773,19 +786,6 @@
             panel8.Name = "panel8";
             panel8.Size = new System.Drawing.Size(28, 28);
             panel8.TabIndex = 42;
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.BackColor = System.Drawing.Color.Transparent;
-            label19.Enabled = false;
-            label19.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 128);
-            label19.Location = new System.Drawing.Point(220, 206);
-            label19.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            label19.Name = "label19";
-            label19.Size = new System.Drawing.Size(295, 20);
-            label19.TabIndex = 44;
-            label19.Text = "パスワード／パスフレーズに環境変数を使用する";
             // 
             // ConnectionForm
             // 

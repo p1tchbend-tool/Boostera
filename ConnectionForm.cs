@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Boostera
@@ -26,6 +24,7 @@ namespace Boostera
         {
             WriteIndented = true
         };
+        private ConnectionManager connectionManager = new ConnectionManager();
 
         private static readonly int MAX_HISTORIES_COUNT = 10000;
         private static readonly int SSH = 0;
@@ -514,236 +513,6 @@ namespace Boostera
             timer1.Start();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            if (listBox1.Visible) return;
-
-            this.Hide();
-
-            Random random = new Random();
-            var forwardingLocalPort = random.Next(49152, 65535).ToString();
-
-            var protocol = comboBox2.SelectedIndex;
-            var protocolText = comboBox2.Text;
-            var host = textBox5.Text;
-            var user = textBox4.Text;
-            var port = textBox1.Text;
-            var privateKey = textBox3.Text;
-            var password = textBox2.Text;
-            var isEnvPassword = checkBox2.Checked;
-            var logonScript = textBox12.Text;
-            var waitingString = textBox14.Text;
-            var waitingTime = textBox15.Text;
-            var isForwarding = checkBox3.Checked;
-            var forwardingHost = textBox6.Text;
-            var forwardingUser = textBox10.Text;
-            var forwardingPort = textBox9.Text;
-            var forwardingPrivateKey = textBox7.Text;
-            var forwardingPassword = textBox8.Text;
-            var forwardingIsEnvPassword = checkBox4.Checked;
-            var isHide = checkBox1.Checked;
-            var tag = textBox11.Text;
-
-            if (isForwarding)
-            {
-                var arguments = forwardingHost + ":" + forwardingPort + " /ssh2";
-                if (isHide)
-                {
-                    arguments += " /V";
-                }
-                else
-                {
-                    arguments += " /I";
-                }
-                arguments += " /ssh-L" + forwardingLocalPort + ":" + host + ":" + port;
-
-                if (!string.IsNullOrEmpty(forwardingPrivateKey))
-                {
-                    arguments += " /auth=publickey /user=" + forwardingUser + " /keyfile=\"" + forwardingPrivateKey + "\"";
-                }
-                else
-                {
-                    arguments += " /auth=password /user=" + forwardingUser;
-                }
-                if (!string.IsNullOrEmpty(forwardingPassword)) arguments += " /passwd=\"" + forwardingPassword + "\"";
-
-                var windowTitle = forwardingUser + "@" + forwardingHost;
-                arguments += " /W=" + windowTitle;
-
-                var psi = new ProcessStartInfo(ttermproPath);
-                psi.UseShellExecute = true;
-                psi.Arguments = arguments;
-                try
-                {
-                    Process.Start(psi);
-                    Thread.Sleep(3000);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-
-            if (comboBox2.SelectedIndex == SSH)
-            {
-                var arguments = string.Empty;
-                if (isForwarding)
-                {
-                    arguments = "localhost:" + forwardingLocalPort + " /nosecuritywarning /ssh2";  // トンネリング時に限り検証無効
-                }
-                else
-                {
-                    arguments = host + ":" + port + " /ssh2";
-                }
-
-                if (!string.IsNullOrEmpty(privateKey))
-                {
-                    arguments += " /auth=publickey /user=" + user + " /keyfile=\"" + privateKey + "\"";
-                }
-                else
-                {
-                    arguments += " /auth=password /user=" + user;
-                }
-                if (!string.IsNullOrEmpty(password)) arguments += " /passwd=\"" + password + "\"";
-
-                if (!string.IsNullOrEmpty(logonScript))
-                {
-                    try
-                    {
-                        if (!Directory.Exists(Path.Combine(Program.BoosteraDataFolder, ".temp")))
-                            Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
-                        var tempTtlPath = Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl");
-
-                        var script = $@"wait '{waitingString}'
-mpause {waitingTime}
-sendln '{logonScript}'
-filedelete '{tempTtlPath}'";
-
-                        File.WriteAllText(tempTtlPath, script);
-                        arguments += " /M=\"" + tempTtlPath + "\"";
-                    }
-                    catch { }
-                }
-
-                var windowTitle = user + "@" + host;
-                arguments += " /W=" + windowTitle;
-
-                var psi = new ProcessStartInfo(ttermproPath);
-                psi.UseShellExecute = true;
-                psi.Arguments = arguments;
-                try
-                {
-                    Process.Start(psi);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-            else if (comboBox2.SelectedIndex == RDP)
-            {
-                var arguments1 = string.Empty;
-                var arguments2 = string.Empty;
-
-                if (isForwarding)
-                {
-                    arguments1 = "/generic:TERMSRV/localhost /user:" + user + " /pass:" + password;
-                    arguments2 = "/v:localhost:" + forwardingLocalPort;
-                }
-                else
-                {
-                    arguments1 = "/generic:TERMSRV/" + host + " /user:" + user + " /pass:" + password;
-                    arguments2 = "/v:" + host + ":" + port;
-                }
-
-                var psi1 = new ProcessStartInfo("cmdkey");
-                psi1.UseShellExecute = true;
-                psi1.WindowStyle = ProcessWindowStyle.Minimized;
-                psi1.Arguments = arguments1;
-                try
-                {
-                    var process = Process.Start(psi1);
-                    process.WaitForExit();
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-
-                var psi2 = new ProcessStartInfo("mstsc");
-                psi2.UseShellExecute = true;
-                psi2.Arguments = arguments2;
-                try
-                {
-                    Process.Start(psi2);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-            else if (comboBox2.SelectedIndex == SFTP)
-            {
-                var arguments = string.Empty;
-
-                if (isForwarding)
-                {
-                    if (!string.IsNullOrEmpty(password))
-                    {
-                        arguments = "sftp://" + user + ":" + password + "@localhost:" + forwardingLocalPort;
-                    }
-                    else
-                    {
-                        arguments = "sftp://" + user + "@localhost:" + forwardingLocalPort;
-                    }
-                    if (!string.IsNullOrEmpty(privateKey)) arguments += " /privatekey=\"" + privateKey + "\"";
-
-                    arguments += " /hostkey=\"*\"";  // トンネリング時に限り検証無効
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(password))
-                    {
-                        arguments = "sftp://" + user + ":" + password + "@" + host + ":" + port;
-                    }
-                    else
-                    {
-                        arguments = "sftp://" + user + "@" + host + ":" + port;
-                    }
-                    if (!string.IsNullOrEmpty(privateKey)) arguments += " /privatekey=\"" + privateKey + "\"";
-                }
-
-                arguments += " /sessionname=" + user + "@" + host;
-
-                var psi = new ProcessStartInfo(winscpPath);
-                psi.UseShellExecute = true;
-                psi.Arguments = arguments;
-                try
-                {
-                    Process.Start(psi);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-
-            var searchKey = string.Empty;
-            var uniqueKey = string.Empty;
-
-            if (string.IsNullOrEmpty(tag))
-            {
-                searchKey = protocolText + user + host;
-                uniqueKey = protocolText + "://" + user + "@" + host;
-            }
-            else
-            {
-                searchKey = protocolText + user + host + tag;
-                uniqueKey = protocolText + "://" + user + "@" + host + " #" + tag;
-            }
-
-            var hitory = new History(uniqueKey, searchKey, protocol, host, user, port, privateKey, password,
-                isEnvPassword, logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser,
-                forwardingPort, forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag);
-
-            histories.RemoveAll(x => x.UniqueKey == uniqueKey);
-            histories.Insert(0, hitory);
-            if (histories.Count > MAX_HISTORIES_COUNT) histories.RemoveRange(MAX_HISTORIES_COUNT, histories.Count - MAX_HISTORIES_COUNT);
-
-            try
-            {
-                var historyEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(histories), boosteraKeyPath);
-                var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
-            }
-            catch { }
-        }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             var caret = textBox1.SelectionStart;
@@ -867,6 +636,75 @@ filedelete '{tempTtlPath}'";
             textBox13.Focus();
         }
 
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            if (listBox1.Visible) return;
+
+            this.Hide();
+
+            Random random = new Random();
+            var forwardingLocalPort = random.Next(49152, 65535).ToString();
+
+            var protocol = comboBox2.SelectedIndex;
+            var protocolText = comboBox2.Text;
+            var host = textBox5.Text;
+            var user = textBox4.Text;
+            var port = textBox1.Text;
+            var privateKey = textBox3.Text;
+            var password = textBox2.Text;
+            var isEnvPassword = checkBox2.Checked;
+            var logonScript = textBox12.Text;
+            var waitingString = textBox14.Text;
+            var waitingTime = textBox15.Text;
+            var isForwarding = checkBox3.Checked;
+            var forwardingHost = textBox6.Text;
+            var forwardingUser = textBox10.Text;
+            var forwardingPort = textBox9.Text;
+            var forwardingPrivateKey = textBox7.Text;
+            var forwardingPassword = textBox8.Text;
+            var forwardingIsEnvPassword = checkBox4.Checked;
+            var isHide = checkBox1.Checked;
+            var tag = textBox11.Text;
+
+            var searchKey = string.Empty;
+            var uniqueKey = string.Empty;
+
+            if (string.IsNullOrEmpty(tag))
+            {
+                searchKey = protocolText + user + host;
+                uniqueKey = protocolText + "://" + user + "@" + host;
+            }
+            else
+            {
+                searchKey = protocolText + user + host + tag;
+                uniqueKey = protocolText + "://" + user + "@" + host + " #" + tag;
+            }
+
+            var hitory = new History(uniqueKey, searchKey, protocol, host, user, port, privateKey, password,
+                isEnvPassword, logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser,
+                forwardingPort, forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag);
+
+            histories.RemoveAll(x => x.UniqueKey == uniqueKey);
+            histories.Insert(0, hitory);
+            if (histories.Count > MAX_HISTORIES_COUNT) histories.RemoveRange(MAX_HISTORIES_COUNT, histories.Count - MAX_HISTORIES_COUNT);
+
+            try
+            {
+                var historyEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(histories), boosteraKeyPath);
+                var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
+                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
+            }
+            catch { }
+
+            try
+            {
+                await connectionManager.Connect(ttermproPath, winscpPath, protocolText, host, user, port, privateKey, password, isEnvPassword,
+                    logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser, forwardingPort, forwardingLocalPort,
+                    forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             try
@@ -892,53 +730,12 @@ filedelete '{tempTtlPath}'";
                 if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
 
                 Random random = new Random();
-                var forwardingLocalPort = random.Next(49152, 65535).ToString();
+                var ttlFilePath = connectionManager.ExportTtl(
+                    targetFolder, comboBox2.Text, textBox5.Text, textBox4.Text, textBox1.Text, textBox3.Text, textBox2.Text,
+                    textBox12.Text, textBox14.Text, textBox15.Text, checkBox3.Checked, textBox6.Text, textBox10.Text,
+                    textBox9.Text, random.Next(49152, 65535).ToString(), textBox7.Text, textBox8.Text, checkBox1.Checked, textBox11.Text);
 
-                var protocolText = comboBox2.Text;
-                var host = textBox5.Text;
-                var user = textBox4.Text;
-                var port = textBox1.Text;
-                var privateKey = textBox3.Text;
-                var password = textBox2.Text;
-                var logonScript = textBox12.Text;
-                var waitingString = textBox14.Text;
-                var waitingTime = textBox15.Text;
-                var isForwarding = checkBox3.Checked;
-                var forwardingHost = textBox6.Text;
-                var forwardingUser = textBox10.Text;
-                var forwardingPort = textBox9.Text;
-                var forwardingPrivateKey = textBox7.Text;
-                var forwardingPassword = textBox8.Text;
-                var isHide = checkBox1.Checked;
-                var tag = textBox11.Text;
-
-                var ttl = TTL_TEMPLATE.Replace("{{Protocol}}", protocolText);
-                ttl = ttl.Replace("{{Host}}", host);
-                ttl = ttl.Replace("{{User}}", user);
-                ttl = ttl.Replace("{{Port}}", port);
-                ttl = ttl.Replace("{{PrivateKey}}", privateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
-                ttl = ttl.Replace("{{Password}}", password);
-                ttl = ttl.Replace("{{LogonScript}}", logonScript);
-                ttl = ttl.Replace("{{WaitingString}}", waitingString);
-                ttl = ttl.Replace("{{WaitingTime}}", waitingTime);
-                ttl = ttl.Replace("{{IsForwarding}}", isForwarding.ToString().ToLower());
-                ttl = ttl.Replace("{{ForwardingHost}}", forwardingHost);
-                ttl = ttl.Replace("{{ForwardingUser}}", forwardingUser);
-                ttl = ttl.Replace("{{ForwardingPort}}", forwardingPort);
-                ttl = ttl.Replace("{{ForwardingLocalPort}}", forwardingLocalPort);
-                ttl = ttl.Replace("{{ForwardingPrivateKey}}", forwardingPrivateKey.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
-                ttl = ttl.Replace("{{ForwardingPassword}}", forwardingPassword);
-                ttl = ttl.Replace("{{IsHide}}", isHide.ToString().ToLower());
-                ttl = ttl.Replace("{{WinscpPath}}", winscpPath.Replace(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "%USERPROFILE%"));
-                ttl = ttl.Replace("{{Tag}}", tag);
-
-                var ttlFileName = protocolText + "_" + user + "@" + host;
-                if (!string.IsNullOrEmpty(tag)) ttlFileName += "_" + tag;
-                ttlFileName = Regex.Replace(ttlFileName, @"[<>:""/\\|?*]", "");
-                ttlFileName = ttlFileName.ToLower() + ".ttl";
-
-                File.WriteAllText(Path.Combine(targetFolder, ttlFileName), ttl);
-                MessageBox.Show("TTL マクロをエクスポートしました。\n\n" + Path.Combine(targetFolder, ttlFileName), "Boostera");
+                MessageBox.Show("TTL マクロをエクスポートしました。\n\n" + ttlFilePath, "Boostera");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -962,41 +759,27 @@ filedelete '{tempTtlPath}'";
                 }
 
                 if (string.IsNullOrEmpty(ttlFilePath) || !File.Exists(ttlFilePath)) return;
-                var ttl = File.ReadAllText(ttlFilePath);
 
-                comboBox2.Text = RegexMatchedGroupText(ttl, @"^Protocol\s+=\s+'(.*?)'");
-                textBox5.Text = RegexMatchedGroupText(ttl, @"^Host\s+=\s+'(.*?)'");
-                textBox4.Text = RegexMatchedGroupText(ttl, @"^User\s+=\s+'(.*?)'");
-                textBox1.Text = RegexMatchedGroupText(ttl, @"^Port\s+=\s+'(.*?)'");
-                textBox3.Text = RegexMatchedGroupText(ttl, @"^PrivateKey\s+=\s+'(.*?)'")
-                    .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-                textBox2.Text = RegexMatchedGroupText(ttl, @"^Password\s+=\s+'(.*?)'");
-                textBox12.Text = RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'");
-                textBox14.Text = RegexMatchedGroupText(ttl, @"^WaitingString\s+=\s+'(.*?)'");
-                textBox15.Text = RegexMatchedGroupText(ttl, @"^WaitingTime\s+=\s+'(.*?)'");
-                checkBox3.Checked = RegexMatchedGroupText(ttl, @"^IsForwarding\s+=\s+'(.*?)'") == "true";
-                textBox6.Text = RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'");
-                textBox10.Text = RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'");
-                textBox9.Text = RegexMatchedGroupText(ttl, @"^ForwardingPort\s+=\s+'(.*?)'");
-                textBox7.Text = RegexMatchedGroupText(ttl, @"^ForwardingPrivateKey\s+=\s+'(.*?)'")
-                    .Replace("%USERPROFILE%", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
-                textBox8.Text = RegexMatchedGroupText(ttl, @"^ForwardingPassword\s+=\s+'(.*?)'");
-                checkBox1.Checked = RegexMatchedGroupText(ttl, @"^IsHide\s+=\s+'(.*?)'") == "true";
-                textBox11.Text = RegexMatchedGroupText(ttl, @"^Tag\s+=\s+'(.*?)'");
+                var dict = connectionManager.ImportTtl(ttlFilePath);
+                comboBox2.Text = dict["Protocol"];
+                textBox5.Text = dict["Host"];
+                textBox4.Text = dict["User"];
+                textBox1.Text = dict["Port"];
+                textBox3.Text = dict["PrivateKey"];
+                textBox2.Text = dict["Password"];
+                textBox12.Text = dict["LogonScript"];
+                textBox14.Text = dict["WaitingString"];
+                textBox15.Text = dict["WaitingTime"];
+                checkBox3.Checked = dict["IsForwarding"] == "true";
+                textBox6.Text = dict["ForwardingHost"];
+                textBox10.Text = dict["ForwardingUser"];
+                textBox9.Text = dict["ForwardingPort"];
+                textBox7.Text = dict["ForwardingPrivateKey"];
+                textBox8.Text = dict["ForwardingPassword"];
+                checkBox1.Checked = dict["IsHide"] == "true";
+                textBox11.Text = dict["Tag"];
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
-
-        private string RegexMatchedGroupText(string text, string pattern)
-        {
-            var matchedGroupText = string.Empty;
-            try
-            {
-                var match = Regex.Match(text, pattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-                matchedGroupText = match.Groups[1].Value;
-            }
-            catch { }
-            return matchedGroupText;
         }
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
@@ -1050,236 +833,5 @@ filedelete '{tempTtlPath}'";
             this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
             this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
         }
-
-        private static readonly string TTL_TEMPLATE = @"Protocol = '{{Protocol}}'
-Host = '{{Host}}'
-User = '{{User}}'
-Port = '{{Port}}'
-PrivateKey = '{{PrivateKey}}'
-Password = '{{Password}}'
-LogonScript = '{{LogonScript}}'
-WaitingString = '{{WaitingString}}'
-WaitingTime = {{WaitingTime}}
-IsForwarding = '{{IsForwarding}}'
-ForwardingHost = '{{ForwardingHost}}'
-ForwardingUser = '{{ForwardingUser}}'
-ForwardingPort = '{{ForwardingPort}}'
-ForwardingLocalPort = '{{ForwardingLocalPort}}'
-ForwardingPrivateKey = '{{ForwardingPrivateKey}}'
-ForwardingPassword = '{{ForwardingPassword}}'
-IsHide = '{{IsHide}}'
-WinscpPath = '{{WinscpPath}}'
-Tag = '{{Tag}}'
-
-expandenv PrivateKey
-expandenv ForwardingPrivateKey
-expandenv WinscpPath
-
-buf = ''
-strcompare IsForwarding 'true'
-if result == 0 then
-    strconcat buf ForwardingHost
-    strconcat buf ':'
-    strconcat buf ForwardingPort
-    strconcat buf ' /ssh2'
-
-    strcompare IsHide 'true'
-    if result == 0 then
-        strconcat buf ' /V'
-    else
-        strconcat buf ' /I'
-    endif
-
-    strconcat buf ' /ssh-L'
-    strconcat buf forwardingLocalPort
-    strconcat buf ':'
-    strconcat buf Host
-    strconcat buf ':'
-    strconcat buf Port
-
-    strcompare ForwardingPrivateKey ''
-    if result != 0 then
-        strconcat buf ' /auth=publickey /user='
-        strconcat buf ForwardingUser
-        strconcat buf ' /keyfile=""'
-        strconcat buf ForwardingPrivateKey
-        strconcat buf '""'
-    else
-        strconcat buf ' /auth=password /user='
-        strconcat buf ForwardingUser
-    endif
-
-    strcompare ForwardingPassword ''
-    if result != 0 then
-        strconcat buf ' /passwd=""'
-        strconcat buf ForwardingPassword
-        strconcat buf '""'
-    endif
-
-    strconcat buf ' /W='
-    strconcat buf ForwardingUser
-    strconcat buf '@'
-    strconcat buf ForwardingHost
-
-    connect buf
-    wait ''
-    mpause 3000
-    unlink
-endif
-
-buf = ''
-strcompare Protocol 'SSH'
-if result == 0 then
-
-    strcompare IsForwarding 'true'
-    if result == 0 then
-        strconcat buf 'localhost:'
-        strconcat buf forwardingLocalPort
-        strconcat buf ' /nosecuritywarning /ssh2'
-    else
-        strconcat buf Host
-        strconcat buf ':'
-        strconcat buf Port
-        strconcat buf ' /ssh2'
-    endif
-
-    strcompare PrivateKey ''
-    if result != 0 then
-        strconcat buf ' /auth=publickey /user='
-        strconcat buf User
-        strconcat buf ' /keyfile=""'
-        strconcat buf PrivateKey
-        strconcat buf '""'
-    else
-        strconcat buf ' /auth=password /user='
-        strconcat buf User
-    endif
-
-    strcompare Password ''
-    if result != 0 then
-        strconcat buf ' /passwd=""'
-        strconcat buf Password
-        strconcat buf '""'
-    endif
-
-    strconcat buf ' /W='
-    strconcat buf User
-    strconcat buf '@'
-    strconcat buf Host
-
-    connect buf
-
-    strcompare LogonScript ''
-    if result != 0 then
-        wait WaitingString
-        mpause WaitingTime
-        sendln LogonScript
-    endif
-endif
-
-strcompare Protocol 'RDP'
-if result == 0 then
-    strconcat buf 'cmdkey'
-
-    strcompare IsForwarding 'true'
-    if result == 0 then
-        strconcat buf ' /generic:TERMSRV/localhost /user:'
-        strconcat buf User
-        strconcat buf ' /pass:'
-        strconcat buf Password
-    else
-        strconcat buf ' /generic:TERMSRV/'
-        strconcat buf Host
-        strconcat buf ' /user:'
-        strconcat buf User
-        strconcat buf ' /pass:'
-        strconcat buf Password
-    endif
-
-    exec buf 'minimize' 1
-
-    buf = ''
-    strconcat buf 'mstsc'
-
-    strcompare IsForwarding 'true'
-    if result == 0 then
-        strconcat buf ' /v:localhost:'
-        strconcat buf forwardingLocalPort
-    else
-        strconcat buf ' /v:'
-        strconcat buf Host
-        strconcat buf ':'
-        strconcat buf Port
-    endif
-
-    exec buf
-endif
-
-strcompare Protocol 'SFTP'
-if result == 0 then
-    strconcat buf WinscpPath
-
-    strcompare IsForwarding 'true'
-    if result == 0 then
-
-        strcompare Password ''
-        if result != 0 then
-            strconcat buf ' sftp://'
-            strconcat buf User
-            strconcat buf ':'
-            strconcat buf Password
-            strconcat buf '@localhost:'
-            strconcat buf forwardingLocalPort
-        else
-            strconcat buf ' sftp://'
-            strconcat buf User
-            strconcat buf '@localhost:'
-            strconcat buf forwardingLocalPort
-        endif
-
-        strcompare PrivateKey ''
-        if result != 0 then
-            strconcat buf ' /privatekey=""'
-            strconcat buf PrivateKey
-            strconcat buf '""'
-        endif
-
-        strconcat buf ' /hostkey=""*""'
-    else
-        strcompare Password ''
-        if result != 0 then
-            strconcat buf ' sftp://'
-            strconcat buf User
-            strconcat buf ':'
-            strconcat buf Password
-            strconcat buf '@'
-            strconcat buf Host
-            strconcat buf ':'
-            strconcat buf Port
-        else
-            strconcat buf ' sftp://'
-            strconcat buf User
-            strconcat buf '@'
-            strconcat buf Host
-            strconcat buf ':'
-            strconcat buf Port
-        endif
-
-        strcompare PrivateKey ''
-        if result != 0 then
-            strconcat buf ' /privatekey=""'
-            strconcat buf PrivateKey
-            strconcat buf '""'
-        endif
-    endif
-
-    strconcat buf ' /sessionname='
-    strconcat buf User
-    strconcat buf '@'
-    strconcat buf Host
-
-    exec buf
-endif
-";
     }
 }
