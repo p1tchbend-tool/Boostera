@@ -67,6 +67,7 @@ namespace Boostera
             toolTip1.SetToolTip(textBox1, "接続先のポートを入力してください。");
             toolTip1.SetToolTip(textBox3, "接続先の秘密鍵のパスを入力してください。");
             toolTip1.SetToolTip(textBox2, "接続先のパスワード／パスフレーズを入力してください。");
+            toolTip1.SetToolTip(checkBox2, "チェックを外した場合、テキストボックスの値をそのまま使用します。\nチェックを入れた場合、テキストボックスの値と同名の環境変数を使用します。");
             toolTip1.SetToolTip(textBox12, "接続時に実行するコマンドを入力してください。");
             toolTip1.SetToolTip(textBox14, "指定した文字列が表示されるまで、コマンドの実行を待機します。\n空白の場合、任意の文字が表示されるまで、コマンドの実行を待機します。");
             toolTip1.SetToolTip(textBox15, "文字列が表示されてから、コマンドを実行するまでの待機時間を入力してください。");
@@ -76,6 +77,7 @@ namespace Boostera
             toolTip1.SetToolTip(textBox9, "SSHトンネリングで利用するポートを入力してください。");
             toolTip1.SetToolTip(textBox7, "SSHトンネリングで利用する秘密鍵のパスを入力してください。");
             toolTip1.SetToolTip(textBox8, "SSHトンネリングで利用するパスワード／パスフレーズを入力してください。");
+            toolTip1.SetToolTip(checkBox4, "チェックを外した場合、テキストボックスの値をそのまま使用します。\nチェックを入れた場合、テキストボックスの値と同名の環境変数を使用します。");
             toolTip1.SetToolTip(checkBox1, "SSHトンネリングで利用する接続先を、非表示のウィンドウで起動する場合、チェックを入れてください。\n" +
                 "非表示で起動したウィンドウは、Boosteraの機能で再表示及び終了可能です。");
             toolTip1.SetToolTip(textBox11, "ヒストリーの検索や、エクスポート時のファイル名に使用するタグを入力してください。");
@@ -120,6 +122,7 @@ namespace Boostera
                 textBox1.Text = history.Port;
                 textBox3.Text = history.PrivateKey;
                 textBox2.Text = history.Password;
+                checkBox2.Checked = history.IsEnvPassword;
                 textBox12.Text = history.LogonScript;
                 textBox14.Text = history.WaitingString;
                 textBox15.Text = history.WaitingTime;
@@ -129,6 +132,7 @@ namespace Boostera
                 textBox9.Text = history.ForwardingPort;
                 textBox7.Text = history.ForwardingPrivateKey;
                 textBox8.Text = history.ForwardingPassword;
+                checkBox4.Checked = history.ForwardingIsEnvPassword;
                 checkBox1.Checked = history.IsHide;
                 textBox11.Text = history.Tag;
 
@@ -150,6 +154,7 @@ namespace Boostera
                     textBox1.Text = history.Port;
                     textBox3.Text = history.PrivateKey;
                     textBox2.Text = history.Password;
+                    checkBox2.Checked = history.IsEnvPassword;
                     textBox12.Text = history.LogonScript;
                     textBox14.Text = history.WaitingString;
                     textBox15.Text = history.WaitingTime;
@@ -159,6 +164,7 @@ namespace Boostera
                     textBox9.Text = history.ForwardingPort;
                     textBox7.Text = history.ForwardingPrivateKey;
                     textBox8.Text = history.ForwardingPassword;
+                    checkBox4.Checked = history.ForwardingIsEnvPassword;
                     checkBox1.Checked = history.IsHide;
                     textBox11.Text = history.Tag;
                 }
@@ -178,6 +184,7 @@ namespace Boostera
                     textBox1.Text = history.Port;
                     textBox3.Text = history.PrivateKey;
                     textBox2.Text = history.Password;
+                    checkBox2.Checked = history.IsEnvPassword;
                     textBox12.Text = history.LogonScript;
                     textBox14.Text = history.WaitingString;
                     textBox15.Text = history.WaitingTime;
@@ -187,6 +194,7 @@ namespace Boostera
                     textBox9.Text = history.ForwardingPort;
                     textBox7.Text = history.ForwardingPrivateKey;
                     textBox8.Text = history.ForwardingPassword;
+                    checkBox4.Checked = history.ForwardingIsEnvPassword;
                     checkBox1.Checked = history.IsHide;
                     textBox11.Text = history.Tag;
                 }
@@ -233,6 +241,7 @@ namespace Boostera
                 textBox1.Text = history.Port;
                 textBox3.Text = history.PrivateKey;
                 textBox2.Text = history.Password;
+                checkBox2.Checked = history.IsEnvPassword;
                 textBox12.Text = history.LogonScript;
                 textBox14.Text = history.WaitingString;
                 textBox15.Text = history.WaitingTime;
@@ -242,6 +251,7 @@ namespace Boostera
                 textBox9.Text = history.ForwardingPort;
                 textBox7.Text = history.ForwardingPrivateKey;
                 textBox8.Text = history.ForwardingPassword;
+                checkBox4.Checked = history.ForwardingIsEnvPassword;
                 checkBox1.Checked = history.IsHide;
                 textBox11.Text = history.Tag;
 
