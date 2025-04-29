@@ -9,9 +9,9 @@ namespace Boostera
 {
     public class ConnectionManager
     {
-        public async Task Connect(string ttermproPath, string winscpPath, string protocolText, string host, string user, string port, string privateKey, string password,
-            bool isEnvPassword, string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
-            string forwardingPort, string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide)
+        public async Task Connect(string ttermproPath, string winscpPath, bool isLogging, string logFolder, string protocolText, string host, string user, string port, string privateKey,
+            string password, bool isEnvPassword, string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
+            string forwardingPort, string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag)
         {
             if (isEnvPassword) password = Environment.GetEnvironmentVariable(password, EnvironmentVariableTarget.User);
             if (forwardingIsEnvPassword) forwardingPassword = Environment.GetEnvironmentVariable(forwardingPassword, EnvironmentVariableTarget.User);
@@ -71,19 +71,33 @@ namespace Boostera
                 }
                 if (!string.IsNullOrEmpty(password)) arguments += " /passwd=\"" + password + "\"";
 
-                if (!string.IsNullOrEmpty(logonScript))
+                if (isLogging || !string.IsNullOrEmpty(logonScript))
                 {
                     if (!Directory.Exists(Path.Combine(Program.BoosteraDataFolder, ".temp")))
                         Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
-                    var tempTtlPath = Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl");
 
-                    var script = $@"wait '{waitingString}'
+                    var tempTtlPath = Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl");
+                    arguments += " /M=\"" + tempTtlPath + "\"";
+
+                    var script = string.Empty;
+
+                    if (isLogging)
+                    {
+                        var logFile = Path.Combine(logFolder, "%Y%m%d-%H%M%S_" + user + "@" + host + "_#" + tag + ".log");
+                        script += $@"logclose
+logopen '{logFile}' 0 1 1 1 1 1 0
+";
+                    }
+
+                    if (!string.IsNullOrEmpty(logonScript))
+                    {
+                        script += $@"wait '{waitingString}'
 mpause {waitingTime}
 sendln '{logonScript}'
 filedelete '{tempTtlPath}'";
+                    }
 
                     File.WriteAllText(tempTtlPath, script);
-                    arguments += " /M=\"" + tempTtlPath + "\"";
                 }
 
                 var windowTitle = user + "@" + host;
@@ -276,23 +290,6 @@ if result == 0 then
     getenv ForwardingPassword ForwardingPassword
 endif
 
-strcompare IsLogging 'true'
-if result == 0 then
-    logFile = ''
-    strconcat logFile LogFolder
-    strconcat logFile '\'
-    strconcat logFile '%Y%m%d-%H%M%S_'
-    strconcat logFile User
-    strconcat logFile '@'
-    strconcat logFile Host
-    strconcat logFile '_#'
-    strconcat logFile Tag
-    strconcat logFile '.log'
-
-    logclose
-    logopen logFile
-endif
-
 buf = ''
 strcompare IsForwarding 'true'
 if result == 0 then
@@ -348,6 +345,23 @@ endif
 buf = ''
 strcompare Protocol 'SSH'
 if result == 0 then
+
+    strcompare IsLogging 'true'
+　　if result == 0 then
+　　    logFile = ''
+　　    strconcat logFile LogFolder
+　　    strconcat logFile '\'
+　　    strconcat logFile '%Y%m%d-%H%M%S_'
+　　    strconcat logFile User
+　　    strconcat logFile '@'
+　　    strconcat logFile Host
+　　    strconcat logFile '_#'
+　　    strconcat logFile Tag
+　　    strconcat logFile '.log'
+
+　　    logclose
+　　    logopen logFile 0 1 1 1 1 1 0
+　　endif
 
     strcompare IsForwarding 'true'
     if result == 0 then

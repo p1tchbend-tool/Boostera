@@ -698,9 +698,9 @@ namespace Boostera
 
             try
             {
-                await connectionManager.Connect(ttermproPath, winscpPath, protocolText, host, user, port, privateKey, password, isEnvPassword,
-                    logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser, forwardingPort, forwardingLocalPort,
-                    forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide);
+                await connectionManager.Connect(ttermproPath, winscpPath, isLogging, logFolder, protocolText, host, user, port, privateKey, password,
+                    isEnvPassword, logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser, forwardingPort, forwardingLocalPort,
+                    forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
