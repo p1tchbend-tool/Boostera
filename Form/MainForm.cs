@@ -724,14 +724,19 @@ namespace Boostera
             Program.ProgramHotKey.Remove(Program.HotKeyShowForm);
             Program.ProgramHotKey.Add(modkey, key, Program.HotKeyShowForm);
 
-            Program.ChangeFontFamily(this, "メイリオ");
-            Program.SortTabIndex(this);
+            UiHelper.ChangeFontFamily(this, "メイリオ");
+            UiHelper.SortTabIndex(this);
             this.WindowState = FormWindowState.Normal;
 
             timer1.Start();
             timer2.Start();
             timer3.Start();
             timer4.Start();
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+            UiHelper.AdjustDpi(this, initialWidth, initialHeight);
         }
 
         private void timer3_Tick(object sender, EventArgs e)
@@ -774,12 +779,6 @@ namespace Boostera
         private void timer2_Tick(object sender, EventArgs e)
         {
             EnumerateAsync();
-        }
-
-        private void timer4_Tick(object sender, EventArgs e)
-        {
-            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
         }
 
         private async void EnumerateAsync()

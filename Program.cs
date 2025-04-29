@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 namespace Boostera
 {
@@ -12,35 +10,6 @@ namespace Boostera
         public static readonly string BoosteraDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera");
         public static readonly HotKey ProgramHotKey = new HotKey();
         public static readonly int HotKeyShowForm = 1;
-
-        public static void SortTabIndex(Control control)
-        {
-            var children = new List<Control>();
-            foreach (Control child in control.Controls) children.Add(child);
-            children.Sort((x, y) =>
-            {
-                if (x.Top == y.Top) return x.Left.CompareTo(y.Left);
-                return x.Top.CompareTo(y.Top);
-            });
-            for (int i = 0; i < children.Count; i++) children[i].TabIndex = i;
-        }
-
-        public static void ChangeFontFamily(Control control, string fontFamilyName)
-        {
-            try
-            {
-                Install(control);
-                void Install(Control ctrl)
-                {
-                    foreach (Control c in ctrl.Controls)
-                    {
-                        c.Font = new Font(fontFamilyName, c.Font.SizeInPoints, c.Font.Style);
-                        Install(c);
-                    }
-                }
-            }
-            catch { }
-        }
 
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。

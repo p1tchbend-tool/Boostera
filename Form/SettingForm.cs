@@ -159,20 +159,16 @@ namespace Boostera
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            var value = 1;
-            NativeMethods.DwmSetWindowAttribute(
-                this.Handle, NativeMethods.DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, (uint)Marshal.SizeOf(typeof(int)));
-
-            Program.ChangeFontFamily(this, "メイリオ");
-            Program.SortTabIndex(this);
+            UiHelper.SetDarkMode(this, true);
+            UiHelper.ChangeFontFamily(this, "メイリオ");
+            UiHelper.SortTabIndex(this);
 
             timer1.Start();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
+            UiHelper.AdjustDpi(this, initialWidth, initialHeight);
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)

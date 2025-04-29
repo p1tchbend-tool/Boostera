@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -513,14 +512,16 @@ namespace Boostera
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            var value = 1;
-            NativeMethods.DwmSetWindowAttribute(
-                this.Handle, NativeMethods.DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, (uint)Marshal.SizeOf(typeof(int)));
-
-            Program.ChangeFontFamily(this, "メイリオ");
-            Program.SortTabIndex(this);
+            UiHelper.SetDarkMode(this, true);
+            UiHelper.ChangeFontFamily(this, "メイリオ");
+            UiHelper.SortTabIndex(this);
 
             timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            UiHelper.AdjustDpi(this, initialWidth, initialHeight);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -837,12 +838,6 @@ namespace Boostera
                 checkBox1.Enabled = false;
                 checkBox4.Enabled = false;
             }
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            this.Width = (int)Math.Round((decimal)initialWidth * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
-            this.Height = (int)Math.Round((decimal)initialHeight * (this.DeviceDpi / NativeMethods.GetDpiForSystem()));
         }
     }
 }
