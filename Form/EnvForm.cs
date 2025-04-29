@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Globalization;
 using CsvHelper;
@@ -17,12 +16,12 @@ namespace Boostera
         private static int? initialHeight = null;
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
         private string boosteraEnvFileFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\env");
-        private List<string> running = new List<string>();
         private List<Env> envs = new List<Env>();
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
         {
             WriteIndented = true
         };
+        private EnvManager envManager = new EnvManager();
 
         public EnvForm(string boosteraKeyPath)
         {
@@ -36,7 +35,7 @@ namespace Boostera
 
             this.FormClosing += (s, e) =>
             {
-                if (running.Count > 0)
+                if (envManager.IsRunning)
                 {
                     MessageBox.Show("環境変数の設定中です。\nしばらく待ってからフォームを閉じてください。", "Boostera");
                     e.Cancel = true;
@@ -87,21 +86,9 @@ namespace Boostera
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox1.Text)) return;
-
-            Task.Run(() =>
-            {
-                var id = Guid.NewGuid().ToString("N");
-                running.Add(id);
-                try
-                {
-                    Environment.SetEnvironmentVariable(textBox2.Text, textBox1.Text, EnvironmentVariableTarget.User);
-                }
-                catch { }
-                running.Remove(id);
-            });
 
             listView1.Items.RemoveByKey(textBox2.Text);
 
@@ -123,23 +110,13 @@ namespace Boostera
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
             }
             catch { }
+
+            await envManager.SetEnv(new Env(textBox2.Text, textBox1.Text));
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox2.Text)) return;
-
-            Task.Run(() =>
-            {
-                var id = Guid.NewGuid().ToString("N");
-                running.Add(id);
-                try
-                {
-                    Environment.SetEnvironmentVariable(textBox2.Text, null, EnvironmentVariableTarget.User);
-                }
-                catch { }
-                running.Remove(id);
-            });
 
             listView1.Items.RemoveByKey(textBox2.Text);
 
@@ -156,6 +133,8 @@ namespace Boostera
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
             }
             catch { }
+
+            await envManager.SetEnv(new Env(textBox2.Text, null));
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -209,7 +188,7 @@ namespace Boostera
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private async void button5_Click(object sender, EventArgs e)
         {
             var envFilePath = string.Empty;
             using (var openFileDialog = new OpenFileDialog())
@@ -259,23 +238,9 @@ namespace Boostera
             }
             catch { }
 
-            Task.Run(() =>
-            {
-                var id = Guid.NewGuid().ToString("N");
-                running.Add(id);
-
-                envs.ForEach(env =>
-                {
-                    try
-                    {
-                        Environment.SetEnvironmentVariable(env.Key, env.Value, EnvironmentVariableTarget.User);
-                    }
-                    catch { }
-                });
-                running.Remove(id);
-            });
-
             MessageBox.Show("環境変数をインポートしました。", "Boostera");
+
+            await envManager.SetEnvs(envs);
         }
     }
 }
