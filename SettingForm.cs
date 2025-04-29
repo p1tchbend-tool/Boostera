@@ -163,7 +163,7 @@ namespace Boostera
             NativeMethods.DwmSetWindowAttribute(
                 this.Handle, NativeMethods.DWMWA_USE_IMMERSIVE_DARK_MODE, ref value, (uint)Marshal.SizeOf(typeof(int)));
 
-            Program.ChangeFont(this);
+            Program.ChangeFontFamily(this, "メイリオ");
             Program.SortTabIndex(this);
 
             timer1.Start();

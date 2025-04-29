@@ -25,7 +25,7 @@ namespace Boostera
             for (int i = 0; i < children.Count; i++) children[i].TabIndex = i;
         }
 
-        public static void ChangeFont(Control control)
+        public static void ChangeFontFamily(Control control, string fontFamilyName)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Boostera
                 {
                     foreach (Control c in ctrl.Controls)
                     {
-                        c.Font = new Font("メイリオ", c.Font.SizeInPoints, c.Font.Style);
+                        c.Font = new Font(fontFamilyName, c.Font.SizeInPoints, c.Font.Style);
                         Install(c);
                     }
                 }
