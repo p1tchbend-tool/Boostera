@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Windows.Forms;
-using System.Globalization;
-using CsvHelper;
-using System.Linq;
 
 namespace Boostera
 {
@@ -175,14 +172,7 @@ namespace Boostera
 
             try
             {
-                using (var writer = new StreamWriter(Path.Combine(targetFolder, "env.csv")))
-                {
-                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-                    {
-                        csv.WriteRecords(envs);
-                    }
-                }
-
+                envManager.ExportEnvsToCsv(envs, Path.Combine(targetFolder, "env.csv"));
                 MessageBox.Show("環境変数を 「env.csv」 にエクスポートしました。", "Boostera");
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
@@ -208,13 +198,7 @@ namespace Boostera
 
             try
             {
-                using (var reader = new StreamReader(envFilePath))
-                {
-                    using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                    {
-                        envs = csv.GetRecords<Env>().ToList();
-                    }
-                }
+                envs = envManager.ImportEnvsFromCsv(envFilePath);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
