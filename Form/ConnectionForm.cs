@@ -33,6 +33,28 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
+        private int protocol { get { return comboBox2.SelectedIndex; } }
+        private string protocolText { get { return comboBox2.Text; } }
+        private string host { get { return textBox5.Text; } }
+        private string user { get { return textBox4.Text; } }
+        private string port { get { return textBox1.Text; } }
+        private string privateKey { get { return textBox3.Text; } }
+        private string password { get { return textBox2.Text; } }
+        private bool isEnvPassword { get { return checkBox2.Checked; } }
+        private string logonScript { get { return textBox12.Text; } }
+        private string waitingString { get { return textBox14.Text; } }
+        private string waitingTime { get { return textBox15.Text; } }
+        private bool isForwarding { get { return checkBox3.Checked; } }
+        private string forwardingHost { get { return textBox6.Text; } }
+        private string forwardingUser { get { return textBox10.Text; } }
+        private string forwardingPort { get { return textBox9.Text; } }
+        private string forwardingLocalPort { get { return new Random().Next(49152, 65535).ToString(); } }
+        private string forwardingPrivateKey { get { return textBox7.Text; } }
+        private string forwardingPassword { get { return textBox8.Text; } }
+        private bool forwardingIsEnvPassword { get { return checkBox4.Checked; } }
+        private bool isHide { get { return checkBox1.Checked; } }
+        private string tag { get { return textBox11.Text; } }
+
         public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath, bool isLogging, string logFolder)
         {
             InitializeComponent();
@@ -115,25 +137,7 @@ namespace Boostera
                 if (listBox1.SelectedItems.Count == 0) return;
 
                 var history = (History)listBox1.SelectedItems[0];
-                comboBox2.SelectedIndex = history.Protocol;
-                textBox5.Text = history.Host;
-                textBox4.Text = history.User;
-                textBox1.Text = history.Port;
-                textBox3.Text = history.PrivateKey;
-                textBox2.Text = history.Password;
-                checkBox2.Checked = history.IsEnvPassword;
-                textBox12.Text = history.LogonScript;
-                textBox14.Text = history.WaitingString;
-                textBox15.Text = history.WaitingTime;
-                checkBox3.Checked = history.IsForwarding;
-                textBox6.Text = history.ForwardingHost;
-                textBox10.Text = history.ForwardingUser;
-                textBox9.Text = history.ForwardingPort;
-                textBox7.Text = history.ForwardingPrivateKey;
-                textBox8.Text = history.ForwardingPassword;
-                checkBox4.Checked = history.ForwardingIsEnvPassword;
-                checkBox1.Checked = history.IsHide;
-                textBox11.Text = history.Tag;
+                UpdateUiForHistory(history);
 
                 textBox13.Text = string.Empty;
                 listBox1.Visible = false;
@@ -147,25 +151,7 @@ namespace Boostera
                     if (listBox1.SelectedItems.Count == 0) return;
 
                     var history = (History)listBox1.SelectedItems[0];
-                    comboBox2.SelectedIndex = history.Protocol;
-                    textBox5.Text = history.Host;
-                    textBox4.Text = history.User;
-                    textBox1.Text = history.Port;
-                    textBox3.Text = history.PrivateKey;
-                    textBox2.Text = history.Password;
-                    checkBox2.Checked = history.IsEnvPassword;
-                    textBox12.Text = history.LogonScript;
-                    textBox14.Text = history.WaitingString;
-                    textBox15.Text = history.WaitingTime;
-                    checkBox3.Checked = history.IsForwarding;
-                    textBox6.Text = history.ForwardingHost;
-                    textBox10.Text = history.ForwardingUser;
-                    textBox9.Text = history.ForwardingPort;
-                    textBox7.Text = history.ForwardingPrivateKey;
-                    textBox8.Text = history.ForwardingPassword;
-                    checkBox4.Checked = history.ForwardingIsEnvPassword;
-                    checkBox1.Checked = history.IsHide;
-                    textBox11.Text = history.Tag;
+                    UpdateUiForHistory(history);
                 }
             };
 
@@ -177,25 +163,7 @@ namespace Boostera
                     if (string.IsNullOrEmpty(textBox13.Text)) return;
 
                     var history = (History)listBox1.SelectedItems[0];
-                    comboBox2.SelectedIndex = history.Protocol;
-                    textBox5.Text = history.Host;
-                    textBox4.Text = history.User;
-                    textBox1.Text = history.Port;
-                    textBox3.Text = history.PrivateKey;
-                    textBox2.Text = history.Password;
-                    checkBox2.Checked = history.IsEnvPassword;
-                    textBox12.Text = history.LogonScript;
-                    textBox14.Text = history.WaitingString;
-                    textBox15.Text = history.WaitingTime;
-                    checkBox3.Checked = history.IsForwarding;
-                    textBox6.Text = history.ForwardingHost;
-                    textBox10.Text = history.ForwardingUser;
-                    textBox9.Text = history.ForwardingPort;
-                    textBox7.Text = history.ForwardingPrivateKey;
-                    textBox8.Text = history.ForwardingPassword;
-                    checkBox4.Checked = history.ForwardingIsEnvPassword;
-                    checkBox1.Checked = history.IsHide;
-                    textBox11.Text = history.Tag;
+                    UpdateUiForHistory(history);
                 }
                 else if (e.KeyCode == Keys.Up)
                 {
@@ -232,79 +200,12 @@ namespace Boostera
             if (listBox1.Items.Count != 0)
             {
                 var history = (History)listBox1.Items[0];
-                if (history == null) return;
-
-                comboBox2.SelectedIndex = history.Protocol;
-                textBox5.Text = history.Host;
-                textBox4.Text = history.User;
-                textBox1.Text = history.Port;
-                textBox3.Text = history.PrivateKey;
-                textBox2.Text = history.Password;
-                checkBox2.Checked = history.IsEnvPassword;
-                textBox12.Text = history.LogonScript;
-                textBox14.Text = history.WaitingString;
-                textBox15.Text = history.WaitingTime;
-                checkBox3.Checked = history.IsForwarding;
-                textBox6.Text = history.ForwardingHost;
-                textBox10.Text = history.ForwardingUser;
-                textBox9.Text = history.ForwardingPort;
-                textBox7.Text = history.ForwardingPrivateKey;
-                textBox8.Text = history.ForwardingPassword;
-                checkBox4.Checked = history.ForwardingIsEnvPassword;
-                checkBox1.Checked = history.IsHide;
-                textBox11.Text = history.Tag;
+                UpdateUiForHistory(history);
 
                 listBox1.SelectedIndex = 0;
             }
 
-            comboBox2.SelectedIndexChanged += (s, e) =>
-            {
-                if (comboBox2.SelectedIndex == SSH)
-                {
-                    textBox1.Text = "22";
-                    label5.Enabled = true;
-                    textBox3.Enabled = true;
-                    panel1.Enabled = true;
-                    panel3.Enabled = true;
-                    label14.Enabled = true;
-                    textBox12.Enabled = true;
-                    textBox14.Enabled = true;
-                    textBox15.Enabled = true;
-                    label16.Enabled = true;
-                    label17.Enabled = true;
-                    label18.Enabled = true;
-                }
-                else if (comboBox2.SelectedIndex == RDP)
-                {
-                    textBox1.Text = "3389";
-                    label5.Enabled = false;
-                    textBox3.Enabled = false;
-                    panel1.Enabled = false;
-                    panel3.Enabled = false;
-                    label14.Enabled = false;
-                    textBox12.Enabled = false;
-                    textBox14.Enabled = false;
-                    textBox15.Enabled = false;
-                    label16.Enabled = false;
-                    label17.Enabled = false;
-                    label18.Enabled = false;
-                }
-                else if (comboBox2.SelectedIndex == SFTP)
-                {
-                    textBox1.Text = "22";
-                    label5.Enabled = true;
-                    textBox3.Enabled = true;
-                    panel1.Enabled = true;
-                    panel3.Enabled = true;
-                    label14.Enabled = false;
-                    textBox12.Enabled = false;
-                    textBox14.Enabled = false;
-                    textBox15.Enabled = false;
-                    label16.Enabled = false;
-                    label17.Enabled = false;
-                    label18.Enabled = false;
-                }
-            };
+            comboBox2.SelectedIndexChanged += (s, e) => UpdateUiForProtocol(comboBox2.SelectedIndex);
 
             panel1.MouseClick += (s, e) =>
             {
@@ -420,94 +321,8 @@ namespace Boostera
                 }
             };
 
-            if (comboBox2.SelectedIndex == SSH)
-            {
-                textBox1.Text = "22";
-                label5.Enabled = true;
-                textBox3.Enabled = true;
-                panel1.Enabled = true;
-                panel3.Enabled = true;
-                label14.Enabled = true;
-                textBox12.Enabled = true;
-                textBox14.Enabled = true;
-                textBox15.Enabled = true;
-                label16.Enabled = true;
-                label17.Enabled = true;
-                label18.Enabled = true;
-            }
-            else if (comboBox2.SelectedIndex == RDP)
-            {
-                textBox1.Text = "3389";
-                label5.Enabled = false;
-                textBox3.Enabled = false;
-                panel1.Enabled = false;
-                panel3.Enabled = false;
-                label14.Enabled = false;
-                textBox12.Enabled = false;
-                textBox14.Enabled = false;
-                textBox15.Enabled = false;
-                label16.Enabled = false;
-                label17.Enabled = false;
-                label18.Enabled = false;
-            }
-            else if (comboBox2.SelectedIndex == SFTP)
-            {
-                textBox1.Text = "22";
-                label5.Enabled = true;
-                textBox3.Enabled = true;
-                panel1.Enabled = true;
-                panel3.Enabled = true;
-                label14.Enabled = false;
-                textBox12.Enabled = false;
-                textBox14.Enabled = false;
-                textBox15.Enabled = false;
-                label16.Enabled = false;
-                label17.Enabled = false;
-                label18.Enabled = false;
-            }
-
-            if (checkBox3.Checked)
-            {
-                label7.Enabled = true;
-                label8.Enabled = true;
-                label9.Enabled = true;
-                label10.Enabled = true;
-                label11.Enabled = true;
-                label15.Enabled = true;
-                label19.Enabled = true;
-                textBox6.Enabled = true;
-                textBox7.Enabled = true;
-                textBox8.Enabled = true;
-                textBox9.Enabled = true;
-                textBox10.Enabled = true;
-                panel4.Enabled = true;
-                panel5.Enabled = true;
-                panel6.Enabled = true;
-                panel9.Enabled = true;
-                checkBox1.Enabled = true;
-                checkBox4.Enabled = true;
-            }
-            else
-            {
-                label7.Enabled = false;
-                label8.Enabled = false;
-                label9.Enabled = false;
-                label10.Enabled = false;
-                label11.Enabled = false;
-                label15.Enabled = false;
-                label19.Enabled = false;
-                textBox6.Enabled = false;
-                textBox7.Enabled = false;
-                textBox8.Enabled = false;
-                textBox9.Enabled = false;
-                textBox10.Enabled = false;
-                panel4.Enabled = false;
-                panel5.Enabled = false;
-                panel6.Enabled = false;
-                panel9.Enabled = false;
-                checkBox1.Enabled = false;
-                checkBox4.Enabled = false;
-            }
+            UpdateUiForProtocol(comboBox2.SelectedIndex);
+            UpdateUiForForwarding(checkBox3.Checked);
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -653,30 +468,6 @@ namespace Boostera
 
             this.Hide();
 
-            Random random = new Random();
-            var forwardingLocalPort = random.Next(49152, 65535).ToString();
-
-            var protocol = comboBox2.SelectedIndex;
-            var protocolText = comboBox2.Text;
-            var host = textBox5.Text;
-            var user = textBox4.Text;
-            var port = textBox1.Text;
-            var privateKey = textBox3.Text;
-            var password = textBox2.Text;
-            var isEnvPassword = checkBox2.Checked;
-            var logonScript = textBox12.Text;
-            var waitingString = textBox14.Text;
-            var waitingTime = textBox15.Text;
-            var isForwarding = checkBox3.Checked;
-            var forwardingHost = textBox6.Text;
-            var forwardingUser = textBox10.Text;
-            var forwardingPort = textBox9.Text;
-            var forwardingPrivateKey = textBox7.Text;
-            var forwardingPassword = textBox8.Text;
-            var forwardingIsEnvPassword = checkBox4.Checked;
-            var isHide = checkBox1.Checked;
-            var tag = textBox11.Text;
-
             var searchKey = string.Empty;
             var uniqueKey = string.Empty;
 
@@ -741,9 +532,9 @@ namespace Boostera
                 if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
 
                 Random random = new Random();
-                var ttlFilePath = connectionManager.ExportTtl(targetFolder, comboBox2.Text, textBox5.Text, textBox4.Text, textBox1.Text, textBox3.Text,
-                    textBox2.Text, checkBox2.Checked, textBox12.Text, textBox14.Text, textBox15.Text, checkBox3.Checked, textBox6.Text, textBox10.Text,
-                    textBox9.Text, random.Next(49152, 65535).ToString(), textBox7.Text, textBox8.Text, checkBox4.Checked, checkBox1.Checked, textBox11.Text);
+                var ttlFilePath = connectionManager.ExportTtl(targetFolder, protocolText, host, user, port, privateKey, password,
+                    isEnvPassword, logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser, forwardingPort,
+                    forwardingLocalPort, forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag);
 
                 MessageBox.Show("TTL マクロをエクスポートしました。\n\n" + ttlFilePath, "Boostera");
             }
@@ -796,7 +587,46 @@ namespace Boostera
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox3.Checked)
+            UpdateUiForForwarding(checkBox3.Checked);
+        }
+
+        private void UpdateUiForProtocol(int protocol)
+        {
+            if (protocol == SSH || protocol == SFTP)
+            {
+                textBox1.Text = "22";
+                label5.Enabled = true;
+                textBox3.Enabled = true;
+                panel1.Enabled = true;
+                panel3.Enabled = true;
+                label14.Enabled = true;
+                textBox12.Enabled = true;
+                textBox14.Enabled = true;
+                textBox15.Enabled = true;
+                label16.Enabled = true;
+                label17.Enabled = true;
+                label18.Enabled = true;
+            }
+            else if (protocol == RDP)
+            {
+                textBox1.Text = "3389";
+                label5.Enabled = false;
+                textBox3.Enabled = false;
+                panel1.Enabled = false;
+                panel3.Enabled = false;
+                label14.Enabled = false;
+                textBox12.Enabled = false;
+                textBox14.Enabled = false;
+                textBox15.Enabled = false;
+                label16.Enabled = false;
+                label17.Enabled = false;
+                label18.Enabled = false;
+            }
+        }
+
+        private void UpdateUiForForwarding(bool isForwarding)
+        {
+            if (isForwarding)
             {
                 label7.Enabled = true;
                 label8.Enabled = true;
@@ -838,6 +668,31 @@ namespace Boostera
                 checkBox1.Enabled = false;
                 checkBox4.Enabled = false;
             }
+        }
+
+        private void UpdateUiForHistory(History history)
+        {
+            if (history == null) return;
+
+            comboBox2.SelectedIndex = history.Protocol;
+            textBox5.Text = history.Host;
+            textBox4.Text = history.User;
+            textBox1.Text = history.Port;
+            textBox3.Text = history.PrivateKey;
+            textBox2.Text = history.Password;
+            checkBox2.Checked = history.IsEnvPassword;
+            textBox12.Text = history.LogonScript;
+            textBox14.Text = history.WaitingString;
+            textBox15.Text = history.WaitingTime;
+            checkBox3.Checked = history.IsForwarding;
+            textBox6.Text = history.ForwardingHost;
+            textBox10.Text = history.ForwardingUser;
+            textBox9.Text = history.ForwardingPort;
+            textBox7.Text = history.ForwardingPrivateKey;
+            textBox8.Text = history.ForwardingPassword;
+            checkBox4.Checked = history.ForwardingIsEnvPassword;
+            checkBox1.Checked = history.IsHide;
+            textBox11.Text = history.Tag;
         }
     }
 }
