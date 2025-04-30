@@ -41,19 +41,19 @@ namespace Boostera
         {
             if (control == null || string.IsNullOrEmpty(fontFamilyName)) return;
 
-            try
+            Install(control);
+            void Install(Control ctrl)
             {
-                Install(control);
-                void Install(Control ctrl)
+                foreach (Control c in ctrl.Controls)
                 {
-                    foreach (Control c in ctrl.Controls)
+                    try
                     {
                         c.Font = new Font(fontFamilyName, c.Font.SizeInPoints, c.Font.Style);
                         Install(c);
                     }
+                    catch { }
                 }
             }
-            catch { }
         }
     }
 }

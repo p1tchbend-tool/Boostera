@@ -94,9 +94,10 @@ logopen '{logFile}' 0 1 1 1 1 1 0
                         script += $@"wait '{waitingString}'
 mpause {waitingTime}
 sendln '{logonScript}'
-filedelete '{tempTtlPath}'";
+";
                     }
 
+                    script += $@"filedelete '{tempTtlPath}'";
                     File.WriteAllText(tempTtlPath, script);
                 }
 
@@ -346,23 +347,6 @@ buf = ''
 strcompare Protocol 'SSH'
 if result == 0 then
 
-    strcompare IsLogging 'true'
-　　if result == 0 then
-　　    logFile = ''
-　　    strconcat logFile LogFolder
-　　    strconcat logFile '\'
-　　    strconcat logFile '%Y%m%d-%H%M%S_'
-　　    strconcat logFile User
-　　    strconcat logFile '@'
-　　    strconcat logFile Host
-　　    strconcat logFile '_#'
-　　    strconcat logFile Tag
-　　    strconcat logFile '.log'
-
-　　    logclose
-　　    logopen logFile 0 1 1 1 1 1 0
-　　endif
-
     strcompare IsForwarding 'true'
     if result == 0 then
         strconcat buf 'localhost:'
@@ -400,6 +384,23 @@ if result == 0 then
     strconcat buf Host
 
     connect buf
+
+    strcompare IsLogging 'true'
+    if result == 0 then
+        logFile = ''
+        strconcat logFile LogFolder
+        strconcat logFile '\'
+        strconcat logFile '%Y%m%d-%H%M%S_'
+        strconcat logFile User
+        strconcat logFile '@'
+        strconcat logFile Host
+        strconcat logFile '_#'
+        strconcat logFile Tag
+        strconcat logFile '.log'
+
+        logclose
+        logopen logFile 0 1 1 1 1 1 0
+    endif
 
     strcompare LogonScript ''
     if result != 0 then
