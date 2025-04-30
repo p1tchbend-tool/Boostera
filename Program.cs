@@ -10,6 +10,7 @@ namespace Boostera
         public static readonly string BoosteraDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera");
         public static readonly HotKey ProgramHotKey = new HotKey();
         public static readonly int HotKeyShowForm = 1;
+        public static readonly Logger Logger = new Logger(Path.Combine(BoosteraDataFolder, "log"), "Boostera.log", 10000);
 
         /// <summary>
         /// アプリケーションのメイン エントリ ポイントです。
@@ -32,11 +33,7 @@ namespace Boostera
         {
             try
             {
-                var errLogFolder = Path.Combine(Program.BoosteraDataFolder, "log");
-                if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
-
-                File.WriteAllText(
-                    Path.Combine(errLogFolder, DateTime.Now.ToString("yyyyMMdd") + "-" + Guid.NewGuid().ToString("N") + ".log"), e.Exception.ToString());
+                Logger.LogException(e.Exception);
             }
             catch { }
         }
@@ -47,11 +44,7 @@ namespace Boostera
             {
                 try
                 {
-                    var errLogFolder = Path.Combine(Program.BoosteraDataFolder, "log");
-                    if (!Directory.Exists(errLogFolder)) Directory.CreateDirectory(errLogFolder);
-
-                    File.WriteAllText(
-                        Path.Combine(errLogFolder, DateTime.Now.ToString("yyyyMMdd") + "-" + Guid.NewGuid().ToString("N") + ".log"), ((Exception)e.ExceptionObject).ToString());
+                    Logger.LogException((Exception)e.ExceptionObject);
                 }
                 catch { }
             }
