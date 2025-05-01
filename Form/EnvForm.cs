@@ -60,8 +60,9 @@ namespace Boostera
 
             toolTip1.SetToolTip(button1, "テキストボックスの変数と値をユーザー環境変数に追加します。\n反映には再起動が必要な場合があります。");
             toolTip1.SetToolTip(button2, "テキストボックスの変数をユーザー環境変数から削除します。\n反映には再起動が必要な場合があります。");
-            toolTip1.SetToolTip(button3, "csvの変数と値をユーザー環境変数にインポートします。\n反映には再起動が必要な場合があります。");
+            toolTip1.SetToolTip(button3, "テキストボックスの変数を選択して、このフォームを閉じます。");
             toolTip1.SetToolTip(button4, "ビューの変数と値をcsvにエクスポートします。");
+            toolTip1.SetToolTip(button5, "csvの変数と値をユーザー環境変数にインポートします。\n反映には再起動が必要な場合があります。");
 
             toolTip1.Draw += (s, e) =>
             {
