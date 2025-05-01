@@ -43,6 +43,7 @@
             button3 = new System.Windows.Forms.Button();
             button4 = new System.Windows.Forms.Button();
             button5 = new System.Windows.Forms.Button();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
             SuspendLayout();
             // 
             // timer1
@@ -199,6 +200,12 @@
             button5.UseVisualStyleBackColor = false;
             button5.Click += button5_Click;
             // 
+            // toolTip1
+            // 
+            toolTip1.BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
+            toolTip1.ForeColor = System.Drawing.Color.White;
+            toolTip1.OwnerDraw = true;
+            // 
             // EnvForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -246,5 +253,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

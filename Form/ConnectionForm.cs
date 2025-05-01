@@ -106,6 +106,13 @@ namespace Boostera
             toolTip1.SetToolTip(button3, "TTLマクロをこの画面に読み込みます。\nBoosteraでエクスポートしたマクロのみ、インポート可能です。");
             toolTip1.SetToolTip(button1, "現在の設定でホストに接続します。");
 
+            toolTip1.Draw += (s, e) =>
+            {
+                e.DrawBackground();
+                e.DrawBorder();
+                e.DrawText(TextFormatFlags.WordBreak);
+            };
+
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
             listBox1.MouseMove += (s, e) =>
             {
@@ -301,13 +308,6 @@ namespace Boostera
                     textBox8.Text = envForm.SelectedEnv;
                     checkBox4.Checked = true;
                 }
-            };
-
-            toolTip1.Draw += (s, e) =>
-            {
-                e.DrawBackground();
-                e.DrawBorder();
-                e.DrawText(TextFormatFlags.WordBreak);
             };
 
             this.FormClosing += (s, e) =>
