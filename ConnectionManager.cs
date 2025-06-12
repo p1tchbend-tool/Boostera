@@ -226,7 +226,7 @@ sendln '{logonScript}'
             dict.Add("IsEnvPassword", RegexMatchedGroupText(ttl, @"^IsEnvPassword\s+=\s+'(.*?)'"));
             dict.Add("LogonScript", RegexMatchedGroupText(ttl, @"^LogonScript\s+=\s+'(.*?)'"));
             dict.Add("WaitingString", RegexMatchedGroupText(ttl, @"^WaitingString\s+=\s+'(.*?)'"));
-            dict.Add("WaitingTime", RegexMatchedGroupText(ttl, @"^WaitingTime\s+=\s+'(.*?)'"));
+            dict.Add("WaitingTime", RegexMatchedGroupText(ttl, @"^WaitingTime\s+=\s+(.*?)"));
             dict.Add("IsForwarding", RegexMatchedGroupText(ttl, @"^IsForwarding\s+=\s+'(.*?)'"));
             dict.Add("ForwardingHost", RegexMatchedGroupText(ttl, @"^ForwardingHost\s+=\s+'(.*?)'"));
             dict.Add("ForwardingUser", RegexMatchedGroupText(ttl, @"^ForwardingUser\s+=\s+'(.*?)'"));
