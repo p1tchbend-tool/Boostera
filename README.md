@@ -35,7 +35,8 @@ Windowsの設定からアンインストールします。
 ```
 
 ## ライセンス
-本アプリは、[MIT ライセンス](https://licenses.opensource.jp/MIT/MIT.html) で提供されます。
+本アプリは、[MIT ライセンス](https://licenses.opensource.jp/MIT/MIT.html) で提供されます。  
+サードパーティーソフトウェアのライセンスについては、[こちら](https://github.com/p1tchbend-tool/Boostera/NOTICE.md) を参照してください。
 
 ## 連絡先
 本アプリに関するご連絡は、[こちら](<mailto:p1tchbend.tool@gmail.com>) までお願いいたします。
