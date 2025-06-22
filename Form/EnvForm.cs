@@ -9,8 +9,11 @@ namespace Boostera
     public partial class EnvForm : Form
     {
         public string SelectedEnv { get { return textBox2.Text; } }
+
+        private static string targetFolder = string.Empty;
         private static int? initialWidth = null;
         private static int? initialHeight = null;
+
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
         private string boosteraEnvFileFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\env");
         private List<Env> envs = new List<Env>();
@@ -163,22 +166,21 @@ namespace Boostera
         {
             if (listView1.Items.Count < 1) return;
 
-            var targetFolder = string.Empty;
             using (var openFileDialog = new OpenFileDialog())
             {
                 if (!Directory.Exists(boosteraEnvFileFolder)) Directory.CreateDirectory(boosteraEnvFileFolder);
-                openFileDialog.InitialDirectory = boosteraEnvFileFolder;
+                if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) targetFolder = boosteraEnvFileFolder;
+
+                openFileDialog.InitialDirectory = targetFolder;
                 openFileDialog.FileName = "Folder";
                 openFileDialog.Filter = "Folder|.";
                 openFileDialog.ValidateNames = false;
                 openFileDialog.CheckFileExists = false;
                 openFileDialog.CheckPathExists = true;
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
-                    boosteraEnvFileFolder = Path.GetDirectoryName(openFileDialog.FileName);
-                }
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
             }
 
             if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
@@ -203,14 +205,15 @@ namespace Boostera
             using (var openFileDialog = new OpenFileDialog())
             {
                 if (!Directory.Exists(boosteraEnvFileFolder)) Directory.CreateDirectory(boosteraEnvFileFolder);
-                openFileDialog.InitialDirectory = boosteraEnvFileFolder;
+                if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) targetFolder = boosteraEnvFileFolder;
+
+                openFileDialog.InitialDirectory = targetFolder;
                 openFileDialog.Filter = "CSV|*.csv";
 
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    envFilePath = openFileDialog.FileName;
-                    boosteraEnvFileFolder = Path.GetDirectoryName(openFileDialog.FileName);
-                }
+                if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                envFilePath = openFileDialog.FileName;
+                targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
             }
 
             if (string.IsNullOrEmpty(envFilePath) || !File.Exists(envFilePath)) return;
