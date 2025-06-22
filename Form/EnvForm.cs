@@ -247,6 +247,8 @@ namespace Boostera
             }
             catch { }
 
+            MessageBox.Show("環境変数をインポートしました。", "Boostera");
+
             await envManager.SetEnvs(envs);
         }
     }
