@@ -100,6 +100,9 @@ namespace Boostera
         {
             if (string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox1.Text)) return;
 
+            var result = MessageBox.Show($"環境変数「{textBox2.Text}」を追加してよろしいですか？\n※既存の変数は上書きされます。", "Boostera", MessageBoxButtons.YesNo);
+            if (result != DialogResult.Yes) return;
+
             listView1.Items.RemoveByKey(textBox2.Text);
 
             var listViewItem = new ListViewItem(textBox2.Text);
@@ -127,6 +130,9 @@ namespace Boostera
         private async void button2_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBox2.Text)) return;
+
+            var result = MessageBox.Show($"環境変数「{textBox2.Text}」を削除してよろしいですか？", "Boostera", MessageBoxButtons.YesNo);
+            if (result != DialogResult.Yes) return;
 
             listView1.Items.RemoveByKey(textBox2.Text);
 
@@ -209,6 +215,9 @@ namespace Boostera
 
             if (string.IsNullOrEmpty(envFilePath) || !File.Exists(envFilePath)) return;
 
+            var result = MessageBox.Show($"環境変数をファイルから一括インポートしてよろしいですか？\n※既存の変数はすべて上書きされます。", "Boostera", MessageBoxButtons.YesNo);
+            if (result != DialogResult.Yes) return;
+
             try
             {
                 envs = envManager.ImportEnvsFromCsv(envFilePath);
@@ -234,8 +243,6 @@ namespace Boostera
                 File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
             }
             catch { }
-
-            MessageBox.Show("環境変数をインポートしました。", "Boostera");
 
             await envManager.SetEnvs(envs);
         }
