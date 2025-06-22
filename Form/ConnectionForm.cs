@@ -30,6 +30,7 @@ namespace Boostera
         private static readonly int RDP = 1;
         private static readonly int SFTP = 2;
 
+        private static string targetFolder = string.Empty;
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
@@ -511,22 +512,21 @@ namespace Boostera
         {
             try
             {
-                var targetFolder = string.Empty;
                 using (var openFileDialog = new OpenFileDialog())
                 {
                     if (!Directory.Exists(boosteraMacroFolder)) Directory.CreateDirectory(boosteraMacroFolder);
-                    openFileDialog.InitialDirectory = boosteraMacroFolder;
+                    if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) targetFolder = boosteraMacroFolder;
+
+                    openFileDialog.InitialDirectory = targetFolder;
                     openFileDialog.FileName = "Folder";
                     openFileDialog.Filter = "Folder|.";
                     openFileDialog.ValidateNames = false;
                     openFileDialog.CheckFileExists = false;
                     openFileDialog.CheckPathExists = true;
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
-                        boosteraMacroFolder = Path.GetDirectoryName(openFileDialog.FileName);
-                    }
+                    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                    targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
                 }
 
                 if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) return;
@@ -549,14 +549,15 @@ namespace Boostera
                 using (var openFileDialog = new OpenFileDialog())
                 {
                     if (!Directory.Exists(boosteraMacroFolder)) Directory.CreateDirectory(boosteraMacroFolder);
-                    openFileDialog.InitialDirectory = boosteraMacroFolder;
+                    if (string.IsNullOrEmpty(targetFolder) || !Directory.Exists(targetFolder)) targetFolder = boosteraMacroFolder;
+
+                    openFileDialog.InitialDirectory = targetFolder;
                     openFileDialog.Filter = "TTL|*.ttl";
 
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        ttlFilePath = openFileDialog.FileName;
-                        boosteraMacroFolder = Path.GetDirectoryName(openFileDialog.FileName);
-                    }
+                    if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+
+                    ttlFilePath = openFileDialog.FileName;
+                    targetFolder = Path.GetDirectoryName(openFileDialog.FileName);
                 }
 
                 if (string.IsNullOrEmpty(ttlFilePath) || !File.Exists(ttlFilePath)) return;
