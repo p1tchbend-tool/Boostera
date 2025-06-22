@@ -211,18 +211,24 @@ namespace Boostera
             panel2.MouseClick += (s, e) =>
             {
                 if (e.Button != MouseButtons.Left) return;
+
+                var result = DialogResult.None;
                 try
                 {
                     isShowingChildForm = true;
 
                     using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, isLogging, logFolder))
                     {
-                        connectionForm.ShowDialog();
+                        result = connectionForm.ShowDialog();
                     }
                     this.Hide();
                     this.WindowState = FormWindowState.Minimized;
                 }
-                finally { isShowingChildForm = false; }
+                finally
+                {
+                    isShowingChildForm = false;
+                    if (result != DialogResult.OK) ShowSearchForm();
+                }
             };
 
             panel3.MouseClick += (s, e) =>
@@ -286,7 +292,11 @@ namespace Boostera
                         this.WindowState = FormWindowState.Minimized;
                     }
                 }
-                finally { isShowingChildForm = false; }
+                finally
+                {
+                    isShowingChildForm = false;
+                    ShowSearchForm();
+                }
             };
 
             panel4.MouseClick += (s, e) =>
@@ -558,7 +568,11 @@ namespace Boostera
                     this.Hide();
                     this.WindowState = FormWindowState.Minimized;
                 }
-                finally { isShowingChildForm = false; }
+                finally
+                {
+                    isShowingChildForm = false;
+                    ShowSearchForm();
+                }
             };
 
             listBox1.MouseLeave += (s, e) => toolTip1.Hide(listBox1);
