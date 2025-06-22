@@ -21,7 +21,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_5AC35C9F08344EF38BC0EFD25E4A7AEF"
+        "MsmKey" = "8:_3A9C389E869647409ED9C42114A131A0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,12 +46,6 @@
         "Entry"
         {
         "MsmKey" = "8:_AE1100CB25F143D29882B5E49439ECDC"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AEBED9E532264F6CB529826C67AD6A7D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -188,10 +182,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5AC35C9F08344EF38BC0EFD25E4A7AEF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3A9C389E869647409ED9C42114A131A0"
             {
-            "SourcePath" = "8:..\\bin\\Release\\net9.0-windows10.0.17763.0\\publish\\win-x64\\README.html"
-            "TargetName" = "8:README.html"
+            "SourcePath" = "8:..\\bin\\Release\\net9.0-windows10.0.17763.0\\publish\\win-x64\\NOTICE.md"
+            "TargetName" = "8:NOTICE.md"
             "Tag" = "8:"
             "Folder" = "8:_C8C594D2A5BA4FE9810266BE5703FD40"
             "Condition" = "8:"
@@ -272,26 +266,6 @@
             {
             "SourcePath" = "8:..\\bin\\Release\\net9.0-windows10.0.17763.0\\publish\\win-x64\\aspnetcorev2_inprocess.dll"
             "TargetName" = "8:aspnetcorev2_inprocess.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_C8C594D2A5BA4FE9810266BE5703FD40"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AEBED9E532264F6CB529826C67AD6A7D"
-            {
-            "SourcePath" = "8:..\\bin\\Release\\net9.0-windows10.0.17763.0\\publish\\win-x64\\README.pdf"
-            "TargetName" = "8:README.pdf"
             "Tag" = "8:"
             "Folder" = "8:_C8C594D2A5BA4FE9810266BE5703FD40"
             "Condition" = "8:"
