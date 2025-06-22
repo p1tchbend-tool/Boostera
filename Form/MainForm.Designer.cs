@@ -302,8 +302,8 @@
             panel3.BackColor = System.Drawing.Color.FromArgb(23, 23, 23);
             panel3.BackgroundImage = Properties.Resources.setting;
             panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            panel3.Location = new System.Drawing.Point(354, 33);
-            panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 8);
+            panel3.Location = new System.Drawing.Point(352, 33);
+            panel3.Margin = new System.Windows.Forms.Padding(2, 2, 4, 8);
             panel3.Name = "panel3";
             panel3.Size = new System.Drawing.Size(30, 30);
             panel3.TabIndex = 5;
