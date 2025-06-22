@@ -1,30 +1,83 @@
-# Third-Party Software Licenses
+# Third-Party Software Notices
 
-This project uses the following third-party libraries:
+This project incorporates material from the following third-party software.
 
-*   **CsvHelper:**
-    *   License: Likely MIT License (Verify on NuGet: [https://www.nuget.org/packages/CsvHelper](https://www.nuget.org/packages/CsvHelper))
+## CsvHelper
 
-*   **Microsoft.Bcl.AsyncInterfaces:**
-    *   License: Likely MIT License (Verify on NuGet: [https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces](https://www.nuget.org/packages/Microsoft.Bcl.AsyncInterfaces))
+**Source**: <https://github.com/JoshClose/CsvHelper>
 
-*   **Microsoft.CSharp:**
-    *   License: Part of .NET, likely a permissive license (Verify on NuGet or Microsoft documentation)
+### License
 
-*   **System.Data.DataSetExtensions:**
-    *   License: Part of .NET, likely a permissive license (Verify on NuGet or Microsoft documentation)
+    Copyright 2009-2024 Josh Close
 
-*   **System.IO.Pipelines:**
-    *   License: Likely MIT License (Verify on NuGet: [https://www.nuget.org/packages/System.IO.Pipelines](https://www.nuget.org/packages/System.IO.Pipelines))
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-*   **System.Runtime.CompilerServices.Unsafe:**
-    *   License: Likely MIT License (Verify on NuGet: [https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe](https://www.nuget.org/packages/System.Runtime.CompilerServices.Unsafe))
+        http://www.apache.org/licenses/LICENSE-2.0
 
-*   **System.Text.Encodings.Web:**
-    *   License: Likely MIT License (Verify on NuGet: [https://www.nuget.org/packages/System.Text.Encodings.Web](https://www.nuget.org/packages/System.Text.Encodings.Web))
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 
-*   **System.Text.Json:**
-    *   License: Likely MIT License (Verify on NuGet: [https://www.nuget.org/packages/System.Text.Json](https://www.nuget.org/packages/System.Text.Json))
+## Microsoft.AspNetCore.SystemWebAdapters
 
-*   **Microsoft.AspNetCore.SystemWebAdapters:**
-    *   License: Likely a permissive license like MIT or Apache 2.0 (Verify on NuGet: [https://www.nuget.org/packages/Microsoft.AspNetCore.SystemWebAdapters](https://www.nuget.org/packages/Microsoft.AspNetCore.SystemWebAdapters))
+**Source**: <https://github.com/dotnet/systemweb-adapters>
+
+### License
+
+    Copyright (c) .NET Foundation and Contributors
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+## .NET and related libraries
+
+This product incorporates source code from the .NET Foundation and its contributors, licensed under the MIT license. This includes, but is not limited to, the following packages:
+
+*   Microsoft.Bcl.AsyncInterfaces
+*   Microsoft.CSharp
+*   System.Data.DataSetExtensions
+*   System.IO.Pipelines
+*   System.Runtime.CompilerServices.Unsafe
+*   System.Text.Encodings.Web
+*   System.Text.Json
+
+**Source**: <https://github.com/dotnet/runtime>
+
+### License
+
+    The MIT License (MIT)
+
+    Copyright (c) .NET Foundation and Contributors
+
+    All rights reserved.
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
