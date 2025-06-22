@@ -163,6 +163,31 @@ namespace Boostera
                 this.Close();
             };
 
+            var showInExplorerMenuItem = contextMenuStrip2.Items.Add("エクスプローラーで表示する");
+            showInExplorerMenuItem.DisplayStyle = ToolStripItemDisplayStyle.Text;
+            showInExplorerMenuItem.BackColor = Color.FromArgb(31, 31, 31);
+            showInExplorerMenuItem.ForeColor = Color.FromArgb(255, 255, 255);
+            showInExplorerMenuItem.Click += (s, e) =>
+            {
+                if (listBox1.SelectedItems.Count == 0) return;
+
+                var psi = new ProcessStartInfo("EXPLORER.EXE");
+                psi.Arguments = $@"/select,""{((MyListBoxItem)listBox1.SelectedItems[0]).Path}""";
+                psi.UseShellExecute = true;
+                try
+                {
+                    Process.Start(psi);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
+            };
+
+            contextMenuStrip2.Opening += (s, e) =>
+            {
+                if (listBox1.Cursor != Cursors.Hand) e.Cancel = true;
+            };
+
+            listBox1.ContextMenuStrip = contextMenuStrip2;
+
             toolTip1.Draw += (s, e) =>
             {
                 e.DrawBackground();

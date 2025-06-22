@@ -124,16 +124,16 @@
     <value>114, 19</value>
   </metadata>
   <metadata name="timer3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>218, 19</value>
+    <value>205, 23</value>
   </metadata>
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>731, 22</value>
+    <value>520, 23</value>
   </metadata>
   <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>439, 19</value>
+    <value>413, 22</value>
   </metadata>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>579, 19</value>
+    <value>608, 24</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="notifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1322,12 +1322,12 @@
 </value>
   </data>
   <metadata name="timer4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>315, 22</value>
+    <value>288, 21</value>
   </metadata>
   <data name="panel13.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAbAAAAGwCAYAAADITjAqAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vwAADr8BOAVTJAAAHGFJREFUeF7t3c2SHNfZnVGQEj95aPvzjAoFBwwNOMUN4P5vyo6OJg1hoQv9U1lV
+        vAAADrwBlbxySQAAHGFJREFUeF7t3c2SHNfZnVGQEj95aPvzjAoFBwwNOMUN4P5vyo6OJg1hoQv9U1lV
         7zn5rKEC3bn3PlkpNpkAPn1KkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJ
         kiRJkiRJkiRJkiRJkiRJsrL/+wP+2iQf5+frP/lrk7zyoXkvv3eSy/z8XMPvnWzHm/5WvG6Sr/y83IrX
         TZbiDX1v5knOzM/HvZknGceb9tHMl5yRn4tHM1/yUN6gk3z69Okn8yYn8ZOfh0kMm9yNN+Nknz59+tn8
@@ -1451,6 +1451,9 @@
         kiRJkiRJkiRJkiRJkiRJlvL/ANJxtstYXHYeAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="contextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>752, 23</value>
+  </metadata>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAAAAAAAEAIABu4QAAFgAAAIlQTkcNChoKAAAADUlIRFIAAAEAAAABAAgGAAAAXHKoZgAAAAFv
