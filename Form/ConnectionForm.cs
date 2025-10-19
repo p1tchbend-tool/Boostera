@@ -593,7 +593,7 @@ namespace Boostera
 
         private void UpdateUiForProtocol(int protocol)
         {
-            if (protocol == SSH || protocol == SFTP)
+            if (protocol == SSH)
             {
                 textBox1.Text = "22";
                 label5.Enabled = true;
@@ -615,6 +615,21 @@ namespace Boostera
                 textBox3.Enabled = false;
                 panel1.Enabled = false;
                 panel3.Enabled = false;
+                label14.Enabled = false;
+                textBox12.Enabled = false;
+                textBox14.Enabled = false;
+                textBox15.Enabled = false;
+                label16.Enabled = false;
+                label17.Enabled = false;
+                label18.Enabled = false;
+            }
+            else if (protocol == SFTP)
+            {
+                textBox1.Text = "22";
+                label5.Enabled = true;
+                textBox3.Enabled = true;
+                panel1.Enabled = true;
+                panel3.Enabled = true;
                 label14.Enabled = false;
                 textBox12.Enabled = false;
                 textBox14.Enabled = false;
