@@ -15,8 +15,8 @@ namespace Boostera
 {
     public partial class MainForm : Form
     {
-        private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
-        private string ttpmacroPath = @"C:\Program Files (x86)\teraterm5\ttpmacro.exe";
+        private string ttermproPath = @"C:\Program Files\teraterm5\ttermpro.exe";
+        private string ttpmacroPath = @"C:\Program Files\teraterm5\ttpmacro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
         private string searchFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);

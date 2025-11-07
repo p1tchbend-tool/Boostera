@@ -66,7 +66,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new System.Drawing.Size(699, 27);
             textBox1.TabIndex = 0;
-            textBox1.Text = "C:\\Program Files\\teraterm\\ttpmacro.exe";
+            textBox1.Text = "C:\\Program Files\\teraterm5\\ttpmacro.exe";
             // 
             // label1
             // 
@@ -105,7 +105,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new System.Drawing.Size(699, 27);
             textBox2.TabIndex = 5;
-            textBox2.Text = "C:\\";
+            textBox2.Text = "C:\\Users\\me";
             // 
             // label3
             // 
@@ -131,7 +131,7 @@
             textBox3.Name = "textBox3";
             textBox3.Size = new System.Drawing.Size(699, 27);
             textBox3.TabIndex = 7;
-            textBox3.Text = "C:\\Windows,C:\\ProgramData";
+            textBox3.Text = "C:\\Users\\me\\AppData\\Local,C:\\Users\\me\\AppData\\Roaming";
             // 
             // textBox4
             // 
@@ -144,7 +144,7 @@
             textBox4.Name = "textBox4";
             textBox4.Size = new System.Drawing.Size(699, 27);
             textBox4.TabIndex = 8;
-            textBox4.Text = "C:\\Program Files\\teraterm\\ttermpro.exe";
+            textBox4.Text = "C:\\Program Files\\teraterm5\\ttermpro.exe";
             // 
             // label4
             // 
@@ -274,6 +274,7 @@
             textBox7.Name = "textBox7";
             textBox7.Size = new System.Drawing.Size(699, 27);
             textBox7.TabIndex = 18;
+            textBox7.Text = "C:\\Users\\me\\AppData\\Local\\Boostera\\Boostera.Key";
             // 
             // label9
             // 
@@ -345,7 +346,7 @@
             textBox8.Name = "textBox8";
             textBox8.Size = new System.Drawing.Size(699, 27);
             textBox8.TabIndex = 23;
-            textBox8.Text = "C:\\";
+            textBox8.Text = "C:\\Users\\me\\.Boostera\\log";
             // 
             // SettingForm
             // 
