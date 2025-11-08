@@ -37,7 +37,7 @@ namespace Boostera
             {
                 if (envManager.IsRunning)
                 {
-                    MessageBox.Show("環境変数の設定中です。\nしばらく待ってからフォームを閉じてください。", "Boostera");
+                    MessageBox.Show("環境変数の設定中です。\nしばらく待ってからフォームを閉じてください。", Application.ProductName);
                     e.Cancel = true;
                 }
             };
@@ -103,7 +103,7 @@ namespace Boostera
         {
             if (string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox1.Text)) return;
 
-            var result = MessageBox.Show($"環境変数「{textBox2.Text}」を追加してよろしいですか？\n※既存の変数は上書きされます。", "Boostera", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show($"環境変数「{textBox2.Text}」を追加してよろしいですか？\n※既存の変数は上書きされます。", Application.ProductName, MessageBoxButtons.YesNo);
             if (result != DialogResult.Yes) return;
 
             listView1.Items.RemoveByKey(textBox2.Text);
@@ -134,7 +134,7 @@ namespace Boostera
         {
             if (string.IsNullOrEmpty(textBox2.Text)) return;
 
-            var result = MessageBox.Show($"環境変数「{textBox2.Text}」を削除してよろしいですか？", "Boostera", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show($"環境変数「{textBox2.Text}」を削除してよろしいですか？", Application.ProductName, MessageBoxButtons.YesNo);
             if (result != DialogResult.Yes) return;
 
             listView1.Items.RemoveByKey(textBox2.Text);
@@ -218,7 +218,7 @@ namespace Boostera
 
             if (string.IsNullOrEmpty(envFilePath) || !File.Exists(envFilePath)) return;
 
-            var result = MessageBox.Show($"環境変数をファイルから一括インポートしてよろしいですか？\n※既存の変数はすべて上書きされます。", "Boostera", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show($"環境変数をファイルから一括インポートしてよろしいですか？\n※既存の変数はすべて上書きされます。", Application.ProductName, MessageBoxButtons.YesNo);
             if (result != DialogResult.Yes) return;
 
             try
@@ -247,7 +247,7 @@ namespace Boostera
             }
             catch { }
 
-            MessageBox.Show("環境変数をインポートしました。", "Boostera");
+            MessageBox.Show("環境変数をインポートしました。", Application.ProductName);
 
             await envManager.SetEnvs(envs);
         }
