@@ -412,24 +412,28 @@ endif
 
 strcompare Protocol 'RDP'
 if result == 0 then
-    strconcat buf 'cmdkey'
 
-    strcompare IsForwarding 'true'
-    if result == 0 then
-        strconcat buf ' /generic:TERMSRV/localhost /user:'
-        strconcat buf User
-        strconcat buf ' /pass:'
-        strconcat buf Password
-    else
-        strconcat buf ' /generic:TERMSRV/'
-        strconcat buf Host
-        strconcat buf ' /user:'
-        strconcat buf User
-        strconcat buf ' /pass:'
-        strconcat buf Password
+    strcompare Password ''
+    if result != 0 then
+        strconcat buf 'cmdkey'
+
+        strcompare IsForwarding 'true'
+        if result == 0 then
+            strconcat buf ' /generic:TERMSRV/localhost /user:'
+            strconcat buf User
+            strconcat buf ' /pass:'
+            strconcat buf Password
+        else
+            strconcat buf ' /generic:TERMSRV/'
+            strconcat buf Host
+            strconcat buf ' /user:'
+            strconcat buf User
+            strconcat buf ' /pass:'
+            strconcat buf Password
+        endif
+
+        exec buf 'minimize' 1
     endif
-
-    exec buf 'minimize' 1
 
     buf = ''
     strconcat buf 'mstsc'
