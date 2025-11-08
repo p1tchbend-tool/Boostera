@@ -12,9 +12,9 @@ namespace Boostera
         public static readonly int HotKeyShowForm = 1;
         public static readonly Logger Logger = new Logger(Path.Combine(BoosteraDataFolder, "log"), "Boostera.log", 10000);
 
-        /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
-        /// </summary>
+        private static Mutex mutex = null;
+        private static bool hasMutex = false;
+
         [STAThread]
         static void Main()
         {
@@ -26,7 +26,22 @@ namespace Boostera
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            mutex = new Mutex(true, Application.ProductName, out hasMutex);
+            if (!hasMutex)
+            {
+                MessageBox.Show($@"{Application.ProductName} は既に起動中です。");
+                return;
+            }
+
+            try
+            {
+                Application.Run(new MainForm());
+            }
+            finally
+            {
+                if (hasMutex) mutex.ReleaseMutex();
+            }
         }
 
         static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
@@ -48,7 +63,11 @@ namespace Boostera
                 }
                 catch { }
             }
-            finally { Environment.Exit(1); }
+            finally
+            {
+                if (hasMutex) mutex.ReleaseMutex();
+                Environment.Exit(1);
+            }
         }
     }
 }

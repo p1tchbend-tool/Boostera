@@ -63,7 +63,7 @@ namespace Boostera
                     if (EncryptedText.CreateKey(boosteraKeyPath))
                     {
                         MessageBox.Show("秘密情報保護用のシークレットが作成されました。\nこれは他の人に共有しないように注意してください。\n\n" +
-                            boosteraKeyPath, "Boostera");
+                            boosteraKeyPath, Application.ProductName);
                     }
                 }
             }
@@ -157,7 +157,7 @@ namespace Boostera
             item3.ForeColor = Color.FromArgb(255, 255, 255);
             item3.Click += (s, e) =>
             {
-                var result = MessageBox.Show("終了しますか？", "Boostera", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("終了しますか？", Application.ProductName, MessageBoxButtons.YesNo);
                 if (result != DialogResult.Yes) return;
 
                 this.Close();
@@ -477,7 +477,7 @@ namespace Boostera
 
                 if (ps.Length != 0)
                 {
-                    var result = MessageBox.Show("すべて終了しますか？\n※コマンド実行中でも終了します。", "", MessageBoxButtons.YesNo);
+                    var result = MessageBox.Show("すべて終了しますか？\n※コマンド実行中でも終了します。", Application.ProductName, MessageBoxButtons.YesNo);
                     if (result != DialogResult.Yes) return;
 
                     this.Hide();
