@@ -4,10 +4,11 @@ This project incorporates material from the following third-party software.
 
 ## CsvHelper
 
-**Source**: <https://github.com/JoshClose/CsvHelper>
+**Source**: <https://github.com/JoshClose/CsvHelper>  
+  
+**License**:
 
-### License
-```
+```text
 Dual licensing under MS-PL and Apache 2.0
 
 Microsoft Public License (MS-PL)
@@ -118,10 +119,11 @@ To apply the Apache License to your work, attach the following boilerplate notic
 
 This product incorporates source code from the .NET Foundation and its contributors, licensed under the MIT license.
 
-**Source**: <https://github.com/dotnet/runtime>
+**Source**: <https://github.com/dotnet/runtime>  
+  
+**License**:
 
-### License
-```
+```text
 The MIT License (MIT)
 
 Copyright (c) .NET Foundation and Contributors
