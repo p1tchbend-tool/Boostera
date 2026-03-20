@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace Boostera
 {
@@ -15,6 +16,7 @@ namespace Boostera
         public bool IsLogging { get { return checkBox2.Checked; } }
         public string LogFolder { get { return textBox8.Text; } }
         public bool IsStartUp { get { return checkBox1.Checked; } }
+        public string TtlFileName { get { return textBox9.Text; } }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int ModKey { get; set; }
@@ -25,8 +27,8 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath,
-            string searchFolder, string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key)
+        public SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
+            string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key, string ttlFileName)
         {
             InitializeComponent();
 
@@ -141,6 +143,14 @@ namespace Boostera
                         label7.Text = "登録に失敗しました。";
                     }
                 }
+            };
+
+            textBox9.Text = ttlFileName;
+            textBox9.TextChanged += (s, e) =>
+            {
+                var caret = textBox9.SelectionStart;
+                textBox9.Text = Regex.Replace(textBox9.Text, @"[<>:""/\\|?*]", "");
+                textBox9.SelectionStart = caret;
             };
         }
 

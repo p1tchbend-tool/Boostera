@@ -13,6 +13,7 @@ namespace Boostera
         private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
         private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
         private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
+        private string ttlFileName = @"{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
         private bool isLogging = true;
         private string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\log");
         private string boosteraMacroFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Boostera");
@@ -56,7 +57,7 @@ namespace Boostera
         private bool isHide { get { return checkBox1.Checked; } }
         private string tag { get { return textBox11.Text; } }
 
-        public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath, bool isLogging, string logFolder)
+        public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath, string ttlFileName, bool isLogging, string logFolder)
         {
             InitializeComponent();
 
@@ -71,6 +72,7 @@ namespace Boostera
             this.ttermproPath = ttermproPath;
             this.winscpPath = winscpPath;
             this.boosteraKeyPath = boosteraKeyPath;
+            this.ttlFileName = ttlFileName;
             this.isLogging = isLogging;
             this.logFolder = logFolder;
             if (!Directory.Exists(logFolder))
@@ -534,7 +536,7 @@ namespace Boostera
                 Random random = new Random();
                 var ttlFilePath = connectionManager.ExportTtl(targetFolder, protocolText, host, user, port, privateKey, password,
                     isEnvPassword, logonScript, waitingString, waitingTime, isForwarding, forwardingHost, forwardingUser, forwardingPort,
-                    forwardingLocalPort, forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag);
+                    forwardingLocalPort, forwardingPrivateKey, forwardingPassword, forwardingIsEnvPassword, isHide, tag, ttlFileName);
 
                 MessageBox.Show("TTL マクロをエクスポートしました。\n\n" + ttlFilePath, "Boostera");
             }

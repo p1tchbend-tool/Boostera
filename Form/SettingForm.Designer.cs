@@ -53,6 +53,8 @@
             checkBox2 = new System.Windows.Forms.CheckBox();
             label11 = new System.Windows.Forms.Label();
             textBox8 = new System.Windows.Forms.TextBox();
+            label12 = new System.Windows.Forms.Label();
+            textBox9 = new System.Windows.Forms.TextBox();
             SuspendLayout();
             // 
             // textBox1
@@ -77,9 +79,9 @@
             label1.Location = new System.Drawing.Point(12, 12);
             label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(166, 20);
+            label1.Size = new System.Drawing.Size(149, 20);
             label1.TabIndex = 3;
-            label1.Text = "TTERMPRO.EXE の場所：";
+            label1.Text = "ttermpro.exe の場所：";
             // 
             // label2
             // 
@@ -155,9 +157,9 @@
             label4.Location = new System.Drawing.Point(12, 47);
             label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(167, 20);
+            label4.Size = new System.Drawing.Size(151, 20);
             label4.TabIndex = 9;
-            label4.Text = "TTPMACRO.EXE の場所：";
+            label4.Text = "ttpmacro.exe の場所：";
             // 
             // label5
             // 
@@ -259,9 +261,9 @@
             label8.Location = new System.Drawing.Point(12, 82);
             label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(142, 20);
+            label8.Size = new System.Drawing.Size(140, 20);
             label8.TabIndex = 17;
-            label8.Text = "WinSCP.EXE の場所：";
+            label8.Text = "WinSCP.exe の場所：";
             // 
             // textBox7
             // 
@@ -348,13 +350,41 @@
             textBox8.TabIndex = 23;
             textBox8.Text = "C:\\Users\\me\\.Boostera\\log";
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.BackColor = System.Drawing.Color.Transparent;
+            label12.Font = new System.Drawing.Font("メイリオ", 9.75F);
+            label12.ForeColor = System.Drawing.Color.White;
+            label12.Location = new System.Drawing.Point(12, 367);
+            label12.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            label12.Name = "label12";
+            label12.Size = new System.Drawing.Size(205, 20);
+            label12.TabIndex = 24;
+            label12.Text = "TTL マクロ作成時のファイル名：";
+            // 
+            // textBox9
+            // 
+            textBox9.BackColor = System.Drawing.Color.FromArgb(44, 44, 44);
+            textBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            textBox9.Font = new System.Drawing.Font("メイリオ", 9.75F);
+            textBox9.ForeColor = System.Drawing.Color.White;
+            textBox9.Location = new System.Drawing.Point(284, 365);
+            textBox9.Margin = new System.Windows.Forms.Padding(2);
+            textBox9.Name = "textBox9";
+            textBox9.Size = new System.Drawing.Size(699, 27);
+            textBox9.TabIndex = 25;
+            textBox9.Text = "{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
+            // 
             // SettingForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
             BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            ClientSize = new System.Drawing.Size(994, 366);
+            ClientSize = new System.Drawing.Size(994, 406);
+            Controls.Add(textBox9);
+            Controls.Add(label12);
             Controls.Add(textBox8);
             Controls.Add(label11);
             Controls.Add(checkBox2);
@@ -418,5 +448,7 @@
         private System.Windows.Forms.CheckBox checkBox2;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBox9;
     }
 }

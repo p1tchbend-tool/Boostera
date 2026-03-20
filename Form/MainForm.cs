@@ -27,6 +27,7 @@ namespace Boostera
         private bool isStartUp = true;
         private int modkey = HotKey.MOD_KEY_ALT;
         private Keys key = Keys.T;
+        private string ttlFileName = @"{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
 
         private List<IntPtr> ttermproHwnds = new List<IntPtr>();
         private List<IntPtr> ttermproHwndsTopMost = new List<IntPtr>();
@@ -92,8 +93,8 @@ namespace Boostera
                 this.WindowState = FormWindowState.Minimized;
                 this.ShowInTaskbar = false;
 
-                using (var settingForm = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath,
-                    searchFolder, string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key))
+                using (var settingForm = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder,
+                    string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key, ttlFileName))
                 {
                     settingForm.Show();
                     settingForm.Close();
@@ -103,7 +104,7 @@ namespace Boostera
                     envForm.Show();
                     envForm.Close();
                 }
-                using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, isLogging, logFolder))
+                using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, ttlFileName, isLogging, logFolder))
                 {
                     connectionForm.Show();
                     connectionForm.Hide();
@@ -217,7 +218,7 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, isLogging, logFolder))
+                    using (var connectionForm = new ConnectionForm(ttermproPath, winscpPath, boosteraKeyPath, ttlFileName, isLogging, logFolder))
                     {
                         result = connectionForm.ShowDialog();
                     }
@@ -238,8 +239,8 @@ namespace Boostera
                 {
                     isShowingChildForm = true;
 
-                    using (var settingForm = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath,
-                        searchFolder, string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key))
+                    using (var settingForm = new SettingForm(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder,
+                        string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key, ttlFileName))
                     {
                         settingForm.ShowDialog();
                         if (!string.IsNullOrEmpty(settingForm.TtermproPath) && File.Exists(settingForm.TtermproPath)) ttermproPath = settingForm.TtermproPath;
@@ -253,11 +254,12 @@ namespace Boostera
                         isStartUp = settingForm.IsStartUp;
                         modkey = settingForm.ModKey;
                         key = settingForm.Key;
+                        if (!string.IsNullOrEmpty(settingForm.TtlFileName)) ttlFileName = settingForm.TtlFileName;
 
                         try
                         {
-                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath,
-                                searchFolder, string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key);
+                            var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder,
+                                string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key, ttlFileName);
                             File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
                         }
                         catch { }
@@ -720,17 +722,18 @@ namespace Boostera
             try
             {
                 var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json")));
-                ttermproPath = settings.TtermproPath;
-                ttpmacroPath = settings.TtpmacroPath;
-                winscpPath = settings.WinscpPath;
-                boosteraKeyPath = settings.BoosteraKeyPath;
-                searchFolder = settings.SearchFolder;
+                if (!string.IsNullOrEmpty(settings.TtermproPath)) ttermproPath = settings.TtermproPath;
+                if (!string.IsNullOrEmpty(settings.TtpmacroPath)) ttpmacroPath = settings.TtpmacroPath;
+                if (!string.IsNullOrEmpty(settings.WinscpPath)) winscpPath = settings.WinscpPath;
+                if (!string.IsNullOrEmpty(settings.BoosteraKeyPath)) boosteraKeyPath = settings.BoosteraKeyPath;
+                if (!string.IsNullOrEmpty(settings.SearchFolder)) searchFolder = settings.SearchFolder;
                 searchExclusionFolders = settings.SearchExclusionFolders.Split(',');
                 isLogging = settings.IsLogging;
-                logFolder = settings.LogFolder;
+                if (!string.IsNullOrEmpty(settings.LogFolder)) logFolder = settings.LogFolder;
                 isStartUp = settings.IsStartUp;
                 modkey = settings.ModKey;
                 key = settings.Key;
+                if (!string.IsNullOrEmpty(settings.TtlFileName)) ttlFileName = settings.TtlFileName;
             }
             catch { }
 

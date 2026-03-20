@@ -179,7 +179,7 @@ sendln '{logonScript}'
 
         public string ExportTtl(string targetFolder, string protocolText, string host, string user, string port, string privateKey, string password, bool isEnvPassword,
             string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser, string forwardingPort,
-            string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag)
+            string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag, string ttlFileName)
         {
             var ttl = TTL_TEMPLATE.Replace("{{Protocol}}", protocolText);
             ttl = ttl.Replace("{{Host}}", host);
@@ -202,13 +202,24 @@ sendln '{logonScript}'
             ttl = ttl.Replace("{{IsHide}}", isHide.ToString().ToLower());
             ttl = ttl.Replace("{{Tag}}", tag);
 
-            var ttlFileName = protocolText + "_" + user + "@" + host;
-            if (!string.IsNullOrEmpty(tag)) ttlFileName += "_" + tag;
-            ttlFileName = Regex.Replace(ttlFileName, @"[<>:""/\\|?*]", "");
-            ttlFileName = ttlFileName.ToLower() + ".ttl";
+            var filename = ttlFileName.Replace("{{protocol}}", protocolText.ToLower())
+                .Replace("{{host}}", host)
+                .Replace("{{user}}", user)
+                .Replace("{{tag}}", tag);
 
-            File.WriteAllText(Path.Combine(targetFolder, ttlFileName), ttl);
-            return Path.Combine(targetFolder, ttlFileName);
+            if (string.IsNullOrEmpty(tag))
+            {
+                filename = Regex.Replace(filename, @"\{\{istag:([^}]*)\}\}", "");
+            }
+            else
+            {
+                filename = Regex.Replace(filename, @"\{\{istag:([^}]*)\}\}", "$1");
+            }
+
+            filename = Regex.Replace(filename, @"[<>:""/\\|?*]", "") + ".ttl";
+
+            File.WriteAllText(Path.Combine(targetFolder, filename), ttl);
+            return Path.Combine(targetFolder, filename);
         }
 
         public Dictionary<string, string> ImportTtl(string ttlFilePath)
