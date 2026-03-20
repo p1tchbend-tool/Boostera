@@ -85,12 +85,12 @@ namespace Boostera
             }
             comboBox2.SelectedIndex = 0;
 
-            toolTip1.SetToolTip(comboBox2, "接続先のプロトコルを選択してください。\nSSHはTeraTerm、SFTPはWinSCPの事前設定が必要です。");
+            toolTip1.SetToolTip(comboBox2, "接続プロトコルを選択してください。\nSSHはTeraTerm、SFTPはWinSCPの事前設定が必要です。");
             toolTip1.SetToolTip(textBox5, "接続先のホストを入力してください。");
-            toolTip1.SetToolTip(textBox4, "接続先のユーザーを入力してください。");
-            toolTip1.SetToolTip(textBox1, "接続先のポートを入力してください。");
-            toolTip1.SetToolTip(textBox3, "接続先の秘密鍵のパスを入力してください。");
-            toolTip1.SetToolTip(textBox2, "接続先のパスワード／パスフレーズを入力してください。");
+            toolTip1.SetToolTip(textBox4, "接続に使用するユーザーを入力してください。");
+            toolTip1.SetToolTip(textBox1, "接続ポートを入力してください。");
+            toolTip1.SetToolTip(textBox3, "接続に使用する秘密鍵のパスを入力してください。");
+            toolTip1.SetToolTip(textBox2, "接続に使用するパスワード／パスフレーズを入力してください。");
             toolTip1.SetToolTip(checkBox2, "チェックを外した場合、テキストボックスの値をそのまま使用します。\nチェックを入れた場合、テキストボックスの値と同名のユーザー環境変数を使用します。");
             toolTip1.SetToolTip(textBox12, "接続時に実行するコマンドを入力してください。");
             toolTip1.SetToolTip(textBox14, "指定した文字列が表示されるまで、コマンドの実行を待機します。\n空白の場合、任意の文字が表示されるまで、コマンドの実行を待機します。");
