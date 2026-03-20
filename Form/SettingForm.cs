@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Boostera
 {
@@ -151,6 +153,23 @@ namespace Boostera
                 var caret = textBox9.SelectionStart;
                 textBox9.Text = Regex.Replace(textBox9.Text, @"[<>:""/\\|?*]", "");
                 textBox9.SelectionStart = caret;
+            };
+
+            var tooltipText = @"ファイル名には以下のフォーマットが使用できます。
+{{protocol}} : 接続プロトコルが展開されます。
+{{user}}     : 接続に使用するユーザーが展開されます。
+{{host}}     : 接続先ホストが展開されます。
+{{tag}}      : タグが展開されます。
+{{istag:}}   : タグがある場合、コロン以降の文字列が展開されます。";
+
+            toolTip1.SetToolTip(label12, tooltipText);
+            toolTip1.SetToolTip(textBox9, tooltipText);
+
+            toolTip1.Draw += (s, e) =>
+            {
+                e.DrawBackground();
+                e.DrawBorder();
+                e.DrawText(TextFormatFlags.WordBreak);
             };
         }
 

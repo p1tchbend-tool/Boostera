@@ -55,6 +55,7 @@
             textBox8 = new System.Windows.Forms.TextBox();
             label12 = new System.Windows.Forms.Label();
             textBox9 = new System.Windows.Forms.TextBox();
+            toolTip1 = new System.Windows.Forms.ToolTip(components);
             SuspendLayout();
             // 
             // textBox1
@@ -376,6 +377,12 @@
             textBox9.TabIndex = 25;
             textBox9.Text = "{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
             // 
+            // toolTip1
+            // 
+            toolTip1.BackColor = System.Drawing.Color.FromArgb(31, 31, 31);
+            toolTip1.ForeColor = System.Drawing.Color.White;
+            toolTip1.OwnerDraw = true;
+            // 
             // SettingForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -450,5 +457,6 @@
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
