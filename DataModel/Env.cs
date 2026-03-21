@@ -1,9 +1,9 @@
 ﻿namespace Boostera
 {
-    internal class Env
+    public class Env
     {
-        internal string Key { get; set; }
-        internal string Value { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
 
         internal Env(string Key, string Value)
         {

@@ -1,28 +1,28 @@
 ﻿namespace Boostera
 {
-    internal class History
+    public class History
     {
-        internal string UniqueKey { get; set; }
-        internal string SearchKey { get; set; }
-        internal int Protocol { get; set; }
-        internal string Host { get; set; }
-        internal string User { get; set; }
-        internal string Port { get; set; }
-        internal string PrivateKey { get; set; }
-        internal string Password { get; set; }
-        internal bool IsEnvPassword { get; set; }
-        internal string LogonScript { get; set; }
-        internal string WaitingString { get; set; }
-        internal string WaitingTime { get; set; }
-        internal bool IsForwarding { get; set; }
-        internal string ForwardingHost { get; set; }
-        internal string ForwardingUser { get; set; }
-        internal string ForwardingPort { get; set; }
-        internal string ForwardingPrivateKey { get; set; }
-        internal string ForwardingPassword { get; set; }
-        internal bool ForwardingIsEnvPassword { get; set; }
-        internal bool IsHide { get; set; }
-        internal string Tag { get; set; }
+        public string UniqueKey { get; set; }
+        public string SearchKey { get; set; }
+        public int Protocol { get; set; }
+        public string Host { get; set; }
+        public string User { get; set; }
+        public string Port { get; set; }
+        public string PrivateKey { get; set; }
+        public string Password { get; set; }
+        public bool IsEnvPassword { get; set; }
+        public string LogonScript { get; set; }
+        public string WaitingString { get; set; }
+        public string WaitingTime { get; set; }
+        public bool IsForwarding { get; set; }
+        public string ForwardingHost { get; set; }
+        public string ForwardingUser { get; set; }
+        public string ForwardingPort { get; set; }
+        public string ForwardingPrivateKey { get; set; }
+        public string ForwardingPassword { get; set; }
+        public bool ForwardingIsEnvPassword { get; set; }
+        public bool IsHide { get; set; }
+        public string Tag { get; set; }
 
         public override string ToString()
         {

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Boostera
 {
-    internal class EncryptedText
+    public class EncryptedText
     {
-        internal string Key { get; set; }
-        internal string Iv { get; set; }
-        internal string Data { get; set; }
+        public string Key { get; set; }
+        public string Iv { get; set; }
+        public string Data { get; set; }
 
         internal EncryptedText(string key, string iv, string data)
         {
