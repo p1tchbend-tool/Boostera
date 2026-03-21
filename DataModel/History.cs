@@ -29,7 +29,7 @@
             return UniqueKey;
         }
 
-        internal History(string uniqueKey, string searchKey, int protocol, string host, string user, string port, string privateKey, string password,
+        public History(string uniqueKey, string searchKey, int protocol, string host, string user, string port, string privateKey, string password,
             bool isEnvPassword, string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
             string forwardingPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag)
         {

@@ -17,7 +17,7 @@ namespace Boostera
         public Keys Key { get; set; }
         public string TtlFileName { get; set; }
 
-        internal Settings(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
+        public Settings(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
             string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key, string ttlFileName)
         {
             TtermproPath = ttermproPath;

@@ -8,7 +8,7 @@ namespace Boostera
         public string Text { get; set; }
         public DateTime Timestamp { get; set; }
 
-        internal Index(string path, string text, DateTime timestamp) 
+        public Index(string path, string text, DateTime timestamp) 
         {
             Path = path;
             Text = text;

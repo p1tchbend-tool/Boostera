@@ -11,14 +11,14 @@ namespace Boostera
         public string Iv { get; set; }
         public string Data { get; set; }
 
-        internal EncryptedText(string key, string iv, string data)
+        public EncryptedText(string key, string iv, string data)
         {
             Key = key;
             Iv = iv;
             Data = data;
         }
 
-        internal static bool CreateKey(string keyPath)
+        public static bool CreateKey(string keyPath)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Boostera
             catch { throw; }
         }
 
-        internal static EncryptedText Encrypt(string data, string keyPath)
+        public static EncryptedText Encrypt(string data, string keyPath)
         {
             if (!File.Exists(keyPath)) CreateKey(keyPath);
 
@@ -78,7 +78,7 @@ namespace Boostera
             }
         }
 
-        internal static string Decrypt(EncryptedText encryptedText, string keyPath)
+        public static string Decrypt(EncryptedText encryptedText, string keyPath)
         {
             var rsa = new RSACryptoServiceProvider(3072);
             rsa.FromXmlString(File.ReadAllText(keyPath));
