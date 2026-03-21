@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Boostera
@@ -146,12 +145,6 @@ namespace Boostera
             };
 
             textBox9.Text = ttlFileName;
-            textBox9.TextChanged += (s, e) =>
-            {
-                var caret = textBox9.SelectionStart;
-                textBox9.Text = Regex.Replace(textBox9.Text, @"[<>:""/\\|?*]", "");
-                textBox9.SelectionStart = caret;
-            };
 
             var tooltipText = @"ファイル名には以下のフォーマットが使用できます。
 
