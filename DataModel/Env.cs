@@ -1,11 +1,11 @@
 ﻿namespace Boostera
 {
-    public class Env
+    internal class Env
     {
-        public string Key { get; set; }
-        public string Value { get; set; }
+        internal string Key { get; set; }
+        internal string Value { get; set; }
 
-        public Env(string Key, string Value)
+        internal Env(string Key, string Value)
         {
             this.Key = Key;
             this.Value = Value;

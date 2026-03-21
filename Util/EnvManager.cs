@@ -8,12 +8,12 @@ using CsvHelper;
 
 namespace Boostera
 {
-    public class EnvManager
+    internal class EnvManager
     {
         private List<string> running = new List<string>();
-        public bool IsRunning { get { return running.Count != 0; } }
+        internal bool IsRunning { get { return running.Count != 0; } }
 
-        public async Task SetEnv(Env env)
+        internal async Task SetEnv(Env env)
         {
             var id = Guid.NewGuid().ToString("N");
             running.Add(id);
@@ -31,7 +31,7 @@ namespace Boostera
             }
         }
 
-        public async Task SetEnvs(List<Env> envs)
+        internal async Task SetEnvs(List<Env> envs)
         {
             var id = Guid.NewGuid().ToString("N");
             running.Add(id);
@@ -56,7 +56,7 @@ namespace Boostera
             }
         }
 
-        public void ExportEnvsToCsv(List<Env> envs, string filePath)
+        internal void ExportEnvsToCsv(List<Env> envs, string filePath)
         {
             using (var writer = new StreamWriter(filePath))
             {
@@ -67,7 +67,7 @@ namespace Boostera
             }
         }
 
-        public List<Env> ImportEnvsFromCsv(string filePath)
+        internal List<Env> ImportEnvsFromCsv(string filePath)
         {
             using (var reader = new StreamReader(filePath))
             {

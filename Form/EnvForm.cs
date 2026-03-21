@@ -6,15 +6,15 @@ using System.Windows.Forms;
 
 namespace Boostera
 {
-    public partial class EnvForm : Form
+    internal partial class EnvForm : Form
     {
-        public string SelectedEnv { get { return textBox2.Text; } }
+        internal string SelectedEnv { get { return textBox2.Text; } }
 
         private static string targetFolder = string.Empty;
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
+        private string boosteraKeyPath = Path.Combine(Constants.App.BoosteraDataFolder, "Boostera.Key");
         private string boosteraEnvFileFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\env");
         private List<Env> envs = new List<Env>();
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
@@ -23,7 +23,7 @@ namespace Boostera
         };
         private EnvManager envManager = new EnvManager();
 
-        public EnvForm(string boosteraKeyPath)
+        internal EnvForm(string boosteraKeyPath)
         {
             InitializeComponent();
 
@@ -45,7 +45,7 @@ namespace Boostera
             this.boosteraKeyPath = boosteraKeyPath;
             try
             {
-                var envsEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "env.json")));
+                var envsEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Constants.App.BoosteraDataFolder, "env.json")));
                 var envsJson = EncryptedText.Decrypt(envsEncrypted, boosteraKeyPath);
                 envs = JsonSerializer.Deserialize<List<Env>>(envsJson);
             }
@@ -123,7 +123,7 @@ namespace Boostera
             {
                 var envsEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(envs), boosteraKeyPath);
                 var envsJson = JsonSerializer.Serialize(envsEncrypted, jsonSerializerOptions);
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
+                File.WriteAllText(Path.Combine(Constants.App.BoosteraDataFolder, "env.json"), envsJson);
             }
             catch { }
 
@@ -149,7 +149,7 @@ namespace Boostera
             {
                 var envsEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(envs), boosteraKeyPath);
                 var envsJson = JsonSerializer.Serialize(envsEncrypted, jsonSerializerOptions);
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
+                File.WriteAllText(Path.Combine(Constants.App.BoosteraDataFolder, "env.json"), envsJson);
             }
             catch { }
 
@@ -243,7 +243,7 @@ namespace Boostera
             {
                 var envsEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(envs), boosteraKeyPath);
                 var envsJson = JsonSerializer.Serialize(envsEncrypted, jsonSerializerOptions);
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "env.json"), envsJson);
+                File.WriteAllText(Path.Combine(Constants.App.BoosteraDataFolder, "env.json"), envsJson);
             }
             catch { }
 

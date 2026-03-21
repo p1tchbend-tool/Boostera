@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Boostera
 {
-    public class Logger
+    internal class Logger
     {
         private string logFolder;
         private string logFileName;
@@ -12,7 +12,7 @@ namespace Boostera
         private string logFilePath => Path.Combine(logFolder, logFileName);
         private readonly object logLock = new object();
 
-        public Logger(string logFolder, string logFileName, int maxLines)
+        internal Logger(string logFolder, string logFileName, int maxLines)
         {   
             this.logFolder = logFolder;
             this.logFileName = logFileName;
@@ -21,7 +21,7 @@ namespace Boostera
             if (!Directory.Exists(logFolder)) Directory.CreateDirectory(logFolder);
         }
 
-        public void LogException(Exception ex)
+        internal void LogException(Exception ex)
         {
             lock (logLock)
             {

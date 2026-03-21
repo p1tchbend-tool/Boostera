@@ -2,34 +2,32 @@
 using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Boostera
 {
-    public partial class SettingForm : Form
+    internal partial class SettingForm : Form
     {
-        public string TtermproPath { get { return textBox4.Text; } }
-        public string TtpmacroPath { get { return textBox1.Text; } }
-        public string WinscpPath { get { return textBox6.Text; } }
-        public string BoosteraKeyPath { get { return textBox7.Text; } }
-        public string SearchFolder { get { return textBox2.Text; } }
-        public string SearchExclusionFolders { get { return textBox3.Text; } }
-        public bool IsLogging { get { return checkBox2.Checked; } }
-        public string LogFolder { get { return textBox8.Text; } }
-        public bool IsStartUp { get { return checkBox1.Checked; } }
-        public string TtlFileName { get { return textBox9.Text; } }
+        internal string TtermproPath { get { return textBox4.Text; } }
+        internal string TtpmacroPath { get { return textBox1.Text; } }
+        internal string WinscpPath { get { return textBox6.Text; } }
+        internal string BoosteraKeyPath { get { return textBox7.Text; } }
+        internal string SearchFolder { get { return textBox2.Text; } }
+        internal string SearchExclusionFolders { get { return textBox3.Text; } }
+        internal bool IsLogging { get { return checkBox2.Checked; } }
+        internal string LogFolder { get { return textBox8.Text; } }
+        internal bool IsStartUp { get { return checkBox1.Checked; } }
+        internal string TtlFileName { get { return textBox9.Text; } }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int ModKey { get; set; }
+        internal int ModKey { get; set; }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public Keys Key { get; set; }
+        internal Keys Key { get; set; }
 
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
+        internal SettingForm(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
             string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key, string ttlFileName)
         {
             InitializeComponent();
@@ -131,10 +129,10 @@ namespace Boostera
                 {
                     ChangeHotKeyText(modkey, e.KeyCode);
 
-                    if (Program.ProgramHotKey.Add(modkey, e.KeyCode, Program.HotKeyShowForm))
+                    if (Constants.Hoykey.ProgramHotKey.Add(modkey, e.KeyCode, Constants.Hoykey.HotKeyShowForm))
                     {
-                        Program.ProgramHotKey.Remove(Program.HotKeyShowForm);
-                        Program.ProgramHotKey.Add(modkey, e.KeyCode, Program.HotKeyShowForm);
+                        Constants.Hoykey.ProgramHotKey.Remove(Constants.Hoykey.HotKeyShowForm);
+                        Constants.Hoykey.ProgramHotKey.Add(modkey, e.KeyCode, Constants.Hoykey.HotKeyShowForm);
                         label7.Text = "登録に成功しました。";
 
                         ModKey = modkey;

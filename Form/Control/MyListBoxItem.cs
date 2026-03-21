@@ -2,18 +2,18 @@
 
 namespace Boostera
 {
-    public class MyListBoxItem
+    internal class MyListBoxItem
     {
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public DateTime Timestamp { get; set; }
+        internal string Name { get; set; }
+        internal string Path { get; set; }
+        internal DateTime Timestamp { get; set; }
 
         public override string ToString()
         {
             return Name;
         }
 
-        public MyListBoxItem(string name, string path, DateTime timestamp)
+        internal MyListBoxItem(string name, string path, DateTime timestamp)
         {
             Name = name;
             Path = path;

@@ -8,81 +8,81 @@ namespace Boostera
     static class NativeMethods
     {
         [DllImport("dwmapi.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern int DwmSetWindowAttribute(IntPtr hwnd, int attribute, ref int pvAttribute, uint cbAttribute);
-        public static readonly int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
+        internal static extern int DwmSetWindowAttribute(IntPtr hwnd, int attribute, ref int pvAttribute, uint cbAttribute);
+        internal static readonly int DWMWA_USE_IMMERSIVE_DARK_MODE = 20;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern int MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeight, int bRepaint);
+        internal static extern int MoveWindow(IntPtr hwnd, int x, int y, int nWidth, int nHeight, int bRepaint);
 
-        public static readonly int SW_MINIMIZE = 6;
-        public static readonly int SW_RESTORE = 9;
+        internal static readonly int SW_MINIMIZE = 6;
+        internal static readonly int SW_RESTORE = 9;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern int ShowWindow(IntPtr hWnd, int Msg);
+        internal static extern int ShowWindow(IntPtr hWnd, int Msg);
 
-        public static readonly int SW_HIDE = 0;
-        public static readonly int SW_SHOW = 5;
+        internal static readonly int SW_HIDE = 0;
+        internal static readonly int SW_SHOW = 5;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
+        internal static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        public static readonly int SWP_NOSIZE = 0x0001;
-        public static readonly int SWP_NOMOVE = 0x0002;
-        public static readonly int SWP_SHOWWINDOW = 0x0040;
+        internal static readonly int SWP_NOSIZE = 0x0001;
+        internal static readonly int SWP_NOMOVE = 0x0002;
+        internal static readonly int SWP_SHOWWINDOW = 0x0040;
 
-        public static readonly int HWND_TOPMOST = -1;
-        public static readonly int HWND_NOTOPMOST = -2;
+        internal static readonly int HWND_TOPMOST = -1;
+        internal static readonly int HWND_NOTOPMOST = -2;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int uFlags);
+        internal static extern bool SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int cx, int cy, int uFlags);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetForegroundWindow();
+        internal static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
-        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
+        internal static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr ProcessId);
 
         [DllImport("kernel32.dll")]
-        public static extern uint GetCurrentThreadId();
+        internal static extern uint GetCurrentThreadId();
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
+        internal static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool fAttach);
 
-        public static readonly uint WM_ENDTERATERM = 0x0428;
+        internal static readonly uint WM_ENDTERATERM = 0x0428;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll")]
-        public static extern int RegisterHotKey(IntPtr HWnd, int ID, int MOD_KEY, Keys KEY);
+        internal static extern int RegisterHotKey(IntPtr HWnd, int ID, int MOD_KEY, Keys KEY);
 
         [DllImport("user32.dll")]
-        public static extern int UnregisterHotKey(IntPtr HWnd, int ID);
+        internal static extern int UnregisterHotKey(IntPtr HWnd, int ID);
 
         [DllImport("User32.dll")]
-        public static extern int GetDpiForSystem();
+        internal static extern int GetDpiForSystem();
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
+        internal static extern bool EnumWindows(EnumWindowsDelegate lpEnumFunc, IntPtr lparam);
 
-        public delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
-
-        [DllImport("user32.dll")]
-        public static extern int GetClassName(IntPtr hWnd, StringBuilder className, int nMaxCount);
+        internal delegate bool EnumWindowsDelegate(IntPtr hWnd, IntPtr lparam);
 
         [DllImport("user32.dll")]
-        public static extern int GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+        internal static extern int GetClassName(IntPtr hWnd, StringBuilder className, int nMaxCount);
 
         [DllImport("user32.dll")]
-        public static extern short GetAsyncKeyState(int vKey);
+        internal static extern int GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
+        [DllImport("user32.dll")]
+        internal static extern short GetAsyncKeyState(int vKey);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool SetProcessDpiAwarenessContext(IntPtr dpiAWarenessContext);
+        internal static extern bool SetProcessDpiAwarenessContext(IntPtr dpiAWarenessContext);
 
-        public static readonly IntPtr DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = new IntPtr(-3);
+        internal static readonly IntPtr DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = new IntPtr(-3);
     }
 }

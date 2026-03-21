@@ -6,12 +6,12 @@ using System.Windows.Forms;
 
 namespace Boostera
 {
-    public partial class MyPanel : Control
+    internal partial class MyPanel : Control
     {
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int Radius { get; set; } = 1;
+        internal int Radius { get; set; } = 1;
 
-        public MyPanel()
+        internal MyPanel()
         {
             SetStyle(ControlStyles.Opaque, true);
         }

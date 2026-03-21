@@ -2,22 +2,22 @@
 
 namespace Boostera
 {
-    public class Settings
+    internal class Settings
     {
-        public string TtermproPath { get; set; }
-        public string TtpmacroPath { get; set; }
-        public string WinscpPath { get; set; }
-        public string SearchFolder { get; set; }
-        public string SearchExclusionFolders { get; set; }
-        public string BoosteraKeyPath { get; set; }
-        public bool IsLogging { get; set; }
-        public string LogFolder { get; set; }
-        public bool IsStartUp { get; set; }
-        public int ModKey { get; set; }
-        public Keys Key { get; set; }
-        public string TtlFileName { get; set; }
+        internal string TtermproPath { get; set; }
+        internal string TtpmacroPath { get; set; }
+        internal string WinscpPath { get; set; }
+        internal string SearchFolder { get; set; }
+        internal string SearchExclusionFolders { get; set; }
+        internal string BoosteraKeyPath { get; set; }
+        internal bool IsLogging { get; set; }
+        internal string LogFolder { get; set; }
+        internal bool IsStartUp { get; set; }
+        internal int ModKey { get; set; }
+        internal Keys Key { get; set; }
+        internal string TtlFileName { get; set; }
 
-        public Settings(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
+        internal Settings(string ttermproPath, string ttpmacroPath, string winscpPath, string boosteraKeyPath, string searchFolder,
             string searchExclusionFolders, bool isLogging, string logFolder, bool isStartUp, int modKey, Keys key, string ttlFileName)
         {
             TtermproPath = ttermproPath;

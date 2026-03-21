@@ -13,21 +13,20 @@ using System.Windows.Forms;
 
 namespace Boostera
 {
-    public partial class MainForm : Form
+    internal partial class MainForm : Form
     {
-        private string ttermproPath = @"C:\Program Files\teraterm5\ttermpro.exe";
-        private string ttpmacroPath = @"C:\Program Files\teraterm5\ttpmacro.exe";
-        private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
-        private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
-        private string searchFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-        private string[] searchExclusionFolders = new string[] {
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) };
-        private bool isLogging = true;
-        private string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\log");
-        private bool isStartUp = true;
-        private int modkey = HotKey.MOD_KEY_ALT;
-        private Keys key = Keys.T;
-        private string ttlFileName = @"{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
+        private string ttermproPath = Constants.App.DefaultTtermproPath;
+        private string ttpmacroPath = Constants.App.DefaultTtpmacroPath;
+        private string winscpPath = Constants.App.DefaultWinscpPath;
+        private string boosteraKeyPath = Constants.App.DefaultBoosteraKeyPath;
+        private string searchFolder = Constants.App.DefaultSearchFolder;
+        private string[] searchExclusionFolders = Constants.App.DefaultSearchExclusionFolders;
+        private bool isLogging = Constants.App.DefaultLogging;
+        private string logFolder = Constants.App.DefaultLogFolder;
+        private bool isStartUp = Constants.App.DefaultStartUp;
+        private int modkey = Constants.Hoykey.DefaultHotModkey;
+        private Keys key = Constants.Hoykey.DefaultHotKey;
+        private string ttlFileName = Constants.App.DefaultTtlFileName;
 
         private List<IntPtr> ttermproHwnds = new List<IntPtr>();
         private List<IntPtr> ttermproHwndsTopMost = new List<IntPtr>();
@@ -45,9 +44,9 @@ namespace Boostera
         private static int? initialWidth = null;
         private static int? initialHeight = null;
 
-        public MainForm()
+        internal MainForm()
         {
-            if (!Directory.Exists(Program.BoosteraDataFolder)) Directory.CreateDirectory(Program.BoosteraDataFolder);
+            if (!Directory.Exists(Constants.App.BoosteraDataFolder)) Directory.CreateDirectory(Constants.App.BoosteraDataFolder);
             if (!Directory.Exists(logFolder))
             {
                 try
@@ -70,9 +69,9 @@ namespace Boostera
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
 
-            Program.ProgramHotKey.OnHotKey += (s, e) =>
+            Constants.Hoykey.ProgramHotKey.OnHotKey += (s, e) =>
             {
-                if (((HotKey.HotKeyEventArgs)e).Id == Program.HotKeyShowForm) ShowSearchForm();
+                if (((HotKey.HotKeyEventArgs)e).Id == Constants.Hoykey.HotKeyShowForm) ShowSearchForm();
             };
 
             InitializeComponent();
@@ -260,7 +259,7 @@ namespace Boostera
                         {
                             var settings = new Settings(ttermproPath, ttpmacroPath, winscpPath, boosteraKeyPath, searchFolder,
                                 string.Join(",", searchExclusionFolders), isLogging, logFolder, isStartUp, modkey, key, ttlFileName);
-                            File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
+                            File.WriteAllText(Path.Combine(Constants.App.BoosteraDataFolder, "settings.json"), JsonSerializer.Serialize(settings, jsonSerializerOptions));
                         }
                         catch { }
 
@@ -713,7 +712,7 @@ namespace Boostera
             this.TransparencyKey = Color.Green;
             try
             {
-                var indexEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "search.index")));
+                var indexEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Constants.App.BoosteraDataFolder, "search.index")));
                 var indexJson = EncryptedText.Decrypt(indexEncrypted, boosteraKeyPath);
                 files = JsonSerializer.Deserialize<List<Index>>(indexJson);
             }
@@ -721,7 +720,7 @@ namespace Boostera
 
             try
             {
-                var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "settings.json")));
+                var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(Path.Combine(Constants.App.BoosteraDataFolder, "settings.json")));
                 if (!string.IsNullOrEmpty(settings.TtermproPath)) ttermproPath = settings.TtermproPath;
                 if (!string.IsNullOrEmpty(settings.TtpmacroPath)) ttpmacroPath = settings.TtpmacroPath;
                 if (!string.IsNullOrEmpty(settings.WinscpPath)) winscpPath = settings.WinscpPath;
@@ -763,8 +762,8 @@ namespace Boostera
                 catch { }
             });
 
-            Program.ProgramHotKey.Remove(Program.HotKeyShowForm);
-            Program.ProgramHotKey.Add(modkey, key, Program.HotKeyShowForm);
+            Constants.Hoykey.ProgramHotKey.Remove(Constants.Hoykey.HotKeyShowForm);
+            Constants.Hoykey.ProgramHotKey.Add(modkey, key, Constants.Hoykey.HotKeyShowForm);
 
             UiHelper.ChangeFontFamily(this, "メイリオ");
             UiHelper.SortTabIndex(this);
@@ -842,7 +841,7 @@ namespace Boostera
                 {
                     var indexEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(files_shadow, jsonSerializerOptions), boosteraKeyPath);
                     var indexJson = JsonSerializer.Serialize(indexEncrypted, jsonSerializerOptions);
-                    File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "search.index"), indexJson);
+                    File.WriteAllText(Path.Combine(Constants.App.BoosteraDataFolder, "search.index"), indexJson);
                 }
                 catch { }
             });

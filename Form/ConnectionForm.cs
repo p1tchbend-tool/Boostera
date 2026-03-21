@@ -8,16 +8,17 @@ using System.Windows.Forms;
 
 namespace Boostera
 {
-    public partial class ConnectionForm : Form
+    internal partial class ConnectionForm : Form
     {
-        private string ttermproPath = @"C:\Program Files (x86)\teraterm5\ttermpro.exe";
-        private string winscpPath = @"C:\Program Files (x86)\WinSCP\WinSCP.exe";
-        private string boosteraKeyPath = Path.Combine(Program.BoosteraDataFolder, "Boostera.Key");
-        private string ttlFileName = @"{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
-        private bool isLogging = true;
-        private string logFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @".Boostera\log");
-        private string boosteraMacroFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".Boostera");
-        private string sshFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".ssh");
+        private string ttermproPath = Constants.App.DefaultTtermproPath;
+        private string winscpPath = Constants.App.DefaultWinscpPath;
+        private string boosteraKeyPath = Constants.App.DefaultBoosteraKeyPath;
+        private string ttlFileName = Constants.App.DefaultTtlFileName;
+        private bool isLogging = Constants.App.DefaultLogging;
+        private string logFolder = Constants.App.DefaultLogFolder;
+        private string boosteraMacroFolder = Constants.App.BoosteraMacroFolder;
+        private string sshFolder = Constants.App.SshFolder;
+
         private List<History> histories = new List<History>();
         private int preIndex = ListBox.NoMatches;
         private JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions
@@ -57,7 +58,7 @@ namespace Boostera
         private bool isHide { get { return checkBox1.Checked; } }
         private string tag { get { return textBox11.Text; } }
 
-        public ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath, string ttlFileName, bool isLogging, string logFolder)
+        internal ConnectionForm(string ttermproPath, string winscpPath, string boosteraKeyPath, string ttlFileName, bool isLogging, string logFolder)
         {
             InitializeComponent();
 
@@ -197,7 +198,7 @@ namespace Boostera
 
             try
             {
-                var historyEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Program.BoosteraDataFolder, "history.json")));
+                var historyEncrypted = JsonSerializer.Deserialize<EncryptedText>(File.ReadAllText(Path.Combine(Constants.App.BoosteraDataFolder, "history.json")));
                 var historyJson = EncryptedText.Decrypt(historyEncrypted, boosteraKeyPath);
                 histories = JsonSerializer.Deserialize<List<History>>(historyJson);
             }
@@ -497,7 +498,7 @@ namespace Boostera
             {
                 var historyEncrypted = EncryptedText.Encrypt(JsonSerializer.Serialize(histories), boosteraKeyPath);
                 var historyJson = JsonSerializer.Serialize(historyEncrypted, jsonSerializerOptions);
-                File.WriteAllText(Path.Combine(Program.BoosteraDataFolder, "history.json"), historyJson);
+                File.WriteAllText(Path.Combine(Constants.App.BoosteraDataFolder, "history.json"), historyJson);
             }
             catch { }
 

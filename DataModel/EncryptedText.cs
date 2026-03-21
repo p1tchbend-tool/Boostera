@@ -5,20 +5,20 @@ using System.Text;
 
 namespace Boostera
 {
-    public class EncryptedText
+    internal class EncryptedText
     {
-        public string Key { get; set; }
-        public string Iv { get; set; }
-        public string Data { get; set; }
+        internal string Key { get; set; }
+        internal string Iv { get; set; }
+        internal string Data { get; set; }
 
-        public EncryptedText(string key, string iv, string data)
+        internal EncryptedText(string key, string iv, string data)
         {
             Key = key;
             Iv = iv;
             Data = data;
         }
 
-        public static bool CreateKey(string keyPath)
+        internal static bool CreateKey(string keyPath)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Boostera
             catch { throw; }
         }
 
-        public static EncryptedText Encrypt(string data, string keyPath)
+        internal static EncryptedText Encrypt(string data, string keyPath)
         {
             if (!File.Exists(keyPath)) CreateKey(keyPath);
 
@@ -78,7 +78,7 @@ namespace Boostera
             }
         }
 
-        public static string Decrypt(EncryptedText encryptedText, string keyPath)
+        internal static string Decrypt(EncryptedText encryptedText, string keyPath)
         {
             var rsa = new RSACryptoServiceProvider(3072);
             rsa.FromXmlString(File.ReadAllText(keyPath));

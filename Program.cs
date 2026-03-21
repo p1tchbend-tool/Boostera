@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -7,11 +6,6 @@ namespace Boostera
 {
     internal static class Program
     {
-        public static readonly string BoosteraDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Boostera");
-        public static readonly HotKey ProgramHotKey = new HotKey();
-        public static readonly int HotKeyShowForm = 1;
-        public static readonly Logger Logger = new Logger(Path.Combine(BoosteraDataFolder, "log"), "Boostera.log", 10000);
-
         private static Mutex mutex = null;
         private static bool hasMutex = false;
 
@@ -48,7 +42,7 @@ namespace Boostera
         {
             try
             {
-                Logger.LogException(e.Exception);
+                Constants.Log.Logger.LogException(e.Exception);
             }
             catch { }
         }
@@ -59,7 +53,7 @@ namespace Boostera
             {
                 try
                 {
-                    Logger.LogException((Exception)e.ExceptionObject);
+                    Constants.Log.Logger.LogException((Exception)e.ExceptionObject);
                 }
                 catch { }
             }

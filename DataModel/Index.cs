@@ -2,13 +2,13 @@
 
 namespace Boostera
 {
-    public class Index
+    internal class Index
     {
-        public string Path { get; set; }
-        public string Text { get; set; }
-        public DateTime Timestamp { get; set; }
+        internal string Path { get; set; }
+        internal string Text { get; set; }
+        internal DateTime Timestamp { get; set; }
 
-        public Index(string path, string text, DateTime timestamp) 
+        internal Index(string path, string text, DateTime timestamp) 
         {
             Path = path;
             Text = text;

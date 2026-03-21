@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Boostera
 {
-    public class ConnectionManager
+    internal class ConnectionManager
     {
-        public async Task Connect(string ttermproPath, string winscpPath, bool isLogging, string logFolder, string protocolText, string host, string user, string port, string privateKey,
+        internal async Task Connect(string ttermproPath, string winscpPath, bool isLogging, string logFolder, string protocolText, string host, string user, string port, string privateKey,
             string password, bool isEnvPassword, string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser,
             string forwardingPort, string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag)
         {
@@ -73,10 +73,10 @@ namespace Boostera
 
                 if (isLogging || !string.IsNullOrEmpty(logonScript))
                 {
-                    if (!Directory.Exists(Path.Combine(Program.BoosteraDataFolder, ".temp")))
-                        Directory.CreateDirectory(Path.Combine(Program.BoosteraDataFolder, ".temp"));
+                    if (!Directory.Exists(Path.Combine(Constants.App.BoosteraDataFolder, ".temp")))
+                        Directory.CreateDirectory(Path.Combine(Constants.App.BoosteraDataFolder, ".temp"));
 
-                    var tempTtlPath = Path.Combine(Program.BoosteraDataFolder, ".temp\\logon.ttl");
+                    var tempTtlPath = Path.Combine(Constants.App.BoosteraDataFolder, ".temp\\logon.ttl");
                     arguments += " /M=\"" + tempTtlPath + "\"";
 
                     var script = string.Empty;
@@ -177,7 +177,7 @@ sendln '{logonScript}'
             }
         }
 
-        public string ExportTtl(string targetFolder, string protocolText, string host, string user, string port, string privateKey, string password, bool isEnvPassword,
+        internal string ExportTtl(string targetFolder, string protocolText, string host, string user, string port, string privateKey, string password, bool isEnvPassword,
             string logonScript, string waitingString, string waitingTime, bool isForwarding, string forwardingHost, string forwardingUser, string forwardingPort,
             string forwardingLocalPort, string forwardingPrivateKey, string forwardingPassword, bool forwardingIsEnvPassword, bool isHide, string tag, string ttlFileName)
         {
@@ -222,7 +222,7 @@ sendln '{logonScript}'
             return Path.Combine(targetFolder, filename);
         }
 
-        public Dictionary<string, string> ImportTtl(string ttlFilePath)
+        internal Dictionary<string, string> ImportTtl(string ttlFilePath)
         {
             var ttl = File.ReadAllText(ttlFilePath);
             var dict = new Dictionary<string, string>();
