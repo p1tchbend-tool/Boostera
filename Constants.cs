@@ -34,7 +34,7 @@ namespace Boostera
 
             internal static readonly bool DefaultStartUp = true;
 
-            internal static readonly string DefaultTtlFileName = @"{{protocol}}_{{user}}@{{host}}{{istag:_}}{{tag}}";
+            internal static readonly string DefaultTtlFileName = @"{{tag}}{{istag:_}}{{user}}@{{host}}_{{protocol}}";
         }
 
         internal class Log
